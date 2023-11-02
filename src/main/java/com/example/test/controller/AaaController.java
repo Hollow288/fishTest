@@ -34,6 +34,7 @@ public class AaaController {
     public void efghd(@RequestBody Student student){
         System.out.println(student);
         System.out.println("this is master tag");
+        System.out.println("this is test tag");
     }
 
 
