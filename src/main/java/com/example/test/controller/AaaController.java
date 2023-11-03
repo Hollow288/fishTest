@@ -25,7 +25,6 @@ public class AaaController {
         for (Play littlePlay : play) {
             System.out.println("-------------------------");
             littlePlay.doing();
-            System.out.println("test2 tag");
 
         }
     }
@@ -34,7 +33,6 @@ public class AaaController {
     @PostMapping("/student")
     public void efghd(@RequestBody Student student){
         System.out.println(student);
-        System.out.println("this is test2 tag");
     }
 
 
