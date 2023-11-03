@@ -33,8 +33,7 @@ public class AaaController {
     @PostMapping("/student")
     public void efghd(@RequestBody Student student){
         System.out.println(student);
-        System.out.println("this is master tag");
-        System.out.println("this is test tag");
+        System.out.println("this is test2 tag");
     }
 
 
