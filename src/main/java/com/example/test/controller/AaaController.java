@@ -25,6 +25,7 @@ public class AaaController {
         for (Play littlePlay : play) {
             System.out.println("-------------------------");
             littlePlay.doing();
+            System.out.println("test2 tag");
 
         }
     }
