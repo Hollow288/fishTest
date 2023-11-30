@@ -4,7 +4,6 @@ import com.pond.build.mapper.PeopleMapper;
 import com.pond.build.model.Teacher;
 import com.pond.build.model.User;
 import com.pond.build.service.PeopleService;
-import jdk.jfr.Threshold;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
