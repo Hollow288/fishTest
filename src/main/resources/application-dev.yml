@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    username: root
+    password: root
+#    allowMultiQueries=true  支持批处理
+    url: jdbc:mysql://localhost:3306/fishdb?allowMultiQueries=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+server:
+  port: 8999
+
+mybatis:
+  mapper-locations: classpath:com/pond/build/mapper/*.xml
+  type-aliases-package: com.pond.build.model
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+logging:
+  config: classpath:Log4j2-spring.xml
+
+
+pond:
+  name: fish
