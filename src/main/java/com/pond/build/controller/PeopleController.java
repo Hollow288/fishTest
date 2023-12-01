@@ -20,6 +20,17 @@ public class PeopleController {
     private String pondName;
 
 
+    //redis-server.exe redis.windows.conf
+
+//    Redis默认拥有16个数据库，初始默认使用0号库，在命令行中通过select命令将数据库切换到8号数据库：
+//
+//    select 8
+
+    //在命令中通过shutdown命令来关闭redis服务
+
+
+
+
     //添加单个user
     @PostMapping("/insertUser")
     public void insertInfoByUser(@RequestBody User user){
