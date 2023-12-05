@@ -5,6 +5,7 @@ import com.pond.build.model.Teacher;
 import com.pond.build.model.User;
 import com.pond.build.service.PeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,11 +36,12 @@ public class PeopleServiceImpl implements PeopleService {
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public void deleteUserById(Integer id) {
         peopleMapper.deleteUserById(id);
     }
 
     @Override
+    @Cacheable(value="TeacherAndUserInfoById", key = "#id")
     public Teacher selectTeacherAndUserById(Integer id) {
         return  peopleMapper.selectTeacherAndUserById(id);
     }

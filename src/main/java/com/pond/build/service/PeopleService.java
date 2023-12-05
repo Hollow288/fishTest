@@ -10,7 +10,7 @@ public interface PeopleService {
 
     Integer insertTeacherInfo(Teacher teacher);
 
-    void deleteById(Integer id);
+    void deleteUserById(Integer id);
 
     Teacher selectTeacherAndUserById(Integer id);
 

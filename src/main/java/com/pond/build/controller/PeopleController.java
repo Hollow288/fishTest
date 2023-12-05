@@ -45,6 +45,11 @@ public class PeopleController {
         System.out.println("user=" + user);
     }
 
+    @GetMapping("/getUserById")
+    public void getUserById(@RequestParam Integer id){
+
+    }
+
 
     @PostMapping("/insertTeacher")
     public void insertInfoByTeacher(@RequestBody Teacher teacher){
@@ -73,7 +78,7 @@ public class PeopleController {
     //单个删除user
     @DeleteMapping("/deleteUserById")
     public void deleteUserById(@RequestParam Integer id){
-        userService.deleteById(id);
+        userService.deleteUserById(id);
     }
 
     //查单个teacher,顺带对应的user
