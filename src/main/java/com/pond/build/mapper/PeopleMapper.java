@@ -17,7 +17,7 @@ public interface PeopleMapper {
     Teacher selectTeacherAndUserById(@Param("id") Integer id);
 
 
-    User getUser(@Param("id") Integer id);
+    User getUserById(@Param("id") Integer id);
 
     Teacher getTeacher(@Param("id") Integer id);
 

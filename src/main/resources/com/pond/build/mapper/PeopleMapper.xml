@@ -77,7 +77,7 @@
     </select>
 
     <!--查user-->
-    <select id="getUser" resultType="User">
+    <select id="getUserById" resultType="User">
         select * from user where id = #{id}
     </select>
 

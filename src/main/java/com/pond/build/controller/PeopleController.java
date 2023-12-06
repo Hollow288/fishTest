@@ -47,7 +47,8 @@ public class PeopleController {
 
     @GetMapping("/getUserById")
     public void getUserById(@RequestParam Integer id){
-
+        User userById = userService.getUserById(id);
+        System.out.println(userById);
     }
 
 

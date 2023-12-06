@@ -1,15 +1,19 @@
 package com.pond.build.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.pond.build.mapper.PeopleMapper;
 import com.pond.build.model.Teacher;
 import com.pond.build.model.User;
 import com.pond.build.service.PeopleService;
+import com.pond.build.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
 
 
 @Service
@@ -18,6 +22,9 @@ public class PeopleServiceImpl implements PeopleService {
 
     @Autowired
     private PeopleMapper peopleMapper;
+
+    @Autowired
+    private RedisUtil redisUtil;
 
     @Override
     public Integer insertUserInfo(User user) {
@@ -35,13 +42,33 @@ public class PeopleServiceImpl implements PeopleService {
         return insert;
     }
 
+
     @Override
+    public User getUserById(Integer id){
+        String key = "getUserById::"+id;
+        Object value = redisUtil.get(key);
+        if (value != null){
+            return JSONObject.parseObject(value.toString(), User.class);
+        }
+        User user = peopleMapper.getUserById(id);
+        redisUtil.set("getUserById::"+id, JSONObject.toJSONString(user),3600);
+        return user;
+    }
+
+    @Override
+    //删除缓存
+    @CacheEvict(value = "getUserById", key = "#id")
     public void deleteUserById(Integer id) {
         peopleMapper.deleteUserById(id);
     }
 
+    /**
+     * @Cacheable(value = "myCache", key = "#id") 中的 value 属性表示缓存的名称。在Redis中，这个名称就是一个键空间（key space）
+     * key = "#id" 中的 #id 是一个SpEL表达式，表示方法参数中名为 "id" 的值。这个值将被用作缓存键（在Redis中就是键），它是用于在缓存中唯一标识缓存项的。
+     * redis中是这样的  TeacherAndUserInfoById::1
+     */
     @Override
-    @Cacheable(value="TeacherAndUserInfoById", key = "#id")
+    @Cacheable(value="selectTeacherAndUserById", key = "#id")
     public Teacher selectTeacherAndUserById(Integer id) {
         return  peopleMapper.selectTeacherAndUserById(id);
     }
@@ -76,6 +103,5 @@ public class PeopleServiceImpl implements PeopleService {
     @Override
     public Integer batchUpdateUsers(List<User> userList) {
       return  peopleMapper.batchUpdatetUser(userList);
-
     }
 }
