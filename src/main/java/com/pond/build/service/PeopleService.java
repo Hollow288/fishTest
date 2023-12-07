@@ -1,24 +1,24 @@
 package com.pond.build.service;
 
+import com.pond.build.model.Student;
 import com.pond.build.model.Teacher;
-import com.pond.build.model.User;
 
 import java.util.List;
 
 public interface PeopleService {
-    Integer insertUserInfo(User user);
+    Integer insertStudentInfo(Student student);
 
     Integer insertTeacherInfo(Teacher teacher);
 
-    User getUserById(Integer id);
+    Student getStudentById(Integer id);
 
-    void deleteUserById(Integer id);
+    void deleteStudentById(Integer id);
 
-    Teacher selectTeacherAndUserById(Integer id);
+    Teacher selectTeacherAndStudentById(Integer id);
 
     Teacher selectTeacherById(Integer id);
 
-    Integer batchInsertUsers(List<User> userList);
+    Integer batchInsertStudents(List<Student> studentList);
 
-    Integer batchUpdateUsers(List<User> userList);
+    Integer batchUpdateStudents(List<Student> studentList);
 }

@@ -1,7 +1,7 @@
 package com.pond.build.controller;
 
+import com.pond.build.model.Student;
 import com.pond.build.model.Teacher;
-import com.pond.build.model.User;
 import com.pond.build.service.PeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,7 +14,7 @@ import java.util.Map;
 @RestController
 public class PeopleController {
     @Autowired
-    private PeopleService userService;
+    private PeopleService studentService;
 
     @Value("${pond.name}")
     private String pondName;
@@ -31,69 +31,69 @@ public class PeopleController {
 
 
 
-    //添加单个user
-    @PostMapping("/insertUser")
-    public void insertInfoByUser(@RequestBody User user){
-        Integer integer = userService.insertUserInfo(user);
+    //添加单个student
+    @PostMapping("/insertStudent")
+    public void insertInfoByStudent(@RequestBody Student student){
+        Integer integer = studentService.insertStudentInfo(student);
         System.out.println("==========================在这之前的操作===================");
         //注意：如果在这里抛出的异常，但是我们只在ServiceImpl中加了@Transactional注解，
         // controller层没有@Transactional注解，那么事务将不会回滚，因为事务已经提交了
 //        int i = 1/0;
         //影响的行数
         System.out.println("influenceNum=" + integer);
-        //传进来的user的id为null，但是这里就已经自动附上值了
-        System.out.println("user=" + user);
+        //传进来的student的id为null，但是这里就已经自动附上值了
+        System.out.println("student=" + student);
     }
 
-    @GetMapping("/getUserById")
-    public void getUserById(@RequestParam Integer id){
-        User userById = userService.getUserById(id);
-        System.out.println(userById);
+    @GetMapping("/getStudentById")
+    public void getStudentById(@RequestParam Integer id){
+        Student studentById = studentService.getStudentById(id);
+        System.out.println(studentById);
     }
 
 
     @PostMapping("/insertTeacher")
     public void insertInfoByTeacher(@RequestBody Teacher teacher){
-        Integer integer = userService.insertTeacherInfo(teacher);
+        Integer integer = studentService.insertTeacherInfo(teacher);
         System.out.println("==========================在这之前的操作===================");
         //注意：如果在这里抛出的异常，但是我们只在ServiceImpl中加了@Transactional注解，
         // controller层没有@Transactional注解，那么事务将不会回滚，因为事务已经提交了
 //        int i = 1/0;
         //影响的行数
         System.out.println("influenceNum=" + integer);
-        //传进来的user的id为null，但是这里就已经自动附上值了
+        //传进来的student的id为null，但是这里就已经自动附上值了
         System.out.println("teacher=" + teacher);
     }
 
-    //添加多个user
-    @PostMapping("/batchInsertUser")
-    public void batchInsertUser(@RequestBody List<User> users){
-        Integer integer = userService.batchInsertUsers(users);
+    //添加多个student
+    @PostMapping("/batchInsertStudent")
+    public void batchInsertStudent(@RequestBody List<Student> students){
+        Integer integer = studentService.batchInsertStudents(students);
         //影响的行数
         System.out.println("influenceNum=" + integer);
-        //传进来的users的id为null，但是这里就已经自动附上值了
-        System.out.println("user=" + users);
+        //传进来的students的id为null，但是这里就已经自动附上值了
+        System.out.println("student=" + students);
     }
 
 
-    //单个删除user
-    @DeleteMapping("/deleteUserById")
-    public void deleteUserById(@RequestParam Integer id){
-        userService.deleteUserById(id);
+    //单个删除student
+    @DeleteMapping("/deleteStudentById")
+    public void deleteStudentById(@RequestParam Integer id){
+        studentService.deleteStudentById(id);
     }
 
-    //查单个teacher,顺带对应的user
-    @GetMapping("/selectTeacherAndUserById")
-    public Teacher selectTeacherAndUserById(@RequestParam Integer id){
+    //查单个teacher,顺带对应的student
+    @GetMapping("/selectTeacherAndStudentById")
+    public Teacher selectTeacherAndStudentById(@RequestParam Integer id){
         //这里为什么会创建两次Creating a new SqlSession呢 ，事务好像也是两个
 //       Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@207fc7cc]
 //       Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@30f9155d]
 
         //因为controller层没有@Transactional注解，所以这两次的查询是两个SqlSession，所以不仅事务不生效，mybatis的一级缓存也不生效
 
-        Teacher teacher = userService.selectTeacherAndUserById(id);
+        Teacher teacher = studentService.selectTeacherAndStudentById(id);
         System.out.println(teacher);
-//        Teacher teacher2 = userService.selectTeacherAndUserById(id);
+//        Teacher teacher2 = studentService.selectTeacherAndStudentById(id);
 //        System.out.println(teacher2);
         System.out.println("yml中的配置 pond.name = " + pondName);
         return teacher;
@@ -101,22 +101,22 @@ public class PeopleController {
 
 
 
-    //查单个teacher信息，没有user
+    //查单个teacher信息，没有student
     @GetMapping("/selectTeacherById")
     public void selectTeacherById(@RequestParam Integer id){
-        Teacher teacher = userService.selectTeacherById(id);
+        Teacher teacher = studentService.selectTeacherById(id);
 //        System.out.println(teacher);
     }
 
 
-    //修改多个user信息
-    @PutMapping("/batchUpdateUser")
-    public void batchUpdateUser(@RequestBody List<User> users){
-        Integer integer = userService.batchUpdateUsers(users);
+    //修改多个student信息
+    @PutMapping("/batchUpdateStudent")
+    public void batchUpdateStudent(@RequestBody List<Student> students){
+        Integer integer = studentService.batchUpdateStudents(students);
         //影响的行数 这里只会返回1 因为是一条条执行的
         System.out.println("influenceNum=" + integer);
-        //传进来的users的id为null，但是这里就已经自动附上值了
-        System.out.println("user=" + users);
+        //传进来的students的id为null，但是这里就已经自动附上值了
+        System.out.println("student=" + students);
     }
 
 

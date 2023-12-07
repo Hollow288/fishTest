@@ -3,7 +3,7 @@
 <mapper namespace="com.pond.build.mapper.PeopleMapper">
 
     <!---->
-    <resultMap type="com.pond.build.model.User" id="UserMap">
+    <resultMap type="com.pond.build.model.Student" id="StudentMap">
         <result property="id" column="uid" jdbcType="INTEGER"/>
         <result property="name" column="uname" jdbcType="VARCHAR"/>
         <result property="age" column="age" jdbcType="INTEGER"/>
@@ -14,19 +14,19 @@
     <resultMap type="com.pond.build.model.Teacher" id="TeacherMap">
         <result property="id" column="tid" jdbcType="INTEGER"/>
         <result property="name" column="tname" jdbcType="VARCHAR"/>
-        <collection property="users" ofType="com.pond.build.model.User" resultMap="UserMap"/>
+        <collection property="students" ofType="com.pond.build.model.Student" resultMap="StudentMap"/>
     </resultMap>
 
 
 <!--    <resultMap type="com.pond.build.model.Teacher" id="TeacherMap">-->
 <!--        <result property="id" column="tid" jdbcType="INTEGER"/>-->
 <!--        <result property="name" column="tname" jdbcType="VARCHAR"/>-->
-<!--        <collection property="users" ofType="com.pond.build.model.User" resultMap="UserMap"/>-->
+<!--        <collection property="students" ofType="com.pond.build.model.Student" resultMap="StudentMap"/>-->
 <!--    </resultMap>-->
 
-    <!--新增单个user-->
-    <insert id="insertUser" useGeneratedKeys="true" keyProperty="id">
-        insert into user(name, age, birthday, tid)
+    <!--新增单个student-->
+    <insert id="insertStudent" useGeneratedKeys="true" keyProperty="id">
+        insert into student(name, age, birthday, tid)
         values (#{name}, #{age}, #{birthday}, #{tid})
     </insert>
 
@@ -43,31 +43,31 @@
         name = #{name} where id = #{id}
     </update>
 
-    <!--新增多个user-->
-<!--    collection： 指定要迭代的集合的属性名。这是一个 OGNL 表达式，表示从参数对象中获取的集合。在示例中，userList 是方法参数中的一个集合。
-        item： 指定迭代过程中的每个元素在 <foreach> 内部被称为的别名。在示例中，user 是表示集合中每个元素的别名。在 <foreach> 元素内部，你可以使用 user 来引用集合中的每个元素。
+    <!--新增多个student-->
+<!--    collection： 指定要迭代的集合的属性名。这是一个 OGNL 表达式，表示从参数对象中获取的集合。在示例中，studentList 是方法参数中的一个集合。
+        item： 指定迭代过程中的每个元素在 <foreach> 内部被称为的别名。在示例中，student 是表示集合中每个元素的别名。在 <foreach> 元素内部，你可以使用 student 来引用集合中的每个元素。
         separator： 指定在迭代多个元素时，用于分隔生成的 SQL 片段的字符串。在示例中，separator="," 表示在每两个元素之间使用逗号作为分隔符。
 -->
-    <insert id="batchInsertUser" useGeneratedKeys="true" keyProperty="id">
-        insert into user (name, age, birthday, tid)
+    <insert id="batchInsertStudent" useGeneratedKeys="true" keyProperty="id">
+        insert into student (name, age, birthday, tid)
         values
-        <foreach collection="userList" item="user" separator=",">
-            (#{user.name}, #{user.age}, #{user.birthday}, #{user.tid})
+        <foreach collection="studentList" item="student" separator=",">
+            (#{student.name}, #{student.age}, #{student.birthday}, #{student.tid})
         </foreach>
     </insert>
 
 
-    <!--通过主键user删除-->
-    <delete id="deleteUserById">
-        delete from user where id = #{id}
+    <!--通过主键student删除-->
+    <delete id="deleteStudentById">
+        delete from student where id = #{id}
     </delete>
 
-    <!--查teacher和其下面的user-->
-    <select id="selectTeacherAndUserById" resultMap="TeacherMap">
+    <!--查teacher和其下面的student-->
+    <select id="selectTeacherAndStudentById" resultMap="TeacherMap">
         SELECT teacher.id as tid, teacher.name as tname,
-               user.id as uid, user.name as uname, user.age, user.birthday, user.tid
+               student.id as uid, student.name as uname, student.age, student.birthday, student.tid
         FROM teacher
-                 inner join  user ON user.tid = teacher.id
+                 inner join  student ON student.tid = teacher.id
         WHERE teacher.id = #{id}
     </select>
 
@@ -76,16 +76,16 @@
         select * from teacher where id = #{id}
     </select>
 
-    <!--查user-->
-    <select id="getUserById" resultType="User">
-        select * from user where id = #{id}
+    <!--查student-->
+    <select id="getStudentById" resultType="Student">
+        select * from student where id = #{id}
     </select>
 
-    <!--修改多个user-->
-    <update id="batchUpdatetUser" >
-        <foreach collection="userList" item="user" separator=";">
-            update user set
-            name = #{user.name},age = #{user.age}, birthday = #{user.birthday},tid = #{user.tid} where id = #{user.id}
+    <!--修改多个student-->
+    <update id="batchUpdatetStudent" >
+        <foreach collection="studentList" item="student" separator=";">
+            update student set
+            name = #{student.name},age = #{student.age}, birthday = #{student.birthday},tid = #{student.tid} where id = #{student.id}
         </foreach>
     </update>
 

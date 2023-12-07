@@ -25,7 +25,7 @@ public class Teacher implements Serializable {
     /**
      * 学生
      */
-    private List<User> users;
+    private List<Student> students;
 
 
     @Override
@@ -33,7 +33,7 @@ public class Teacher implements Serializable {
         return "Teacher{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", users=" + users +
+                ", students=" + students +
                 '}';
     }
 }

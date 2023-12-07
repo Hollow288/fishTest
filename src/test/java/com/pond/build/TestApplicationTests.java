@@ -1,5 +1,6 @@
 package com.pond.build;
 
+import com.pond.build.mapper.UserMapper;
 import com.pond.build.service.impl.PeopleServiceImpl;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -13,14 +14,18 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
+
+import com.pond.build.model.User;
 
 @SpringBootTest
 class TestApplicationTests {
 
     @Autowired
-    private PeopleServiceImpl userService;
+    private PeopleServiceImpl peopleService;
 
 
     @Test
@@ -31,7 +36,7 @@ class TestApplicationTests {
 
     @Test
     public void tt(){
-        userService.deleteById(3);
+        peopleService.deleteStudentById(3);
     }
 
     public static void PJ(String subjectCode,String subjectName,String fullSubjectName,String balanceDirection,String subjectCategoryName){
@@ -128,7 +133,7 @@ class TestApplicationTests {
 
     @Test
     void outCXKMXLXS(){
-        testXxxm("C:\\Users\\11\\Desktop\\589f8653e9302ad7fca10ca8cdff5e28.xlsx");
+        testXxxm("C:\\Students\\11\\Desktop\\589f8653e9302ad7fca10ca8cdff5e28.xlsx");
     }
 
 
@@ -141,7 +146,16 @@ class TestApplicationTests {
     }
 
 
+    @Autowired
+    private UserMapper userMapper;
 
+    @Test
+    public void testUserMapper(){
+        List<User> userList = userMapper.selectList(null);
+        for (User user : userList) {
+            System.out.println(user);
+        }
+    }
 
 
 
