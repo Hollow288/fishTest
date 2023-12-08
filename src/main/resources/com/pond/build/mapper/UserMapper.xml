@@ -7,7 +7,7 @@
         <id column="id" property="id" />
         <result column="user_name" property="userName" />
         <result column="nick_name" property="nickName" />
-        <result column="password" property="password" />
+        <result column="password" property="passWord" />
         <result column="status" property="status" />
         <result column="email" property="email" />
         <result column="phone_number" property="phoneNumber" />
@@ -22,8 +22,17 @@
     </resultMap>
 
     <!-- 通用查询结果列 -->
+<!--    SQL 语句定义了一个列名的列表，包括了 User 类中的所有字段。这个 SQL 片段可以在后续的 <select>、<update>、<insert> 等语句中被引用，以避免在每个语句中都重复列出所有的列名。-->
     <sql id="Base_Column_List">
-        id, user_name, nick_name, password, status, email, phone_number, sex, avatar, user_type, create_by, create_time, update_by, update_time, del_flag
+        id, user_name, nick_name, pass_word, status, email, phone_number, sex, avatar, user_type, create_by, create_time, update_by, update_time, del_flag
     </sql>
+
+
+    <select id="selectUserById" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM user
+        WHERE id = #{id}
+    </select>
 
 </mapper>

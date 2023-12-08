@@ -36,14 +36,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = userMapper.selectOne(queryWrapper);
         //如果没有查询到用户
         if (Objects.isNull(user)){
-            throw new RuntimeException("用户名或者密码错误");
+            throw new RuntimeException("用户名不存在！");
         }
 
-
-        //TODO (授权，即查询用户具有哪些权限)查询对应的用户信息
+        // (授权，即查询用户具有哪些权限)查询对应的用户信息
         //定义一个权限集合
         List<String> list = menuMapper.selectPermsByUserId(user.getId());
-
 
         //把数据封装成UserDetails返回
         return new LoginUser(user,list);

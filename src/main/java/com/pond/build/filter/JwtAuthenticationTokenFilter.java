@@ -52,10 +52,13 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         }
         LoginUser loginUser = JSONObject.parseObject(result.toString(), LoginUser.class);
         //封装Authentication对象存入SecurityContextHolder
-        //TODO 获取权限信息封装到Authentication中
 
+        // 获取权限信息封装到Authentication中
+//        第一个参数：principal，通常是包含了用户信息的对象，如果包含权限信息，应该在这里传递。
+//        第二个参数：credentials，通常是密码，或者在无密码认证场景下可以为 null。
+//        第三个参数：authorities，表示用户的权限，如果包含权限信息，应该在这里传递。
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(loginUser,null,null);
+                new UsernamePasswordAuthenticationToken(loginUser,loginUser.getPassword(),loginUser.getAuthorities());
 
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         //放行
