@@ -15,7 +15,7 @@ import java.io.IOException;
 @Component
 public class QXLogoutSuccessHandler implements LogoutSuccessHandler {
 
-    //todo 为什么这里不行呢？配置了以后没有验证就提示验证失败
+    //Todo 为什么这里不行呢？配置了以后没有验证就提示验证失败
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         System.out.println("注销成功");

@@ -56,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
 
-        //todo 为什么这里不行呢？配置了以后没有验证就提示验证失败
+        //Todo 为什么这里不行呢？配置了以后没有验证就提示验证失败
 //        http.formLogin()
 //                //配置认证成功处理器
 //                .successHandler(authenticationSuccessHandler)
@@ -84,7 +84,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 除上面外的所有请求全部需要鉴权认证
                 .anyRequest().authenticated();
 
-        //todo 为什么这里不行呢？配置了以后没有验证就提示验证失败
+        //Todo 为什么这里不行呢？配置了以后没有验证就提示验证失败
 //                .and()
 //                .formLogin()
 //                //配置认证成功处理器

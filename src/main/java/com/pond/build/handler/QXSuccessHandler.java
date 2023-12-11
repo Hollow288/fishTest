@@ -16,7 +16,7 @@ import java.io.IOException;
 @Component
 public class QXSuccessHandler implements AuthenticationSuccessHandler {
 
-    //todo 为什么这里不行呢？配置了以后没有验证就提示验证失败
+    //Todo 为什么这里不行呢？配置了以后没有验证就提示验证失败
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         System.out.println("认证成功");
