@@ -8,6 +8,7 @@ import com.pond.build.service.LoginService;
 import com.pond.build.utils.JwtUtil;
 import com.pond.build.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -57,7 +58,7 @@ public class LoginServiceImpl implements LoginService {
         //把完整的用户信息存入redis  userid为key   用户信息为value
         redisUtil.set("login:"+userid, JSONObject.toJSONString(loginUser),3600);
 
-        return new ResponseResult(200,"登录成功",map);
+        return new ResponseResult(HttpStatus.OK.value(),"登录成功",map);
     }
 
 
@@ -72,7 +73,7 @@ public class LoginServiceImpl implements LoginService {
 
         //根据userid找到redis对应值进行删除
         redisUtil.persist("login:"+userid);
-        return new ResponseResult(200,"注销成功");
+        return new ResponseResult(HttpStatus.OK.value(),"注销成功");
     }
 
 

@@ -15,7 +15,8 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_NULL)
+// Jackson 库中的注解，它用于控制在序列化 Java 对象为 JSON 字符串时，是否包含值为 null 的属性。
+//@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Menu implements Serializable {
     private static final long serialVersionUID = -54979041104113736L;
 

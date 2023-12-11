@@ -47,10 +47,7 @@ Content-Type: application/json
 <> 2023-12-07T164623.500.json
 
 ###
-GET /hello
-
-###
 GET http://localhost:8999/hello
 
 ###
-GET /hello
+GET http://localhost:8999/allItems?fieldName=Menu

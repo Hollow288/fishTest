@@ -79,7 +79,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 // 对于登录接口 允许匿名访问
                 .antMatchers("/user/login").anonymous()
-                .antMatchers("/selectTeacherAndStudentById").anonymous()
+                //获取字段信息的
+                .antMatchers("/allItems").anonymous()
                 // 除上面外的所有请求全部需要鉴权认证
                 .anyRequest().authenticated();
 
@@ -106,12 +107,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         //允许跨域
         http.cors();
-
-
     }
-
-
-
 
     @Bean  //这样子就可以从容器当中获取到AuthenticationManager
     @Override
