@@ -1,6 +1,7 @@
 package com.pond.build.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.pond.build.enums.HttpStatusCode;
 import com.pond.build.model.LoginUser;
 import com.pond.build.model.ResponseResult;
 import com.pond.build.model.User;
@@ -58,7 +59,7 @@ public class LoginServiceImpl implements LoginService {
         //把完整的用户信息存入redis  userid为key   用户信息为value
         redisUtil.set("login:"+userid, JSONObject.toJSONString(loginUser),3600);
 
-        return new ResponseResult(HttpStatus.OK.value(),"登录成功",map);
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"登录成功",map);
     }
 
 
@@ -73,7 +74,7 @@ public class LoginServiceImpl implements LoginService {
 
         //根据userid找到redis对应值进行删除
         redisUtil.persist("login:"+userid);
-        return new ResponseResult(HttpStatus.OK.value(),"注销成功");
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"注销成功");
     }
 
 

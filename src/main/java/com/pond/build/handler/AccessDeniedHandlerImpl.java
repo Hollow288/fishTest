@@ -1,6 +1,7 @@
 package com.pond.build.handler;
 
 import com.alibaba.fastjson.JSON;
+import com.pond.build.enums.HttpStatusCode;
 import com.pond.build.model.ResponseResult;
 import com.pond.build.utils.WebUtils;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,7 @@ import java.io.IOException;
 public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
-        ResponseResult result = new ResponseResult(HttpStatus.FORBIDDEN.value(),"您的权限不足");
+        ResponseResult result = new ResponseResult(HttpStatusCode.FORBIDDEN.getCode(),HttpStatusCode.FORBIDDEN.getCnMessage());
         String json = JSON.toJSONString(result);
         //处理移除
         WebUtils.renderString(response,json);
