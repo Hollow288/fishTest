@@ -15,10 +15,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * 认证的异常处理类
+ * 认证的异常处理类(也可能是access_token过期)
  */
 @Component
 public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
+
+    //返回一个让前端使用/refreshToken/{refreshToken}接口刷新token的状态码
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         ResponseResult result = new ResponseResult(HttpStatusCode.UNAUTHORIZED.getCode(),HttpStatusCode.UNAUTHORIZED.getCnMessage());

@@ -8,6 +8,7 @@ import com.pond.build.model.User;
 import com.pond.build.service.LoginService;
 import com.pond.build.utils.JwtUtil;
 import com.pond.build.utils.RedisUtil;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -52,12 +53,19 @@ public class LoginServiceImpl implements LoginService {
         //获取当前用户的userid
         String userid = loginUser.getUser().getId().toString();
 
-        String jwt = JwtUtil.createJWT(userid);
+//        String jwt = JwtUtil.createJWT(userid);
+        String accessToken = JwtUtil.createJWT(userid, JwtUtil.JWT_ACCESS_TTL);
+        String refreshToken = JwtUtil.createJWT(userid, JwtUtil.JWT_REFRESH_TTL);
+
         Map<String, String> map = new HashMap<>();
-        map.put("token",jwt);
+        map.put("access_token",accessToken);
+        map.put("refresh_token",refreshToken);
 
         //把完整的用户信息存入redis  userid为key   用户信息为value
-        redisUtil.set("login:"+userid, JSONObject.toJSONString(loginUser),3600);
+//        redisUtil.set("login:"+userid, JSONObject.toJSONString(loginUser),3600);
+
+        redisUtil.set("access_token:"+ userid,JSONObject.toJSONString(loginUser),JwtUtil.JWT_ACCESS_TTL/1000);
+        redisUtil.set("refresh_token:"+ userid,JSONObject.toJSONString(loginUser),JwtUtil.JWT_REFRESH_TTL/1000);
 
         return new ResponseResult(HttpStatusCode.OK.getCode(),"登录成功",map);
     }
@@ -73,8 +81,58 @@ public class LoginServiceImpl implements LoginService {
         Long userid = loginUser.getUser().getId();
 
         //根据userid找到redis对应值进行删除
-        redisUtil.persist("login:"+userid);
+        redisUtil.removeKey("access_token:"+userid);
+        redisUtil.removeKey("refresh_token:"+userid);
         return new ResponseResult(HttpStatusCode.OK.getCode(),"注销成功");
+    }
+
+    @Override
+    public ResponseResult refreshToken(String refreshToken) {
+
+        try {
+
+            //Todo 这里返回的状态码不应该和AuthenticationEntryPointImpl一样,因为这是refreshToken,如果也过期了,应该发一个让前端觉得应该返回登录界面的状态码
+
+            //检查refreshToken是否过期
+            Boolean tokenExpired = JwtUtil.isTokenExpired(refreshToken);
+            if(tokenExpired){
+                return new ResponseResult(HttpStatusCode.UNAUTHORIZED.getCode(),HttpStatusCode.UNAUTHORIZED.getCnMessage());
+            }
+            //检查refreshToken是否在黑名单
+            if(redisUtil.isBlackToken(refreshToken)){
+                return new ResponseResult(HttpStatusCode.UNAUTHORIZED.getCode(),HttpStatusCode.UNAUTHORIZED.getCnMessage());
+            }
+
+            Claims claims = JwtUtil.parseJWT(refreshToken);
+            String userid = claims.getSubject();
+            //检查refreshToken是否在redis中
+            if(!redisUtil.hasKey("access_token:"+ userid)){
+                return new ResponseResult(HttpStatusCode.UNAUTHORIZED.getCode(),HttpStatusCode.UNAUTHORIZED.getCnMessage());
+            }
+
+            Object userInfo = redisUtil.get("refresh_token:" + userid);
+            //重置AccessToken和RefreshToken过期时间(秒)
+            redisUtil.set("access_token:"+ userid,userInfo.toString(),JwtUtil.JWT_ACCESS_TTL/1000);
+            redisUtil.set("refresh_token:"+ userid,userInfo.toString(),JwtUtil.JWT_REFRESH_TTL/1000);
+
+            //生成新的AccessToken和RefreshToken
+            Map<String, String> map = new HashMap<>();
+            String newAccessToken = JwtUtil.createJWT(userid, JwtUtil.JWT_ACCESS_TTL);
+            String newRefreshToken = JwtUtil.createJWT(userid, JwtUtil.JWT_REFRESH_TTL);
+            //将refreshToken加入黑名单
+            redisUtil.tokenAddToBlack(refreshToken);
+            //将newAccessToken和newRefreshToken返回给前端
+            map.put("access_token",newAccessToken);
+            map.put("refresh_token",newRefreshToken);
+
+            return new ResponseResult(HttpStatusCode.OK.getCode(),"刷新成功",map);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+//            throw new RuntimeException(e);
+            return new ResponseResult(HttpStatusCode.UNAUTHORIZED.getCode(),HttpStatusCode.UNAUTHORIZED.getCnMessage());
+        }
+
     }
 
 

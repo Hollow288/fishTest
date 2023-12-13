@@ -5,6 +5,7 @@ import com.pond.build.model.User;
 import com.pond.build.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -60,7 +61,12 @@ public class LoginController {
     @PostMapping("/user/logout")
     public ResponseResult logout(){
         return loginService.logout();
+    }
 
+    @PostMapping("/refreshToken/{refreshToken}")
+//    @PreAuthorize("permitAll")
+    public ResponseResult refreshToken(@PathVariable("refreshToken") String refreshToken){
+        return loginService.refreshToken(refreshToken);
     }
 
 }

@@ -55,21 +55,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-
-        //Todo 为什么这里不行呢？配置了以后没有验证就提示验证失败
-//        http.formLogin()
-//                //配置认证成功处理器
-//                .successHandler(authenticationSuccessHandler)
-//                .loginPage("/user/login") // 指定自定义的登录页面
-//                //配置认证失败处理器
-//                .failureHandler(authenticationFailureHandler);
-//
-//        //配置注销成功处理器
-//        http.logout().logoutSuccessHandler(logoutSuccessHandler).logoutUrl("/user/logout");
-//
-//        //因为重写了 所以需要手动添加认证规则
-//        http.authorizeRequests().anyRequest().authenticated();
-
         http
                 //关闭csrf
                 .csrf().disable()
@@ -78,13 +63,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 // 对于登录接口 允许匿名访问
-                .antMatchers("/user/login").anonymous()
+                .antMatchers("/user/login").permitAll()
+                .antMatchers("/refreshToken/{refreshToken}").permitAll()
                 //获取字段信息的
-                .antMatchers("/allItems").anonymous()
+                .antMatchers("/allItems").permitAll()
                 // 除上面外的所有请求全部需要鉴权认证
                 .anyRequest().authenticated();
 
         //Todo 为什么这里不行呢？配置了以后没有验证就提示验证失败
+        //2023.12.13 首先分析之前的逻辑:
+        // 1.前端发json
+        // 2.后端token拦截器拦截,如果有token就验证token,从token中获取用户id,然后查权限之类的交给Spring Security管理,token无效就报错,没有token就放行，请求来到controller
+        // 3.controller将json转成User,然后调用service中的登录处理逻辑,验证成功就创建token,将token存在redis,并返回token,验证失败就抛出异常,进入到AuthenticationEntryPointImpl或者AccessDeniedHandlerImpl
+        // 如果开启表单登录,那么流程就变成:
+        // 1.这里配置的loginPage("/user/login"),Spring Security会拦截来自这个路径的表单提交请求,从中获取username和password,如果使用api工具请求,注意将Content-Type:application/x-www-form-urlencoded加上,然后使用form-data而不是json
+        // 2.和之前的逻辑一样,有token就测,没有就放行,但是验证后将进入我们自定义的验证成功处理器和验证失败处理器,并不会进入我们的controller
+        // 3.因为不会进行controller所以要将service中的逻辑全部搬到我们自定义的验证成功处理器和验证失败处理器中
+
 //                .and()
 //                .formLogin()
 //                //配置认证成功处理器

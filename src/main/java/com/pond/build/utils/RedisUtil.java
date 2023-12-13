@@ -51,6 +51,29 @@ public class RedisUtil {
     public boolean persist(String key) {
         return redisTemplate.boundValueOps(key).persist();
     }
+    /**
+     * 移除指定的key
+     */
+    public boolean removeKey(String key) {
+        // 删除指定的key
+        return redisTemplate.delete(key);
+    }
+
+    /**
+     * 加入token黑名单
+     */
+    public void tokenAddToBlack(String token) {
+        // 删除指定的key
+        this.set("Constants.TOKEN_BLACKLIST_PREFIX:" +token,"黑名单token",JwtUtil.JWT_REFRESH_TTL/1000);
+    }
+
+    /**
+     * 检查是否是黑名单token
+     */
+
+    public boolean isBlackToken(String token){
+       return redisTemplate.hasKey("Constants.TOKEN_BLACKLIST_PREFIX:" + token);
+    }
 
     //- - - - - - - - - - - - - - - - - - - - -  String类型 - - - - - - - - - - - - - - - - - - - -
 

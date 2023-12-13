@@ -29,7 +29,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         //获取token
-        String token = request.getHeader("token");
+        String token = request.getHeader("access_token");
         if (!StringUtils.hasText(token)) {
             //放行
             filterChain.doFilter(request, response);
@@ -45,10 +45,10 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             throw new RuntimeException("token非法");
         }
         //从redis中获取用户信息
-        String redisKey = "login:" + userid;
+        String redisKey = "access_token:" + userid;
         Object result = redisUtil.get(redisKey);
         if(Objects.isNull(result)){
-            throw new RuntimeException("用户未登录");
+            throw new RuntimeException("用户未登录或AccessToken过期");
         }
         LoginUser loginUser = JSONObject.parseObject(result.toString(), LoginUser.class);
         //封装Authentication对象存入SecurityContextHolder

@@ -13,10 +13,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 import com.pond.build.model.User;
@@ -26,6 +24,208 @@ class TestApplicationTests {
 
     @Autowired
     private PeopleServiceImpl peopleService;
+
+
+    @Test
+    void contextLoads() {
+
+        outTest("row_guid\n" +
+                "CREATION_DATE\n" +
+                "CREATED_BY\n" +
+                "CREATED_BY_NAME\n" +
+                "CREATED_BY_NUMBER\n" +
+                "LAST_UPDATE_DATE\n" +
+                "LAST_UPDATED_BY\n" +
+                "LAST_UPDATED_BY_NAME\n" +
+                "LAST_UPDATED_BY_NUMBER\n" +
+                "BOE_TYPE_CODE\n" +
+                "BOE_TYPE_NAME\n" +
+                "OPERATION_TYPE_CODE\n" +
+                "OPERATION_TYPE_NAME\n" +
+                "FLOW_STATUS\n" +
+                "DEPT_ID\n" +
+                "DEPT_CODE\n" +
+                "DEPT_NAME\n" +
+                "ENABLED_FLAG\n" +
+                "ATTRIBUTE1\n" +
+                "ATTRIBUTE2\n" +
+                "ATTRIBUTE3\n" +
+                "ATTRIBUTE4\n" +
+                "ATTRIBUTE5\n" +
+                "Boe_num\n" +
+                "CREATED_year\n" +
+                "employee_id\n" +
+                "employee_name\n" +
+                "employee_DEPT_ID\n" +
+                "employee_DEPT_CODE\n" +
+                "employee_DEPT_NAME\n" +
+                "Professional_post\n" +
+                "Profession_code\n" +
+                "Profession_name\n" +
+                "Main_technical_work\n" +
+                "Training_situation\n" +
+                "Publication_status\n" +
+                "Technical_director_id\n" +
+                "Technical_director_name\n" +
+                "Professional_knowledge_code\n" +
+                "Professional_knowledge_name\n" +
+                "Professional_skill_code\n" +
+                "Professional_skill_name\n" +
+                "Working_ability_code\n" +
+                "Working_ability_name\n" +
+                "Work_performance_code\n" +
+                "Work_performance_name\n" +
+                "Employee_assessment_code\n" +
+                "Employee_assessment_name\n" +
+                "design_obey_task_code\n" +
+                "design_obey_task_name\n" +
+                "design_follow_law_code\n" +
+                "design_follow_law_name\n" +
+                "design_rating_code\n" +
+                "design_rating_name\n" +
+                "project_obey_task_code\n" +
+                "project_obey_task_name\n" +
+                "project_difficulty_level_code\n" +
+                "project_difficulty_level_name\n" +
+                "annual_drawing_quantity\n" +
+                "verification_quantity\n" +
+                "review_quantity\n" +
+                "Project_overall_workload_code\n" +
+                "Project_overall_workload_name\n" +
+                "Project_workload_code\n" +
+                "Project_workload_name\n" +
+                "schedule_and_quality_code\n" +
+                "schedule_and_quality_name\n" +
+                "org_coord_ability_code\n" +
+                "org_coord_ability_name\n" +
+                "project_rating_code\n" +
+                "project_rating_name\n" +
+                "quality_complaints_code\n" +
+                "quality_complaints_name\n" +
+                "rectification_status_code\n" +
+                "rectification_status_name\n" +
+                "process_control_level_code\n" +
+                "process_control_level_name\n" +
+                "quality_awareness_code\n" +
+                "quality_awareness_name\n" +
+                "Quality_project_rating_code\n" +
+                "Quality_project_rating_name\n" +
+                "technical_training_code\n" +
+                "technical_training_name\n" +
+                "technology_promotion_code\n" +
+                "technology_promotion_name\n" +
+                "technical_rating_code\n" +
+                "technical_rating_name\n" +
+                "violation_attendance_code\n" +
+                "violation_attendance_name\n", "uid\n" +
+                "创建时间\n" +
+                "创建人id\n" +
+                "创建人name\n" +
+                "创建人code\n" +
+                "最近更新时间\n" +
+                "最近更新人id\n" +
+                "最近更新人\n" +
+                "最近更新人code\n" +
+                "单据类型-code\n" +
+                "单据类型-name\n" +
+                "业务类型-code\n" +
+                "业务类型-name\n" +
+                "流程状态\n" +
+                "登记部门id\n" +
+                "登记部门code\n" +
+                "登记部门name\n" +
+                "是否逻辑删除\n" +
+                "备用字段1\n" +
+                "备用字段2\n" +
+                "备用字段3\n" +
+                "备用字段4\n" +
+                "备用字段5\n" +
+                "单据编号\n" +
+                "年度\n" +
+                "人员id\n" +
+                "人员姓名\n" +
+                "部门id\n" +
+                "部门code\n" +
+                "部门name\n" +
+                "职称\n" +
+                "专业code\n" +
+                "专业name\n" +
+                "本年度承担的主要技术工作\n" +
+                "培训情况\n" +
+                "论文发表情况\n" +
+                "总工程师（技术负责人）\n" +
+                "总工程师（技术负责人）\n" +
+                "专业知识评审结果code\n" +
+                "专业知识评审结果\n" +
+                "专业技能评审结果code\n" +
+                "专业技能评审结果\n" +
+                "工作能力评审结果code\n" +
+                "工作能力评审结果\n" +
+                "工作业绩评审结果code\n" +
+                "工作业绩评审结果\n" +
+                "员工考核登记code\n" +
+                "员工考核登记\n" +
+                "1、服从任务安排\n" +
+                "1、服从任务安排\n" +
+                "2、遵守劳动纪律\n" +
+                "2、遵守劳动纪律\n" +
+                "考核等级\n" +
+                "考核等级\n" +
+                "1、服从任务安排\n" +
+                "1、服从任务安排\n" +
+                "2、在手及完成项目难易程度\n" +
+                "2、在手及完成项目难易程度\n" +
+                "年出图量（张）\n" +
+                "校核量（张）\n" +
+                "审核量（张）\n" +
+                "3、总体工作负荷(EPC及监理人员请填4)\n" +
+                "3、总体工作负荷(EPC及监理人员请填4)\n" +
+                "4、工作负荷（EPC及监理人员，公司全年共246工作日）\n" +
+                "4、工作负荷（EPC及监理人员，公司全年共246工作日）\n" +
+                "5、工期及质量\n" +
+                "5、工期及质量\n" +
+                "6、组织协调能力\n" +
+                "6、组织协调能力\n" +
+                "考核等级\n" +
+                "考核等级\n" +
+                "1、质量投诉\n" +
+                "1、质量投诉\n" +
+                "2、配合质量整改情况（若无质量问题则不填）\n" +
+                "2、配合质量整改情况（若无质量问题则不填）\n" +
+                "3、过程控制水平（日常工作中对管理体系文件的理解和执行情况）\n" +
+                "3、过程控制水平（日常工作中对管理体系文件的理解和执行情况）\n" +
+                "4、质量意识（质量投诉、质量检查等反馈的岗位职责履行情况）\n" +
+                "4、质量意识（质量投诉、质量检查等反馈的岗位职责履行情况）\n" +
+                "考核等级\n" +
+                "考核等级\n" +
+                "1、技术培训\n" +
+                "1、技术培训\n" +
+                "2、是否积极配合软件应用等技术推广（研发）\n" +
+                "2、是否积极配合软件应用等技术推广（研发）\n" +
+                "考核等级\n" +
+                "考核等级\n" +
+                "是否违反公司考勤等规章制度\n" +
+                "是否违反公司考勤等规章制度\n", "hr_Technical_post_assessment");
+    }
+
+    public static void outTest(String zd, String bz, String bm) {
+        String[] zdList = zd.split("\n");
+        String[] bzList = bz.split("\n");
+        StringBuffer resultSb = new StringBuffer();
+        StringBuffer temSb = new StringBuffer();
+        for (int i = 0; i < zdList.length; i++) {
+            temSb.append("exec sp_addextendedproperty 'MS_Description', N'");
+            temSb.append(bzList[i]);
+            temSb.append("', 'SCHEMA', 'dbo', 'TABLE', '");
+            temSb.append(bm);
+            temSb.append("', 'COLUMN','");
+            temSb.append(zdList[i]);
+            temSb.append("'");
+            resultSb.append(temSb + "\n" + "go" + "\n\n");
+            temSb.setLength(0);
+        }
+        System.out.println(resultSb);
+    }
 
 
     @Test
@@ -190,7 +390,7 @@ class TestApplicationTests {
     @Test
     public void fileMangerExcelToSql(){
         try {
-            FileInputStream fileInputStream = new FileInputStream("C:\\Users\\11\\Desktop\\体系文件管理导入模板.xlsx");
+            FileInputStream fileInputStream = new FileInputStream("C:\\Users\\11\\Desktop\\体系文件管理导入模板（已解密）.xlsx");
 //            sheets对象
             XSSFWorkbook sheets = new XSSFWorkbook(fileInputStream);
             //总共的工作表数量
@@ -283,5 +483,99 @@ class TestApplicationTests {
         System.out.println(temSb);
         System.out.println("go");
 
+    }
+
+
+    @Test
+    public void checkRepeatToList(){
+        String needCheck = "CmContractDS.class\n" +
+                "ICmContractDS.class\n" +
+                "CmContractCountersignInformation.class\n" +
+                "SjSystemModification.class\n" +
+                "ISjAuditDAO.class\n" +
+                "SjAuditDAO.class\n" +
+                "ISjAuditDS.class\n" +
+                "SjAuditDS.class\n" +
+                "SjAuditDetail.class\n" +
+                "SjAudit.class\n" +
+                "SjDataApply.class\n" +
+                "SjDataApplyPerformanceDetail.class\n" +
+                "IQuAnnualDS.class\n" +
+                "QuAnnualDS.class\n" +
+                "SjWebDocumentDownload.class\n" +
+                "SjHardwareReturn.class\n" +
+                "SjHardwareReturnDetail.class\n" +
+                "HrHumanResources.class\n" +
+                "SjSoftwareProblemFeedback.class\n" +
+                "CmAnnalDS.class\n" +
+                "ICmAnnalDS.class\n" +
+                "CmAnnalInput.class\n" +
+                "SjHardwareProcessing.class\n" +
+                "HrHumanResources.class\n" +
+                "HrItemBuyDetail.class\n" +
+                "HrTechnicalPostAssessment.class\n" +
+                "HrTechnicalPostAssessmentDetail.class\n" +
+                "SkReviewersEvaluation.class\n" +
+                "HrBuildDS.class\n" +
+                "IHrBuildDS.class\n" +
+                "HrProfessionWorkPlanTrainAnV.class\n" +
+                "SkEvaluationQualification.class\n" +
+                "SkEvaluationQualificationDetail.class\n" +
+                "GaMeetingDAO.class\n" +
+                "IGaMeetingDAO.class\n" +
+                "GaMeetingDS.class\n" +
+                "IGaMeetingDS.class\n" +
+                "GaMeetingRoom.class\n" +
+                "QuInternalAuditPlanSchedule.class\n" +
+                "IQuAnnualDS.class\n" +
+                "QuAnnualDS.class\n" +
+                "IPmProjectsDAO.class\n" +
+                "PmProjectsDAO.class\n" +
+                "ISkSpecificationDS.class\n" +
+                "PmProjectsDS.class\n" +
+                "SkSpecificationDS.class\n" +
+                "SkEvaluationQualificationDetailModify.class\n" +
+                "SkEvaluationQualificationModify.class\n" +
+                "QuAnnualDS.class\n" +
+                "HrTrainingApplicationDS.class\n" +
+                "IHrTrainingApplicationDS.class\n" +
+                "HrTrainingApplicationDAO.class\n" +
+                "IHrTrainingApplicationDAO.class\n" +
+                "HrTrainingApplicationDS.class\n" +
+                "IHrTrainingApplicationDS.class\n" +
+                "ISkSpecificationDAO.class\n" +
+                "SkSpecificationDAO.class\n" +
+                "ISkSpecificationDS.class\n" +
+                "SkSpecificationDS.class\n" +
+                "GaSafetyManage.class\n" +
+                "IQuAnnualDAO.class\n" +
+                "QuAnnualDAO.class\n" +
+                "QuAnnualDS.class\n" +
+                "QuInternalAuditPlanSchedule.class\n" +
+                "QuNonConformanceReport.class\n" +
+                "SkProjectNote.class\n" +
+                "OaFileRecDS.class\n" +
+                "QuSystemFileProject.class\n" +
+                "QuSystemFileRelease.class\n" +
+                "OaFileRecDS.class\n" +
+                "QuAnnualManagementPlan.class\n" +
+                "QuInternalAuditMeeting.class\n" +
+                "QuInternalAuditPlanSchedule.class\n" +
+                "QuListApproval.class\n" +
+                "QuManagementReviewInfo.class\n" +
+                "QuManagementReviewInfoSum.class\n" +
+                "QuManagementReviewMeeting.class\n" +
+                "QuManagementReviewPlan.class\n" +
+                "QuManagementReviewProblem.class\n" +
+                "QuManagementReviewSummary.class\n" +
+                "QuNonConformanceReport.class\n" +
+                "CmAnnalDS.class";
+
+        String[] split = needCheck.split("\n");
+        List<String> collect = Arrays.stream(split).distinct().sorted().collect(Collectors.toList());
+        for (String s : collect) {
+            System.out.println(s);
+        }
+//        System.out.println(collect);
     }
 }

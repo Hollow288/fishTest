@@ -16,8 +16,10 @@ import java.util.UUID;
  */
 public class JwtUtil {
 
-    //有效期为
-    public static final Long JWT_TTL = 60 * 60 *1000L;// 60 * 60 *1000  一个小时
+    //有效期为 AccessToken和RefreshToken
+    public static final Long JWT_ACCESS_TTL = 60 * 60 *1000L;// 60 * 60 * 1000  一个小时
+
+    public static final Long JWT_REFRESH_TTL = 60 * 60 * 8 *1000L;// 60 * 60 * 8 * 1000  八个小时
     //设置秘钥明文
     public static final String JWT_KEY = "qx";
 
@@ -50,7 +52,7 @@ public class JwtUtil {
 
     /**
      * 创建token jwt加密
-     * @param id
+     * @param id 可以指定的id
      * @param subject
      * @param ttlMillis
      * @return
@@ -66,7 +68,7 @@ public class JwtUtil {
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
         if(ttlMillis==null){
-            ttlMillis=JwtUtil.JWT_TTL;
+            ttlMillis=JwtUtil.JWT_ACCESS_TTL;
         }
         long expMillis = nowMillis + ttlMillis;
         Date expDate = new Date(expMillis);
@@ -121,4 +123,25 @@ public class JwtUtil {
     }
 
 
+
+    /**
+     * 验证 token 是否过期失效
+     *
+     * @param token
+     * @return true 过期 false 未过期
+     */
+    public static Boolean isTokenExpired(String token) throws Exception {
+        return getExpirationDate(token).before(new Date());
+    }
+
+    /**
+     * 获取 token 失效时间
+     *
+     * @param token
+     * @return
+     */
+    public static Date getExpirationDate(String token) throws Exception {
+        return parseJWT(token).getExpiration();
+
+    }
 }
