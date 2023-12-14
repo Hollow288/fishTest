@@ -92,6 +92,7 @@ public class LoginServiceImpl implements LoginService {
         try {
 
             //Todo 这里返回的状态码不应该和AuthenticationEntryPointImpl一样,因为这是refreshToken,如果也过期了,应该发一个让前端觉得应该返回登录界面的状态码
+            //2023.12.14 统一返回401的话,如果请求刷新token接口依然返回401,就返回到登录界面,也没什么问题
 
             //检查refreshToken是否过期
             Boolean tokenExpired = JwtUtil.isTokenExpired(refreshToken);
@@ -106,6 +107,7 @@ public class LoginServiceImpl implements LoginService {
             Claims claims = JwtUtil.parseJWT(refreshToken);
             String userid = claims.getSubject();
             //检查refreshToken是否在redis中
+            // (登出的时候，只是把两种token从redis中删除,当用户登出后,再次使用之前的AToken请求失败后,使用RToken刷新,这时候RToken既没有过期,也没有在黑名单,不就返回新的双token咯)
             if(!redisUtil.hasKey("access_token:"+ userid)){
                 return new ResponseResult(HttpStatusCode.UNAUTHORIZED.getCode(),HttpStatusCode.UNAUTHORIZED.getCnMessage());
             }
