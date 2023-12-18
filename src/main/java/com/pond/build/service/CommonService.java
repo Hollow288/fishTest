@@ -4,4 +4,6 @@ import com.pond.build.model.ResponseResult;
 
 public interface CommonService {
     ResponseResult getAllItems(String fieldName);
+
+    void doTask1();
 }

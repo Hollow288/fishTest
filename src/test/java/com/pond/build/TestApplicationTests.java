@@ -488,88 +488,22 @@ class TestApplicationTests {
 
     @Test
     public void checkRepeatToList(){
-        String needCheck = "CmContractDS.class\n" +
-                "ICmContractDS.class\n" +
-                "CmContractCountersignInformation.class\n" +
-                "SjSystemModification.class\n" +
-                "ISjAuditDAO.class\n" +
-                "SjAuditDAO.class\n" +
-                "ISjAuditDS.class\n" +
-                "SjAuditDS.class\n" +
-                "SjAuditDetail.class\n" +
-                "SjAudit.class\n" +
-                "SjDataApply.class\n" +
-                "SjDataApplyPerformanceDetail.class\n" +
-                "IQuAnnualDS.class\n" +
-                "QuAnnualDS.class\n" +
-                "SjWebDocumentDownload.class\n" +
-                "SjHardwareReturn.class\n" +
-                "SjHardwareReturnDetail.class\n" +
-                "HrHumanResources.class\n" +
-                "SjSoftwareProblemFeedback.class\n" +
-                "CmAnnalDS.class\n" +
-                "ICmAnnalDS.class\n" +
-                "CmAnnalInput.class\n" +
-                "SjHardwareProcessing.class\n" +
-                "HrHumanResources.class\n" +
-                "HrItemBuyDetail.class\n" +
-                "HrTechnicalPostAssessment.class\n" +
-                "HrTechnicalPostAssessmentDetail.class\n" +
-                "SkReviewersEvaluation.class\n" +
-                "HrBuildDS.class\n" +
-                "IHrBuildDS.class\n" +
-                "HrProfessionWorkPlanTrainAnV.class\n" +
-                "SkEvaluationQualification.class\n" +
-                "SkEvaluationQualificationDetail.class\n" +
-                "GaMeetingDAO.class\n" +
-                "IGaMeetingDAO.class\n" +
-                "GaMeetingDS.class\n" +
-                "IGaMeetingDS.class\n" +
-                "GaMeetingRoom.class\n" +
-                "QuInternalAuditPlanSchedule.class\n" +
-                "IQuAnnualDS.class\n" +
-                "QuAnnualDS.class\n" +
-                "IPmProjectsDAO.class\n" +
-                "PmProjectsDAO.class\n" +
-                "ISkSpecificationDS.class\n" +
-                "PmProjectsDS.class\n" +
-                "SkSpecificationDS.class\n" +
-                "SkEvaluationQualificationDetailModify.class\n" +
-                "SkEvaluationQualificationModify.class\n" +
-                "QuAnnualDS.class\n" +
-                "HrTrainingApplicationDS.class\n" +
-                "IHrTrainingApplicationDS.class\n" +
-                "HrTrainingApplicationDAO.class\n" +
-                "IHrTrainingApplicationDAO.class\n" +
-                "HrTrainingApplicationDS.class\n" +
-                "IHrTrainingApplicationDS.class\n" +
-                "ISkSpecificationDAO.class\n" +
-                "SkSpecificationDAO.class\n" +
-                "ISkSpecificationDS.class\n" +
-                "SkSpecificationDS.class\n" +
-                "GaSafetyManage.class\n" +
-                "IQuAnnualDAO.class\n" +
-                "QuAnnualDAO.class\n" +
-                "QuAnnualDS.class\n" +
-                "QuInternalAuditPlanSchedule.class\n" +
-                "QuNonConformanceReport.class\n" +
-                "SkProjectNote.class\n" +
-                "OaFileRecDS.class\n" +
-                "QuSystemFileProject.class\n" +
-                "QuSystemFileRelease.class\n" +
-                "OaFileRecDS.class\n" +
-                "QuAnnualManagementPlan.class\n" +
-                "QuInternalAuditMeeting.class\n" +
-                "QuInternalAuditPlanSchedule.class\n" +
-                "QuListApproval.class\n" +
-                "QuManagementReviewInfo.class\n" +
-                "QuManagementReviewInfoSum.class\n" +
-                "QuManagementReviewMeeting.class\n" +
-                "QuManagementReviewPlan.class\n" +
-                "QuManagementReviewProblem.class\n" +
-                "QuManagementReviewSummary.class\n" +
-                "QuNonConformanceReport.class\n" +
-                "CmAnnalDS.class";
+        String needCheck = "improveId\n" +
+                "fileCode\n" +
+                "fileName\n" +
+                "fileVersion\n" +
+                "mainDeptId\n" +
+                "mainDeptName\n" +
+                "existProblem\n" +
+                "updateContext\n" +
+                "fileI\n" +
+                "improveId\n" +
+                "fileCode\n" +
+                "fileName\n" +
+                "fileVersion\n" +
+                "mainDeptId\n" +
+                "mainDeptName\n" +
+                "fileId";
 
         String[] split = needCheck.split("\n");
         List<String> collect = Arrays.stream(split).distinct().sorted().collect(Collectors.toList());

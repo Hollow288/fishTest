@@ -67,6 +67,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/refreshToken/{refreshToken}").permitAll()
                 //获取字段信息的
                 .antMatchers("/allItems").permitAll()
+                //测试
+                .antMatchers("/hello").permitAll()
                 // 除上面外的所有请求全部需要鉴权认证
                 .anyRequest().authenticated();
 

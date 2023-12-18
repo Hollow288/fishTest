@@ -1,6 +1,11 @@
 package com.pond.build.controller;
 
 
+import com.pond.build.service.CommonService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +15,12 @@ import javax.swing.*;
 
 @RestController
 public class MenuTestController {
+
+    private static final Logger logger = LogManager.getLogger(Example.class);
+
+
+    @Autowired
+    private CommonService commonService;
 
 //    @PreAuthorize
 //    注解的一些常用权限表达式：
@@ -25,11 +36,16 @@ public class MenuTestController {
 
 //   如果未指定method属性，Spring MVC将处理所有请求方法，包括GET、POST、PUT、DELETE等。
     @GetMapping("/hello")
-    @PreAuthorize("hasAuthority('check')")
+//    @PreAuthorize("hasAuthority('check')")
 //    //自定义的权限功能
 //    @PreAuthorize("@ex.hasAuthority('system:dept:list')")
 //    @PreAuthorize("permitAll")
     public String hello(){
+        long t1 = System.currentTimeMillis();
+//        Thread.sleep(2000);
+        commonService.doTask1();
+        long t2 = System.currentTimeMillis();
+        logger.info("task1方法耗时 {} ms" , t2-t1);
         return "hello";
     }
 }
