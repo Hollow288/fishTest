@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.swing.*;
@@ -36,7 +35,7 @@ public class MenuTestController {
 
 //   如果未指定method属性，Spring MVC将处理所有请求方法，包括GET、POST、PUT、DELETE等。
     @GetMapping("/hello")
-//    @PreAuthorize("hasAuthority('check')")
+    @PreAuthorize("hasAuthority('check')")
 //    //自定义的权限功能
 //    @PreAuthorize("@ex.hasAuthority('system:dept:list')")
 //    @PreAuthorize("permitAll")

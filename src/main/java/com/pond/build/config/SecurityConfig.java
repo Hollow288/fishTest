@@ -5,26 +5,64 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+//import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
+/**
+ * 在 Spring Security 5.7.0-M2 中，弃用了 WebSecurityConfigurerAdapter，Spring 鼓励用户转向基于组件的安全配置。
+ * 注释掉的代码,是之前的配置
+ * 现在不继承了,都是以Bean的形式,还有就是不推荐.and()的写法了,现在使用Lambda写法
+ *
+ *
+ * 引入 starter 这类jar, SpringBoot 会 自动 动过 autoconfigure 自动来加载注入 相关的security 配置信息
+ * 这种方式 会自动加载对应的配置 ，可以不用 配置@EnableWebSecurity
+ *
+ *
+ * 直接引入 对应的包
+ * 其实对应的包就一共三个，可以自行配置， 比如spring mvc 项目 配置 之后 需要加入.
+ *     <dependency>
+ *       <groupId>org.springframework.security</groupId>
+ *       <artifactId>spring-security-config</artifactId>
+ *       <version>5.3.5.RELEASE</version>
+ *     </dependency>
+ *     <dependency>
+ *       <groupId>org.springframework.security</groupId>
+ *       <artifactId>spring-security-web</artifactId>
+ *       <version>5.3.5.RELEASE</version>
+ *     </dependency>
+ *         <dependency>
+ *       <groupId>org.springframework.security</groupId>
+ *       <artifactId>spring-security-core</artifactId>
+ *       <version>5.3.5.RELEASE</version>
+ *     </dependency>
+ *
+ *     这种方式就要配置开启 @EnableWebSecurity 不然不生效
+ */
+
+
 @Configuration
 //启用Spring Security的Web安全性功能  或者 继承 WebSecurityConfigurerAdapter
 //@EnableWebSecurity
 //开启授权注解功能
 @EnableGlobalMethodSecurity(prePostEnabled =true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
+//public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig{
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -52,25 +90,34 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private LogoutSuccessHandler logoutSuccessHandler;
 
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
                 //关闭csrf
-                .csrf().disable()
+//                .csrf().disable()
+                .csrf(AbstractHttpConfigurer::disable)
                 //不通过Session获取SecurityContext
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests()
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .sessionManagement(conf->conf.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .and()
+//                .authorizeRequests()
+                .authorizeHttpRequests(conf-> conf.requestMatchers("/user/login").permitAll()
+                        .requestMatchers("/refreshToken/{refreshToken}").permitAll()
+                        .requestMatchers("/allItems").permitAll()
+                        .requestMatchers("/hello").permitAll()
+                        .anyRequest().authenticated());
                 // 对于登录接口 允许匿名访问
-                .antMatchers("/user/login").permitAll()
-                .antMatchers("/refreshToken/{refreshToken}").permitAll()
+//                .antMatchers("/user/login").permitAll()
+//                .antMatchers("/refreshToken/{refreshToken}").permitAll()
                 //获取字段信息的
-                .antMatchers("/allItems").permitAll()
+//                .antMatchers("/allItems").permitAll()
                 //测试
-                .antMatchers("/hello").permitAll()
+//                .antMatchers("/hello").permitAll()
                 // 除上面外的所有请求全部需要鉴权认证
-                .anyRequest().authenticated();
+//                .anyRequest().authenticated();
 
         //Todo 为什么这里不行呢？配置了以后没有验证就提示验证失败
         //2023.12.13 首先分析之前的逻辑:
@@ -97,20 +144,39 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         //配置异常处理器
-        http.exceptionHandling()
+        http.exceptionHandling(
+                        //认证失败处理器
+                        exceptionHand ->
+                                exceptionHand.authenticationEntryPoint(authenticationEntryPoint)
+                                        .accessDeniedHandler(accessDeniedHandler));
                 //认证失败处理器
-                .authenticationEntryPoint(authenticationEntryPoint)
-                .accessDeniedHandler(accessDeniedHandler);
+//                .authenticationEntryPoint(authenticationEntryPoint)
+//                .accessDeniedHandler(accessDeniedHandler);
 
         //允许跨域
-        http.cors();
+//        http.cors();
+        http.cors(withDefaults());
+
+        return http.build();
     }
 
-    @Bean  //这样子就可以从容器当中获取到AuthenticationManager
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
+//    @Bean  //这样子就可以从容器当中获取到AuthenticationManager
+//    @Override
+//    public AuthenticationManager authenticationManagerBean() throws Exception {
+//        return super.authenticationManagerBean();
+//    }
+
+    /**
+     * 认证管理器，登录的时候参数会传给 authenticationManager
+     *
+     * @return
+     * @throws Exception
+     */
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
     }
+
 }
 
 

@@ -21,7 +21,7 @@ public class JwtUtil {
 
     public static final Long JWT_REFRESH_TTL = 60 * 60 * 8 *1000L;// 60 * 60 * 8 * 1000  八个小时
     //设置秘钥明文
-    public static final String JWT_KEY = "qx";
+    public static final String JWT_KEY = "thisIsFishInThePondAndWorkAndOFishInThePondAndWork";
 
     public static String getUUID(){
         String token = UUID.randomUUID().toString().replaceAll("-", "");
@@ -103,7 +103,8 @@ public class JwtUtil {
      */
     public static SecretKey generalKey() {
         byte[] encodedKey = Base64.getDecoder().decode(JwtUtil.JWT_KEY);
-        SecretKey key = new SecretKeySpec(encodedKey, 0, encodedKey.length, "AES");
+//        SecretKey key = new SecretKeySpec(encodedKey, 0, encodedKey.length, "AES");
+        SecretKey key = new SecretKeySpec(encodedKey, 0, encodedKey.length, "HmacSHA256");
         return key;
     }
 

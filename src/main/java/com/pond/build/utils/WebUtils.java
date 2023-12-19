@@ -1,6 +1,7 @@
 package com.pond.build.utils;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 
 public class WebUtils
@@ -9,10 +10,9 @@ public class WebUtils
      * 将字符串渲染到客户端
      *
      * @param response 渲染对象
-     * @param string 待渲染的字符串
-     * @return null
+     * @param string   待渲染的字符串
      */
-    public static String renderString(HttpServletResponse response, String string) {
+    public static void renderString(HttpServletResponse response, String string) {
         try
         {
             response.setStatus(200);
@@ -24,6 +24,5 @@ public class WebUtils
         {
             e.printStackTrace();
         }
-        return null;
     }
 }
