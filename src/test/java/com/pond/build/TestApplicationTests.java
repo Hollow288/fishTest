@@ -13,6 +13,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -511,5 +512,115 @@ class TestApplicationTests {
             System.out.println(s);
         }
 //        System.out.println(collect);
+    }
+
+
+    @Test
+    public void employeesAccountExcelToSql(){
+        try {
+            FileInputStream fileInputStream = new FileInputStream("C:\\Users\\11\\Desktop\\个人账户管理导入模板.xlsx");
+//            sheets对象
+            XSSFWorkbook sheets = new XSSFWorkbook(fileInputStream);
+            //总共的工作表数量
+//            int numberOfSheets = sheets.getNumberOfSheets();
+            //第一个sheet
+            XSSFSheet sheet = sheets.getSheetAt(0);
+            //总共的行数
+            int physicalNumberOfRows = sheet.getPhysicalNumberOfRows();
+            for (int i = 2; i < physicalNumberOfRows; i++) {
+                XSSFRow row = sheet.getRow(i);
+                //银行账户
+                String bankAccount = String.valueOf(row.getCell(0));
+                //银行名称
+                String bankName = String.valueOf(row.getCell(1));
+                //开户行
+                String bankAccountName = String.valueOf(row.getCell(2));
+                //手机号
+                String createdByNumber = String.valueOf(row.getCell(4));
+                //所在公司
+                String bearUnitName = String.valueOf(row.getCell(5));
+
+                this.pjEmployeesAccount(bankAccount,bankName,bankAccountName,createdByNumber,bearUnitName);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * update fv
+     * set fv.CREATED_BY = fe.EMPLOYEE_ID,
+     *     fv.CREATED_BY_NAME = fe.EMPLOYEE_NAME,
+     *     fv.LAST_UPDATE_DATE = fv.CREATION_DATE,
+     *     fv.LAST_UPDATED_BY = fe.EMPLOYEE_ID,
+     *     fv.LAST_UPDATED_BY_NUMBER = fv.CREATED_BY_NUMBER,
+     *     fv.LAST_UPDATED_BY_NAME = fe.EMPLOYEE_NAME,
+     *     fv.VENDOR_NAME = fe.EMPLOYEE_NAME,
+     *     fv.DEPT_ID = fe.DEPT_ID,
+     *     fv.DEPT_NAME = fd.DEPT_NAME,
+     *     fv.EMPLOYEE_ID = fe.EMPLOYEE_ID,
+     *     fv.EMPLOYEE_NUMBER = fv.CREATED_BY_NUMBER,
+     *     fv.EMPLOYEE_NAME = fe.EMPLOYEE_NAME,
+     *     fv.vendor_emp_Id = fe.EMPLOYEE_ID
+     * from FM_VENDOR fv
+     *             inner join FBP_EMPLOYEES fe on fv.CREATED_BY_NUMBER = fe.EMPLOYEE_NUMBER
+     *               inner join FBP_DEPT fd on fe.DEPT_ID = fd.DEPT_ID
+     *
+     */
+
+
+    public void pjEmployeesAccount(String bankAccount, String bankName, String bankAccountName, String createdByNumber, String bearUnitName){
+
+        Map<String, String> bearUnitMap = new HashMap<>();
+        bearUnitMap.put("总部合肥","HF");
+        bearUnitMap.put("总部安庆","AQ");
+        bearUnitMap.put("上海分公司","SH");
+        bearUnitMap.put("宁波分公司","NB");
+        bearUnitMap.put("天津分公司","TJ");
+        bearUnitMap.put("海南分公司","HN");
+
+        String formatted = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+//        INSERT INTO asec_deve.dbo.FM_VENDOR (CREATION_DATE, CREATED_BY_NUMBER, ENABLED_FLAG, BANK_NAME, BANK_ACCOUNT_NAME, BANK_ACCOUNT, ROW_GUID, Bear_Unit_code, Bear_Unit_name, BOE_TYPE_CODE) VALUES (N'2023-12-20 16:13:17.833', N'admin', N'Y', N'XX银行', N'XX银行XX支行', N'9558804301011XXXXXX', N'9c0be6e1-c893-4e56-b253-fb99a1364517', N'APNB', N'安评宁波分公司', N'fm_vendor_GR_AN');
+        StringBuffer temSb = new StringBuffer();
+        //insert
+        temSb.append("INSERT INTO asec_deve.dbo.FM_VENDOR (CREATION_DATE, CREATED_BY_NUMBER, ENABLED_FLAG, BANK_NAME, BANK_ACCOUNT_NAME, BANK_ACCOUNT, ROW_GUID, Bear_Unit_code, Bear_Unit_name, BOE_TYPE_CODE) VALUES (N'");
+        //CREATION_DATE
+        temSb.append(formatted);
+        //拼接
+        temSb.append("', N'");
+        //CREATED_BY_NUMBER
+        temSb.append(createdByNumber);
+        //拼接
+        temSb.append("', N'Y', N'");
+        //BANK_NAME
+        temSb.append(bankName);
+        //拼接
+        temSb.append("', N'");
+        //BANK_ACCOUNT_NAME
+        temSb.append(bankAccountName);
+        //拼接
+        temSb.append("', N'");
+        //BANK_ACCOUNT
+        temSb.append(bankAccount);
+        //拼接
+        temSb.append("', N'");
+        //uuid
+        temSb.append(UUID.randomUUID().toString());
+        //拼接
+        temSb.append("', N'");
+        //Bear_Unit_code
+        temSb.append(bearUnitMap.get(bearUnitName));
+        //拼接
+        temSb.append("', N'");
+        //Bear_Unit_name
+        temSb.append(bearUnitName);
+        //拼接
+        temSb.append("', N'fm_vendor_GR');");
+        System.out.println(temSb);
+        System.out.println();
+        System.out.println("go");
+        System.out.println();
+
     }
 }
