@@ -9,9 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -518,6 +516,9 @@ class TestApplicationTests {
     @Test
     public void employeesAccountExcelToSql(){
         try {
+
+            FileWriter file = new FileWriter("C:\\Users\\11\\Desktop\\employeesAccountExcelToSql.sql");
+
             FileInputStream fileInputStream = new FileInputStream("C:\\Users\\11\\Desktop\\个人账户管理导入模板.xlsx");
 //            sheets对象
             XSSFWorkbook sheets = new XSSFWorkbook(fileInputStream);
@@ -540,8 +541,36 @@ class TestApplicationTests {
                 //所在公司
                 String bearUnitName = String.valueOf(row.getCell(5));
 
-                this.pjEmployeesAccount(bankAccount,bankName,bankAccountName,createdByNumber,bearUnitName);
+                StringBuffer stringBuffer = this.pjEmployeesAccount(bankAccount, bankName, bankAccountName, createdByNumber, bearUnitName);
+
+                file.write(stringBuffer.toString());
+                file.write("\r\n");
+                file.write("\r\n");
+                file.write("go");
+                file.write("\r\n");
+                file.write("\r\n");
+
             }
+            file.write("update fv\r\n" +
+                    "set fv.CREATED_BY = fe.EMPLOYEE_ID,\r\n" +
+                    "    fv.CREATED_BY_NAME = fe.EMPLOYEE_NAME,\r\n" +
+                    "    fv.LAST_UPDATE_DATE = fv.CREATION_DATE,\r\n" +
+                    "    fv.LAST_UPDATED_BY = fe.EMPLOYEE_ID,\r\n" +
+                    "    fv.LAST_UPDATED_BY_NUMBER = fv.CREATED_BY_NUMBER,\r\n" +
+                    "    fv.LAST_UPDATED_BY_NAME = fe.EMPLOYEE_NAME,\r\n" +
+                    "    fv.VENDOR_NAME = fe.EMPLOYEE_NAME,\r\n" +
+                    "    fv.DEPT_ID = fe.DEPT_ID,\r\n" +
+                    "    fv.DEPT_NAME = fd.DEPT_NAME,\r\n" +
+                    "    fv.EMPLOYEE_ID = fe.EMPLOYEE_ID,\r\n" +
+                    "    fv.EMPLOYEE_NUMBER = fv.CREATED_BY_NUMBER,\r\n" +
+                    "    fv.EMPLOYEE_NAME = fe.EMPLOYEE_NAME,\r\n" +
+                    "    fv.vendor_emp_Id = fe.EMPLOYEE_ID\r\n" +
+                    "from FM_VENDOR fv\r\n" +
+                    "            inner join FBP_EMPLOYEES fe on fv.CREATED_BY_NUMBER = fe.EMPLOYEE_NUMBER\r\n" +
+                    "              inner join FBP_DEPT fd on fe.DEPT_ID = fd.DEPT_ID;\r\n");
+            file.write("\r\n");
+            file.write("go");
+            file.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -569,7 +598,7 @@ class TestApplicationTests {
      */
 
 
-    public void pjEmployeesAccount(String bankAccount, String bankName, String bankAccountName, String createdByNumber, String bearUnitName){
+    public StringBuffer pjEmployeesAccount(String bankAccount, String bankName, String bankAccountName, String createdByNumber, String bearUnitName){
 
         Map<String, String> bearUnitMap = new HashMap<>();
         bearUnitMap.put("总部合肥","HF");
@@ -584,7 +613,7 @@ class TestApplicationTests {
 //        INSERT INTO asec_deve.dbo.FM_VENDOR (CREATION_DATE, CREATED_BY_NUMBER, ENABLED_FLAG, BANK_NAME, BANK_ACCOUNT_NAME, BANK_ACCOUNT, ROW_GUID, Bear_Unit_code, Bear_Unit_name, BOE_TYPE_CODE) VALUES (N'2023-12-20 16:13:17.833', N'admin', N'Y', N'XX银行', N'XX银行XX支行', N'9558804301011XXXXXX', N'9c0be6e1-c893-4e56-b253-fb99a1364517', N'APNB', N'安评宁波分公司', N'fm_vendor_GR_AN');
         StringBuffer temSb = new StringBuffer();
         //insert
-        temSb.append("INSERT INTO asec_deve.dbo.FM_VENDOR (CREATION_DATE, CREATED_BY_NUMBER, ENABLED_FLAG, BANK_NAME, BANK_ACCOUNT_NAME, BANK_ACCOUNT, ROW_GUID, Bear_Unit_code, Bear_Unit_name, BOE_TYPE_CODE) VALUES (N'");
+        temSb.append("INSERT INTO FM_VENDOR (CREATION_DATE, CREATED_BY_NUMBER, ENABLED_FLAG, BANK_NAME, BANK_ACCOUNT_NAME, BANK_ACCOUNT, ROW_GUID, Bear_Unit_code, Bear_Unit_name, BOE_TYPE_CODE) VALUES (N'");
         //CREATION_DATE
         temSb.append(formatted);
         //拼接
@@ -617,10 +646,11 @@ class TestApplicationTests {
         temSb.append(bearUnitName);
         //拼接
         temSb.append("', N'fm_vendor_GR');");
-        System.out.println(temSb);
-        System.out.println();
-        System.out.println("go");
-        System.out.println();
+//        System.out.println(temSb);
+//        System.out.println();
+//        System.out.println("go");
+//        System.out.println();
+        return temSb;
 
     }
 }
