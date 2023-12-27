@@ -137,5 +137,16 @@ public class LoginServiceImpl implements LoginService {
 
     }
 
+    //获取当前在线人数
+    @Override
+    public ResponseResult getOnlineNum() {
+        //Todo 如果键的数量特别大，直接使用keys命令可能会导致性能问题，因为它需要遍历整个键空间。在这种情况下，可以考虑使用更为高效的方式来统计以特定前缀开头的键的数量。
+        long numSpecificAboutKey = redisUtil.getNumSpecificAboutKey("access_token:");
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("onlineNum",numSpecificAboutKey);
+
+        return new ResponseResult<>(HttpStatusCode.OK.getCode(),HttpStatusCode.OK.getCnMessage(),resultMap);
+    }
+
 
 }

@@ -5,10 +5,7 @@ import com.pond.build.model.User;
 import com.pond.build.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class LoginController {
@@ -67,6 +64,11 @@ public class LoginController {
 //    @PreAuthorize("permitAll")
     public ResponseResult refreshToken(@PathVariable("refreshToken") String refreshToken){
         return loginService.refreshToken(refreshToken);
+    }
+
+    @GetMapping("/onlineNum")
+    public ResponseResult getOnlineNum(){
+        return loginService.getOnlineNum();
     }
 
 }

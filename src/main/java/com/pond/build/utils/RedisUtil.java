@@ -2,6 +2,8 @@ package com.pond.build.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ScanOptions;
+import org.springframework.data.redis.core.Cursor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -73,6 +75,19 @@ public class RedisUtil {
 
     public boolean isBlackToken(String token){
        return redisTemplate.hasKey("Constants.TOKEN_BLACKLIST_PREFIX:" + token);
+    }
+
+    /**
+     * 获取特定前缀key的数量
+     */
+    public long getNumSpecificAboutKey(String prefix){
+
+        Set<String> keys = redisTemplate.keys(prefix + "*");
+        if (keys != null) {
+            return keys.size();
+        } else {
+            return 0;
+        }
     }
 
     //- - - - - - - - - - - - - - - - - - - - -  String类型 - - - - - - - - - - - - - - - - - - - -

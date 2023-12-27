@@ -10,4 +10,5 @@ public interface LoginService {
 
     ResponseResult refreshToken(String refreshToken);
 
+    ResponseResult getOnlineNum();
 }

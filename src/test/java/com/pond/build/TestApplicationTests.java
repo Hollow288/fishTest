@@ -358,7 +358,7 @@ class TestApplicationTests {
 
 
     //INSERT INTO QU_System_file (row_guid,BOE_TYPE_CODE, BOE_TYPE_NAME, OPERATION_TYPE_CODE, OPERATION_TYPE_NAME, FLOW_STATUS, DEPT_ID, DEPT_NAME, ENABLED_FLAG, File_code, File_name, File_version, Main_dept_id, Main_dept_name, modify_type_code, modify_type_name, Release_date, File_state, Implement_date) VALUES (N'01005817-5cc3-4719-afc3-d389f7cd1472', N'QU_System_file', N'体系文件管理', N'QU_System_file', N'体系文件管理', N'正常完成', 4, N'市场部', N'Y', 5, N'文件编号', N'文件名称文件名称2', N'文件版次2', 6, N'技术部', N'02', N'修订', N'2023-12-04', N'正常运行', N'2023-12-04');
-    @Test
+//    @Test
     public Map<String, String> deptNameExcelToSql(){
         try {
             Map<String, String> deptMap = new HashMap<>();
