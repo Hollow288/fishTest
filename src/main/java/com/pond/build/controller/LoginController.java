@@ -50,7 +50,7 @@ public class LoginController {
 
      */
     @PostMapping("/user/login")
-    @PreAuthorize("permitAll")
+//    @PreAuthorize("permitAll")
     public ResponseResult login(@RequestBody User user){
         return loginService.login(user);
     }
@@ -60,9 +60,9 @@ public class LoginController {
         return loginService.logout();
     }
 
-    @PostMapping("/refreshToken/{refreshToken}")
+    @PostMapping("/user/refresh")
 //    @PreAuthorize("permitAll")
-    public ResponseResult refreshToken(@PathVariable("refreshToken") String refreshToken){
+    public ResponseResult refreshToken(@RequestParam("token") String refreshToken){
         return loginService.refreshToken(refreshToken);
     }
 

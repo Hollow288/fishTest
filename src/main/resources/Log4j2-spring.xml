@@ -109,8 +109,8 @@
             <AppenderRef ref="Console" />
         </Logger>
 
-        <root level="info">
-<!--        <root level="trace">-->
+<!--        <root level="info">-->
+        <root level="trace">
             <appender-ref ref="Console" />
             <appender-ref ref="Filelog" />
             <appender-ref ref="RollingFileInfo" />

@@ -1,13 +1,15 @@
 spring:
   datasource:
     username: root
-#    password: root
-    password: 71789
+    password: root
+#    password: 71789
 #    allowMultiQueries=true  支持批处理
     url: jdbc:mysql://localhost:3306/fishdb?allowMultiQueries=true
     driver-class-name: com.mysql.cj.jdbc.Driver
 server:
   port: 8999
+  servlet:
+    context-path: /fish-api
 
 redis:
   #数据库索引
@@ -42,3 +44,4 @@ logging:
 
 pond:
   name: fish
+  prefix: Bearer

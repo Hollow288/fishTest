@@ -61,7 +61,9 @@ public enum HttpStatusCode {
     LOOP_DETECTED(508, "Loop Detected", "服务器处理请求时发现死循环"),
     BANDWIDTH_LIMIT_EXCEEDED(509, "Bandwidth Limit Exceeded", "服务器达到带宽限制"),
     NOT_EXTENDED(510, "Not Extended", "获取资源所需的策略没有被满足"),
-    NETWORK_AUTHENTICATION_REQUIRED(511, "Network Authentication Required", "需要进行网络授权");
+    NETWORK_AUTHENTICATION_REQUIRED(511, "Network Authentication Required", "需要进行网络授权"),
+    USERNAME_PASSWORD_ERR(39999, "Incorrect Username Or Password", "用户名或者密码错误"),
+    REFRESH_TOKEN_ERR(40001, "REFRESH TOKEN ERR", "获取刷新token时错误");
 
     // 错误码
     private final Integer code;

@@ -2,6 +2,7 @@ package com.pond.build;
 
 import com.pond.build.mapper.UserMapper;
 import com.pond.build.service.impl.PeopleServiceImpl;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -517,6 +518,8 @@ class TestApplicationTests {
     public void employeesAccountExcelToSql(){
         try {
 
+            DataFormatter dataFormatter = new DataFormatter();
+
             FileWriter file = new FileWriter("C:\\Users\\11\\Desktop\\employeesAccountExcelToSql.sql");
 
             FileInputStream fileInputStream = new FileInputStream("C:\\Users\\11\\Desktop\\个人账户管理导入模板.xlsx");
@@ -531,15 +534,21 @@ class TestApplicationTests {
             for (int i = 2; i < physicalNumberOfRows; i++) {
                 XSSFRow row = sheet.getRow(i);
                 //银行账户
-                String bankAccount = String.valueOf(row.getCell(0));
+                String bankAccount = dataFormatter.formatCellValue(row.getCell(0));
                 //银行名称
                 String bankName = String.valueOf(row.getCell(1));
                 //开户行
                 String bankAccountName = String.valueOf(row.getCell(2));
                 //手机号
-                String createdByNumber = String.valueOf(row.getCell(4));
+                String createdByNumber = dataFormatter.formatCellValue(row.getCell(4));
                 //所在公司
-                String bearUnitName = String.valueOf(row.getCell(5));
+                String bearUnitName = dataFormatter.formatCellValue(row.getCell(5));
+                //转
+                if(bearUnitName.equals("合肥") || bearUnitName.equals("安庆")){
+                    bearUnitName = "总部" + bearUnitName;
+                }else{
+                    bearUnitName = bearUnitName + "分公司";
+                }
 
                 StringBuffer stringBuffer = this.pjEmployeesAccount(bankAccount, bankName, bankAccountName, createdByNumber, bearUnitName);
 

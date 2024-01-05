@@ -14,10 +14,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -38,11 +40,17 @@ public class LoginServiceImpl implements LoginService {
         UsernamePasswordAuthenticationToken authenticationToken=new UsernamePasswordAuthenticationToken(user.getUserName(),user.getPassWord());
 
         //AuthenticationManager委托机制对authenticationToken 进行用户认证
-        Authentication authenticate = authenticationManager.authenticate(authenticationToken);
+        Authentication authenticate = null;
+        try {
+            authenticate = authenticationManager.authenticate(authenticationToken);
+        } catch (AuthenticationException e) {
+            return new ResponseResult(HttpStatusCode.USERNAME_PASSWORD_ERR.getCode(),HttpStatusCode.USERNAME_PASSWORD_ERR.getCnMessage());
+        }
 
         //如果认证没有通过，给出对应的提示
         if (Objects.isNull(authenticate)){
-            throw new RuntimeException("登录失败");
+//            throw new RuntimeException("登录失败");
+            return new ResponseResult(HttpStatusCode.USERNAME_PASSWORD_ERR.getCode(),HttpStatusCode.USERNAME_PASSWORD_ERR.getCnMessage());
         }
 
         //如果认证通过，使用user生成jwt  jwt存入ResponseResult 返回
@@ -57,11 +65,19 @@ public class LoginServiceImpl implements LoginService {
         String accessToken = JwtUtil.createJWT(userid, JwtUtil.JWT_ACCESS_TTL);
         String refreshToken = JwtUtil.createJWT(userid, JwtUtil.JWT_REFRESH_TTL);
 
-        Map<String, String> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         map.put("access_token",accessToken);
         map.put("refresh_token",refreshToken);
 
-        //把完整的用户信息存入redis  userid为key   用户信息为value
+        //前端需要的用户个人信息
+        User userInfo = loginUser.getUser();
+        List<String> permissions = loginUser.getPermissions();
+        Map<String, Object> userInfoMap = this.putUserInfoToMap(userInfo.getId(), userInfo.getUserName(),
+                userInfo.getNickName(), userInfo.getEmail(), userInfo.getAvatar(), userInfo.getPhoneNumber(), userInfo.getSex(), userInfo.getStatus(), permissions);
+
+        map.put("user",JSONObject.toJSONString(userInfoMap));
+
+        //把完整的用户信息存入redis  userid为key   用户信息为value 好像只有权限信息
 //        redisUtil.set("login:"+userid, JSONObject.toJSONString(loginUser),3600);
 
         redisUtil.set("access_token:"+ userid,JSONObject.toJSONString(loginUser),JwtUtil.JWT_ACCESS_TTL/1000);
@@ -97,19 +113,19 @@ public class LoginServiceImpl implements LoginService {
             //检查refreshToken是否过期
             Boolean tokenExpired = JwtUtil.isTokenExpired(refreshToken);
             if(tokenExpired){
-                return new ResponseResult(HttpStatusCode.UNAUTHORIZED.getCode(),HttpStatusCode.UNAUTHORIZED.getCnMessage());
+                return new ResponseResult(HttpStatusCode.REFRESH_TOKEN_ERR.getCode(),HttpStatusCode.REFRESH_TOKEN_ERR.getCnMessage());
             }
             //检查refreshToken是否在黑名单
             if(redisUtil.isBlackToken(refreshToken)){
-                return new ResponseResult(HttpStatusCode.UNAUTHORIZED.getCode(),HttpStatusCode.UNAUTHORIZED.getCnMessage());
+                return new ResponseResult(HttpStatusCode.REFRESH_TOKEN_ERR.getCode(),HttpStatusCode.REFRESH_TOKEN_ERR.getCnMessage());
             }
 
             Claims claims = JwtUtil.parseJWT(refreshToken);
             String userid = claims.getSubject();
             //检查refreshToken是否在redis中
             // (登出的时候，只是把两种token从redis中删除,当用户登出后,再次使用之前的AToken请求失败后,使用RToken刷新,这时候RToken既没有过期,也没有在黑名单,不就返回新的双token咯)
-            if(!redisUtil.hasKey("access_token:"+ userid)){
-                return new ResponseResult(HttpStatusCode.UNAUTHORIZED.getCode(),HttpStatusCode.UNAUTHORIZED.getCnMessage());
+            if(!redisUtil.hasKey("refresh_token:"+ userid)){
+                return new ResponseResult(HttpStatusCode.REFRESH_TOKEN_ERR.getCode(),HttpStatusCode.REFRESH_TOKEN_ERR.getCnMessage(),null);
             }
 
             Object userInfo = redisUtil.get("refresh_token:" + userid);
@@ -132,7 +148,7 @@ public class LoginServiceImpl implements LoginService {
         } catch (Exception e) {
             e.printStackTrace();
 //            throw new RuntimeException(e);
-            return new ResponseResult(HttpStatusCode.UNAUTHORIZED.getCode(),HttpStatusCode.UNAUTHORIZED.getCnMessage());
+            return new ResponseResult(HttpStatusCode.REFRESH_TOKEN_ERR.getCode(),HttpStatusCode.REFRESH_TOKEN_ERR.getCnMessage());
         }
 
     }
@@ -146,6 +162,31 @@ public class LoginServiceImpl implements LoginService {
         resultMap.put("onlineNum",numSpecificAboutKey);
 
         return new ResponseResult<>(HttpStatusCode.OK.getCode(),HttpStatusCode.OK.getCnMessage(),resultMap);
+    }
+
+
+    //返回给前端的用户信息
+    public Map<String,Object> putUserInfoToMap(Long id, String userName, String nickName, String email, String avatar, String phoneNumber, String sex, String status, List<String> roles){
+        Map<String, Object> userInfoMap = new HashMap<>();
+        userInfoMap.put("id", id);
+        userInfoMap.put("username", userName);
+        userInfoMap.put("email", email);
+        userInfoMap.put("phoneNumber", phoneNumber);
+        userInfoMap.put("nickName", nickName);
+        userInfoMap.put("avatarUrl", avatar);
+        userInfoMap.put("gender", sex);
+        if(Objects.equals(sex,"0")){
+            userInfoMap.put("genderLabel", "女");
+        }else {
+            userInfoMap.put("genderLabel", "男");
+        }
+        if(Objects.equals(status,"0")){
+            userInfoMap.put("enabled", true);
+        }else {
+            userInfoMap.put("enabled", false);
+        }
+        userInfoMap.put("roles", roles);
+        return  userInfoMap;
     }
 
 

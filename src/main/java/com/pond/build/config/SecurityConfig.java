@@ -105,7 +105,7 @@ public class SecurityConfig{
 //                .and()
 //                .authorizeRequests()
                 .authorizeHttpRequests(conf-> conf.requestMatchers("/user/login").permitAll()
-                        .requestMatchers("/refreshToken/{refreshToken}").permitAll()
+                        .requestMatchers("/user/refresh").permitAll()
                         .requestMatchers("/allItems").permitAll()
                         .requestMatchers("/hello").permitAll()
                         .anyRequest().authenticated());
@@ -144,11 +144,11 @@ public class SecurityConfig{
         http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         //配置异常处理器
-        http.exceptionHandling(
-                        //认证失败处理器
-                        exceptionHand ->
-                                exceptionHand.authenticationEntryPoint(authenticationEntryPoint)
-                                        .accessDeniedHandler(accessDeniedHandler));
+//        http.exceptionHandling(
+//                        //认证失败处理器
+//                        exceptionHand ->
+//                                exceptionHand.authenticationEntryPoint(authenticationEntryPoint)
+//                                        .accessDeniedHandler(accessDeniedHandler));
                 //认证失败处理器
 //                .authenticationEntryPoint(authenticationEntryPoint)
 //                .accessDeniedHandler(accessDeniedHandler);

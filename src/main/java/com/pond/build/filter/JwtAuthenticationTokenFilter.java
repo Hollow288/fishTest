@@ -1,7 +1,9 @@
 package com.pond.build.filter;
 
 import com.alibaba.fastjson.JSONObject;
+import com.pond.build.enums.HttpStatusCode;
 import com.pond.build.model.LoginUser;
+import com.pond.build.model.ResponseResult;
 import com.pond.build.model.Student;
 import com.pond.build.utils.JwtUtil;
 import com.pond.build.utils.RedisUtil;
@@ -13,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -29,13 +32,33 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     @Autowired
     private RedisUtil redisUtil;
 
+    @Value("${server.servlet.context-path}")
+    private String contextPath;
+
+    @Value("${pond.prefix}")
+    private String tokenPrefix;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        //获取token
-        String token = request.getHeader("access_token");
-        if (!StringUtils.hasText(token)) {
+
+        //只有登录接口和刷新token接口放行
+        String requestURI = request.getRequestURI();
+
+        if(requestURI.equals(contextPath + "/user/login") && "POST".equalsIgnoreCase(request.getMethod()) ||
+                requestURI.equals(contextPath + "/user/refresh") && "POST".equalsIgnoreCase(request.getMethod())){
             //放行
             filterChain.doFilter(request, response);
+            return;
+        }
+
+        //获取token
+        String token = request.getHeader("Authorization").substring(tokenPrefix.length() + 1);
+        if (!StringUtils.hasText(token)) {
+            //放行
+//            filterChain.doFilter(request, response);
+//            return;
+//            throw new RuntimeException("未检测到token");
+            this.returnTokenError(response);
             return;
         }
         //解析token
@@ -45,13 +68,17 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             userid = claims.getSubject();
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("token非法");
+//            throw new RuntimeException("token非法");
+            this.returnTokenError(response);
+            return;
         }
         //从redis中获取用户信息
         String redisKey = "access_token:" + userid;
         Object result = redisUtil.get(redisKey);
         if(Objects.isNull(result)){
-            throw new RuntimeException("用户未登录或AccessToken过期");
+//            throw new RuntimeException("用户未登录或AccessToken过期");
+            this.returnTokenError(response);
+            return;
         }
         LoginUser loginUser = JSONObject.parseObject(result.toString(), LoginUser.class);
         //封装Authentication对象存入SecurityContextHolder
@@ -66,6 +93,12 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         //放行
         filterChain.doFilter(request, response);
+    }
+
+
+    public void  returnTokenError(HttpServletResponse response) throws IOException {
+        ResponseResult result = new ResponseResult(HttpStatusCode.UNAUTHORIZED.getCode(), HttpStatusCode.UNAUTHORIZED.getCnMessage());
+        response.getWriter().write(JSONObject.toJSONString(result));
     }
 }
 
