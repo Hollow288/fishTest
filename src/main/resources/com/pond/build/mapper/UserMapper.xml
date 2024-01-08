@@ -7,7 +7,7 @@
         <id column="id" property="id" />
         <result column="user_name" property="userName" />
         <result column="nick_name" property="nickName" />
-        <result column="password" property="passWord" />
+        <result column="pass_word" property="passWord" />
         <result column="status" property="status" />
         <result column="email" property="email" />
         <result column="phone_number" property="phoneNumber" />

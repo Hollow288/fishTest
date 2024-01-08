@@ -169,7 +169,7 @@ public class LoginServiceImpl implements LoginService {
     public Map<String,Object> putUserInfoToMap(Long id, String userName, String nickName, String email, String avatar, String phoneNumber, String sex, String status, List<String> roles){
         Map<String, Object> userInfoMap = new HashMap<>();
         userInfoMap.put("id", id);
-        userInfoMap.put("username", userName);
+        userInfoMap.put("userName", userName);
         userInfoMap.put("email", email);
         userInfoMap.put("phoneNumber", phoneNumber);
         userInfoMap.put("nickName", nickName);
