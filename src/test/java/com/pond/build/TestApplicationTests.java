@@ -11,7 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -24,6 +28,56 @@ class TestApplicationTests {
 
     @Autowired
     private PeopleServiceImpl peopleService;
+
+
+    //Java 8 中的 java.time 包是一个全新的日期和时间 API，被设计来纠正之前 Date 和 Calendar API 中存在的多个问题
+    @Test
+    void testDate() {
+        LocalDate date = LocalDate.now(); // 获取今天的日期
+        System.out.println(date);//2023-10-12
+
+        LocalTime time = LocalTime.now(); // 获取今天的时间
+        System.out.println(time);//15:38:02.758
+
+        LocalDateTime dateTime = LocalDateTime.now(); // 获取今天的日期时间
+        System.out.println(dateTime);//2023-10-12T15:39:04.109
+
+        LocalDate specificDate = LocalDate.of(2023, Month.JANUARY, 1); // 创建一个特定的日期
+        System.out.println(specificDate);//2023-01-01
+
+        LocalDateTime specificDateTime = LocalDateTime.of(2023, Month.JANUARY, 1,16,30,45); // 创建一个特定的日期
+        System.out.println(specificDateTime);//2023-01-01T16:30:45
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formatted = specificDateTime.format(formatter);
+        System.out.println(formatted); // 输出: 2023-01-01 16:30
+
+        //SimpleDateFormat 属于 java.text 包，并且主要与 java.util.Date 类进行交互
+        // 线程不安全，多线程使用单个实例会出现问题
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date dateNew = new Date();
+        String simpleDate = simpleDateFormat.format(dateNew);
+        System.out.println(simpleDate);//2023-10-12 15:31:19
+
+
+        //操作
+
+//        加/减天数:
+        LocalDate tomorrow = date.plusDays(1);
+        LocalDate yesterday = date.minusDays(1);
+
+//        加/减周数:
+        LocalDate nextWeek = date.plusWeeks(1);
+        LocalDate lastWeek = date.minusWeeks(1);
+
+//        加/减月数:
+        LocalDate nextMonth = date.plusMonths(1);
+        LocalDate lastMonth = date.minusMonths(1);
+
+//        加/减年数:
+        LocalDate nextYear = date.plusYears(1);
+        LocalDate lastYear = date.minusYears(1);
+    }
 
 
     @Test

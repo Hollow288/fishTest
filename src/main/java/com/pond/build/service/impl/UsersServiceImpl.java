@@ -59,7 +59,8 @@ public class UsersServiceImpl implements UsersService {
         resultMap.put("data",users);
         resultMap.put("page",page);
         resultMap.put("pageSize",pageSize);
-        resultMap.put("total",users.size());
+        Integer usersCountByPage = usersMapper.getUsersCountByPage(searchText, startDate, endDate);
+        resultMap.put("total",usersCountByPage);
         return new ResponseResult(HttpStatusCode.OK.getCode(),"获取成功",resultMap);
     }
 }

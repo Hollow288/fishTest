@@ -31,4 +31,24 @@
         LIMIT #{offset}, #{limit}
     </select>
 
+    <select id="getUsersCountByPage" resultType="java.lang.Integer">
+        SELECT count(id) FROM sys_user
+        <where>
+            <!-- 模糊搜索条件 -->
+            <if test="searchText != null and searchText != ''">
+                AND (nick_name LIKE CONCAT('%', #{searchText}, '%') OR email LIKE CONCAT('%', #{searchText}, '%'))
+            </if>
+
+            <!-- 开始时间条件 -->
+            <if test="startDate != null">
+                AND create_time <![CDATA[>=]]> #{startDate}
+            </if>
+
+            <!-- 结束时间条件 -->
+            <if test="endDate != null">
+                AND create_time <![CDATA[<=]]> #{endDate}
+            </if>
+        </where>
+    </select>
+
 </mapper>

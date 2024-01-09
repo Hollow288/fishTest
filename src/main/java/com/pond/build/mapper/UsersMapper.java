@@ -15,4 +15,6 @@ import java.util.List;
 public interface UsersMapper  extends BaseMapper<User> {
     List<User> getUsersByPage(@Param("searchText") String searchText, @Param("startDate") Date startDate, @Param("endDate") Date endDate,
                               @Param("offset") Integer offset, @Param("limit") Integer limit, @Param("sort") String sort, @Param("order") String order);
+
+    Integer getUsersCountByPage(@Param("searchText") String searchText, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
 }
