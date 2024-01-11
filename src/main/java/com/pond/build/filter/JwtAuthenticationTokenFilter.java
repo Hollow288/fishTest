@@ -97,7 +97,10 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
 
     public void  returnTokenError(HttpServletResponse response) throws IOException {
-        ResponseResult result = new ResponseResult(HttpStatusCode.UNAUTHORIZED.getCode(), HttpStatusCode.UNAUTHORIZED.getCnMessage());
+        ResponseResult result = new ResponseResult(HttpStatusCode.UNAUTHORIZED.getCode(), HttpStatusCode.UNAUTHORIZED.getCnMessage(),null);
+        response.setStatus(200);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("utf-8");
         response.getWriter().write(JSONObject.toJSONString(result));
     }
 }
