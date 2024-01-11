@@ -6,9 +6,7 @@ import com.pond.build.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
@@ -33,5 +31,33 @@ public class UsersController {
                                          @RequestParam(value = "sort", defaultValue = "") String sort,
                                          @RequestParam(value = "order", defaultValue = "asc") String order){
         return usersService.getUsersByPage(page, pageSize, searchText, startDate, endDate, sort, order);
+    }
+
+//    http://localhost:5173/user/123
+//    @GetMapping("/user/{id}")
+//    public String getUserById(@PathVariable("id") Long userId) {
+//        return "获取用户ID为" + userId + "的信息";
+//    }
+
+//    http://localhost:5173/user?name=John
+//    @GetMapping("/user")
+//    public String getUserByName(@RequestParam("name") String userName) {
+//        return "获取用户名为" + userName + "的信息";
+//    }
+
+
+
+
+    @PostMapping("/users/{id}/enable")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult setUserEnable(@PathVariable("id") Integer id){
+        return usersService.setUserEnable(id);
+    }
+
+
+    @PostMapping("/users/{id}/disable")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult setUserDisable(@PathVariable("id") Integer id){
+        return usersService.setUserDisable(id);
     }
 }

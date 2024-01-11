@@ -9,4 +9,8 @@ public interface UsersService {
     ResponseResult getMeInfo();
 
     ResponseResult getUsersByPage(Integer page, Integer pageSize, String searchText, Date startDate, Date endDate, String sort, String order);
+
+    ResponseResult setUserEnable(Integer id);
+
+    ResponseResult setUserDisable(Integer id);
 }

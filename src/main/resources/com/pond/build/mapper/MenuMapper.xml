@@ -15,4 +15,14 @@
           and m.status = 0
 
     </select>
+
+    <select id="selectRolesByUserId" resultType="java.lang.String">
+
+        select distinct sr.role_key
+        from sys_user_role sur
+                 left join sys_role sr on sur.user_id = sr.id
+        where sur.user_id = #{userid}
+          and sr.status = 0
+
+    </select>
 </mapper>

@@ -1,5 +1,7 @@
 package com.pond.build.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pond.build.enums.HttpStatusCode;
 import com.pond.build.mapper.UsersMapper;
@@ -62,5 +64,48 @@ public class UsersServiceImpl implements UsersService {
         Integer usersCountByPage = usersMapper.getUsersCountByPage(searchText, startDate, endDate);
         resultMap.put("total",usersCountByPage);
         return new ResponseResult(HttpStatusCode.OK.getCode(),"获取成功",resultMap);
+    }
+
+    @Override
+    public ResponseResult setUserEnable(Integer id) {
+        // 创建更新对象
+        UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
+        // 设置更新条件，假设id为传入的参数
+        updateWrapper.eq("id", id);
+        // 设置要更新的字段和值
+        updateWrapper.set("status", "0");
+
+        // 执行更新操作
+        boolean updateResult = usersMapper.update(null, updateWrapper) > 0;
+
+        if (updateResult) {
+            // 更新成功的处理逻辑
+            return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
+        } else {
+            // 更新失败的处理逻辑
+            return new ResponseResult(HttpStatusCode.REQUEST_SERVER_ERROR.getCode(),HttpStatusCode.REQUEST_SERVER_ERROR.getCnMessage());
+        }
+    }
+
+
+    @Override
+    public ResponseResult setUserDisable(Integer id) {
+        // 创建更新对象
+        UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
+        // 设置更新条件，假设id为传入的参数
+        updateWrapper.eq("id", id);
+        // 设置要更新的字段和值
+        updateWrapper.set("status", "1");
+
+        // 执行更新操作
+        boolean updateResult = usersMapper.update(null, updateWrapper) > 0;
+
+        if (updateResult) {
+            // 更新成功的处理逻辑
+            return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
+        } else {
+            // 更新失败的处理逻辑
+            return new ResponseResult(HttpStatusCode.REQUEST_SERVER_ERROR.getCode(),HttpStatusCode.REQUEST_SERVER_ERROR.getCnMessage());
+        }
     }
 }
