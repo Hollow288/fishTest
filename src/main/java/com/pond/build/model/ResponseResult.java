@@ -1,5 +1,10 @@
 package com.pond.build.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class ResponseResult<T> {
     /**
      * 状态码

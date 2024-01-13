@@ -97,7 +97,9 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
 
     public void  returnTokenError(HttpServletResponse response) throws IOException {
-        ResponseResult result = new ResponseResult(HttpStatusCode.UNAUTHORIZED.getCode(), HttpStatusCode.UNAUTHORIZED.getCnMessage(),null);
+        ResponseResult result = new ResponseResult(HttpStatusCode.UNAUTHORIZED.getCode(), HttpStatusCode.UNAUTHORIZED.getCnMessage());
+        // Todo 这里没有弄明白,为什么这里不给data赋值,返回给前端的响应体就是 {}
+        result.setData(new JSONObject());  // 设置为空的 JSONObject
         response.setStatus(200);
         response.setContentType("application/json");
         response.setCharacterEncoding("utf-8");
