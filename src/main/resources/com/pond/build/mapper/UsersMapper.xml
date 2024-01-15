@@ -25,8 +25,11 @@
         <result property="address" column="address" jdbcType="VARCHAR"/>
         <result property="briefIntroduction" column="brief_introduction" jdbcType="VARCHAR"/>
 <!--        <collection property="roles" ofType="com.pond.build.model.SysRole" resultMap="SysRoleMap"/>-->
-        <collection property="roles" ofType="java.lang.String" column="role_name">
-            <result column="role"/>
+<!--        <collection property="roles" ofType="java.lang.String" column="role_name">-->
+<!--            <result column="role"/>-->
+<!--        </collection>-->
+        <collection property="roles" ofType="java.lang.String" column="user_id"
+                select="com.pond.build.mapper.UsersMapper.findRoleById">
         </collection>
     </resultMap>
 
@@ -44,11 +47,13 @@
         <result property="remark" column="remark" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <select id="findRoleById" resultType="java.lang.String">
+        select sr.role_name from sys_role sr left join sys_user_role sur on  sur.role_id = sr.role_id where sur.user_id = #{userId}
+    </select>
+
 
     <select id="getUsersByPage" resultMap="userWithRolesResultMap">
-        SELECT  su.*,sr.role_name as role FROM sys_user su
-            left join sys_user_role sur on su.user_id = sur.user_id
-            left join sys_role sr on sur.role_id = sr.role_id
+        SELECT * FROM sys_user
             <where>
                 <!-- 模糊搜索条件 -->
                 <if test="searchText != null and searchText != ''">

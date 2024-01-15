@@ -14,6 +14,9 @@ import java.util.List;
 @Mapper
 @Repository
 public interface UsersMapper  extends BaseMapper<User> {
+
+    String findRoleById(@Param("userId")Integer userId);
+
     List<UserResponse> getUsersByPage(@Param("searchText") String searchText, @Param("startDate") Date startDate, @Param("endDate") Date endDate,
                                       @Param("offset") Integer offset, @Param("limit") Integer limit, @Param("sort") String sort, @Param("order") String order);
 
