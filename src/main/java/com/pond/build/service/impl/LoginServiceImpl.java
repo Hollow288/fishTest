@@ -59,7 +59,7 @@ public class LoginServiceImpl implements LoginService {
         LoginUser loginUser = (LoginUser) authenticate.getPrincipal();
 
         //获取当前用户的userid
-        String userid = loginUser.getUser().getId().toString();
+        String userid = loginUser.getUser().getUserId().toString();
 
 //        String jwt = JwtUtil.createJWT(userid);
         String accessToken = JwtUtil.createJWT(userid, JwtUtil.JWT_ACCESS_TTL);
@@ -72,8 +72,8 @@ public class LoginServiceImpl implements LoginService {
         //前端需要的用户个人信息
         User userInfo = loginUser.getUser();
         List<String> permissions = loginUser.getPermissions();
-        Map<String, Object> userInfoMap = this.putUserInfoToMap(userInfo.getId(), userInfo.getUserName(),
-                userInfo.getNickName(), userInfo.getEmail(), userInfo.getAvatar(), userInfo.getPhoneNumber(), userInfo.getSex(), userInfo.getStatus(), permissions);
+        Map<String, Object> userInfoMap = this.putUserInfoToMap(userInfo.getUserId(), userInfo.getUserName(),
+                userInfo.getNickName(), userInfo.getEmail(), userInfo.getAvatar(), userInfo.getPhoneNumber(), userInfo.getGender(), userInfo.getStatus(), permissions);
 
         map.put("user",JSONObject.toJSONString(userInfoMap));
 
@@ -94,7 +94,7 @@ public class LoginServiceImpl implements LoginService {
                 (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
 
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
-        Long userid = loginUser.getUser().getId();
+        Long userid = loginUser.getUser().getUserId();
 
         //根据userid找到redis对应值进行删除
         redisUtil.removeKey("access_token:"+userid);
@@ -166,19 +166,21 @@ public class LoginServiceImpl implements LoginService {
 
 
     //返回给前端的用户信息
-    public Map<String,Object> putUserInfoToMap(Long id, String userName, String nickName, String email, String avatar, String phoneNumber, String sex, String status, List<String> roles){
+    public Map<String,Object> putUserInfoToMap(Long userId, String userName, String nickName, String email, String avatar, String phoneNumber, String gender, String status, List<String> roles){
         Map<String, Object> userInfoMap = new HashMap<>();
-        userInfoMap.put("id", id);
+        userInfoMap.put("userId", userId);
         userInfoMap.put("userName", userName);
         userInfoMap.put("email", email);
         userInfoMap.put("phoneNumber", phoneNumber);
         userInfoMap.put("nickName", nickName);
         userInfoMap.put("avatarUrl", avatar);
-        userInfoMap.put("gender", sex);
-        if(Objects.equals(sex,"0")){
+        userInfoMap.put("gender", gender);
+        if(Objects.equals(gender,"0")){
             userInfoMap.put("genderLabel", "女");
-        }else {
+        } else if (Objects.equals(gender,"1")) {
             userInfoMap.put("genderLabel", "男");
+        } else {
+            userInfoMap.put("genderLabel", "未知");
         }
         if(Objects.equals(status,"0")){
             userInfoMap.put("enabled", true);

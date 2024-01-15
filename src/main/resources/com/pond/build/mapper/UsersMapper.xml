@@ -2,23 +2,67 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pond.build.mapper.UsersMapper">
 
+    <resultMap type="com.pond.build.model.Response.UserResponse" id="userWithRolesResultMap">
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="nickName" column="nick_name" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="phoneNumber" column="phone_number" jdbcType="VARCHAR"/>
+        <result property="gender" column="gender" jdbcType="VARCHAR"/>
+        <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+        <result property="userType" column="user_type" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="INTEGER"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="delFlag" column="del_flag" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="birthDate" column="birth_Date" jdbcType="TIMESTAMP"/>
+        <result property="country" column="country" jdbcType="VARCHAR"/>
+        <result property="province" column="province" jdbcType="VARCHAR"/>
+        <result property="city" column="city" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="briefIntroduction" column="brief_introduction" jdbcType="VARCHAR"/>
+<!--        <collection property="roles" ofType="com.pond.build.model.SysRole" resultMap="SysRoleMap"/>-->
+        <collection property="roles" ofType="java.lang.String" column="role_name">
+            <result column="role"/>
+        </collection>
+    </resultMap>
 
-    <select id="getUsersByPage" resultType="com.pond.build.model.User">
-        SELECT * FROM sys_user
+
+    <resultMap type="com.pond.build.model.SysRole" id="SysRoleMap">
+        <result property="roleId" column="role_id" jdbcType="INTEGER"/>
+        <result property="roleName" column="role_name" jdbcType="VARCHAR"/>
+        <result property="roleKey" column="role_key" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="delFlag" column="del_flag" jdbcType="INTEGER"/>
+        <result property="createBy" column="create_by" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="INTEGER"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <select id="getUsersByPage" resultMap="userWithRolesResultMap">
+        SELECT  su.*,sr.role_name as role FROM sys_user su
+            left join sys_user_role sur on su.user_id = sur.user_id
+            left join sys_role sr on sur.role_id = sr.role_id
             <where>
                 <!-- 模糊搜索条件 -->
                 <if test="searchText != null and searchText != ''">
-                    AND (nick_name LIKE CONCAT('%', #{searchText}, '%') OR email LIKE CONCAT('%', #{searchText}, '%'))
+                    AND (su.nick_name LIKE CONCAT('%', #{searchText}, '%') OR su.email LIKE CONCAT('%', #{searchText}, '%'))
                 </if>
 
                 <!-- 开始时间条件 -->
                 <if test="startDate != null">
-                    AND create_time <![CDATA[>=]]> #{startDate}
+                    AND su.create_time <![CDATA[>=]]> #{startDate}
                 </if>
 
                 <!-- 结束时间条件 -->
                 <if test="endDate != null">
-                    AND create_time <![CDATA[<=]]> #{endDate}
+                    AND su.create_time <![CDATA[<=]]> #{endDate}
                 </if>
             </where>
 
@@ -32,7 +76,7 @@
     </select>
 
     <select id="getUsersCountByPage" resultType="java.lang.Integer">
-        SELECT count(id) FROM sys_user
+        SELECT count(user_id) FROM sys_user
         <where>
             <!-- 模糊搜索条件 -->
             <if test="searchText != null and searchText != ''">

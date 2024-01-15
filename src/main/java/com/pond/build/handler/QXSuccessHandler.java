@@ -41,7 +41,7 @@ public class QXSuccessHandler implements AuthenticationSuccessHandler {
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
 
         //获取当前用户的userid
-        String userid = loginUser.getUser().getId().toString();
+        String userid = loginUser.getUser().getUserId().toString();
 
         String jwt = JwtUtil.createJWT(userid);
         Map<String, String> map = new HashMap<>();

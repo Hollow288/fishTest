@@ -6,9 +6,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pond.build.enums.HttpStatusCode;
 import com.pond.build.mapper.UsersMapper;
 import com.pond.build.model.LoginUser;
+import com.pond.build.model.Response.UserResponse;
 import com.pond.build.model.ResponseResult;
 import com.pond.build.model.User;
 import com.pond.build.service.UsersService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,8 +37,8 @@ public class UsersServiceImpl implements UsersService {
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         User userInfo = loginUser.getUser();
         List<String> permissions = loginUser.getPermissions();
-        Map<String, Object> userInfoMap = loginService.putUserInfoToMap(userInfo.getId(), userInfo.getUserName(),
-                userInfo.getNickName(), userInfo.getEmail(), userInfo.getAvatar(), userInfo.getPhoneNumber(), userInfo.getSex(), userInfo.getStatus(), permissions);
+        Map<String, Object> userInfoMap = loginService.putUserInfoToMap(userInfo.getUserId(), userInfo.getUserName(),
+                userInfo.getNickName(), userInfo.getEmail(), userInfo.getAvatar(), userInfo.getPhoneNumber(), userInfo.getGender(), userInfo.getStatus(), permissions);
 
         return new ResponseResult(HttpStatusCode.OK.getCode(),"获取成功",userInfoMap);
 
@@ -52,13 +54,36 @@ public class UsersServiceImpl implements UsersService {
         int limit = pageSize;
 
         // 然后将 offset 和 limit 传递给 MyBatis 的查询语句
-        List<User> users = usersMapper.getUsersByPage(searchText, startDate, endDate, offset, limit, sort, order);
-        users.stream()
-                .filter(Objects::nonNull) // 过滤掉可能为空的用户对象
-                .forEach(user -> user.setPassWord(""));
+//        List<User> users = usersMapper.getUsersByPage(searchText, startDate, endDate, offset, limit, sort, order);
+        List<UserResponse> userResponseList = usersMapper.getUsersByPage(searchText, startDate, endDate, offset, limit, sort, order);
+
+//        List<UserResponse> userResponseList = new ArrayList<>();
+//        for (User user : users) {
+//            UserResponse userResponse = new UserResponse();
+//            BeanUtils.copyProperties(user, userResponse);
+//            // 这里可以添加额外的属性设置，例如 roles
+//
+////            userResponse.setRoles(strings);
+//
+//            userResponseList.add(userResponse);
+//        }
+        userResponseList.stream().filter(Objects::nonNull) // 过滤掉可能为空的用户对象
+                .forEach(userResponse ->{
+                    if(Objects.equals(userResponse.getGender(),"0")){
+                        userResponse.setGenderLabel("女");
+                    }else if (Objects.equals(userResponse.getGender(),"1")){
+                        userResponse.setGenderLabel("男");
+                    }else {
+                        userResponse.setGenderLabel("未知");
+                    }
+                });
+
+//        users.stream()
+//                .filter(Objects::nonNull) // 过滤掉可能为空的用户对象
+//                .forEach(user -> user.setPassWord(""));
 
         Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("data",users);
+        resultMap.put("data",userResponseList);
         resultMap.put("page",page);
         resultMap.put("pageSize",pageSize);
         Integer usersCountByPage = usersMapper.getUsersCountByPage(searchText, startDate, endDate);
@@ -67,11 +92,11 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public ResponseResult setUserEnable(Integer id) {
+    public ResponseResult setUserEnable(Integer userId) {
         // 创建更新对象
         UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
         // 设置更新条件，假设id为传入的参数
-        updateWrapper.eq("id", id);
+        updateWrapper.eq("user_id", userId);
         // 设置要更新的字段和值
         updateWrapper.set("status", "0");
 
@@ -89,11 +114,11 @@ public class UsersServiceImpl implements UsersService {
 
 
     @Override
-    public ResponseResult setUserDisable(Integer id) {
+    public ResponseResult setUserDisable(Integer userId) {
         // 创建更新对象
         UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
         // 设置更新条件，假设id为传入的参数
-        updateWrapper.eq("id", id);
+        updateWrapper.eq("user_id", userId);
         // 设置要更新的字段和值
         updateWrapper.set("status", "1");
 

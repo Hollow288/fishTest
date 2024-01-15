@@ -7,9 +7,9 @@
 
         select distinct m.perms
         from sys_user_role ur
-                 left join sys_role r on ur.role_id = r.id
+                 left join sys_role r on ur.role_id = r.role_id
                  left join sys_role_menu rm on ur.role_id = rm.role_id
-                 left join sys_menu m on m.id = rm.menu_id
+                 left join sys_menu m on m.menu_id = rm.menu_id
         where user_id = #{userid}
           and r.status = 0
           and m.status = 0
@@ -20,7 +20,7 @@
 
         select distinct sr.role_key
         from sys_user_role sur
-                 left join sys_role sr on sur.user_id = sr.id
+                 left join sys_role sr on sur.user_id = sr.role_id
         where sur.user_id = #{userid}
           and sr.status = 0
 

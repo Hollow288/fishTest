@@ -1,31 +1,16 @@
-package com.pond.build.model;
+package com.pond.build.model.Response;
 
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
-
-/**
- * 用户表(User)实体类
- *
- *
- */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@TableName("sys_user")
-public class User implements Serializable {
-    private static final long serialVersionUID = -40356785423868312L;
-
-    /**
-     * 主键
-     */
-    @TableId
+@Getter
+@Setter
+public class UserResponse {
     private Long userId;
     /**
      * 用户名
@@ -35,10 +20,6 @@ public class User implements Serializable {
      * 昵称
      */
     private String nickName;
-    /**
-     * 密码
-     */
-    private String passWord;
     /**
      * 账号状态（0正常 1停用）
      */
@@ -55,6 +36,10 @@ public class User implements Serializable {
      * 用户性别（0女，1男，2未知）
      */
     private String gender;
+    /**
+     * 用户性别（0女，1男，2未知）
+     */
+    private String genderLabel;
     /**
      * 头像
      */
@@ -111,5 +96,8 @@ public class User implements Serializable {
      * 简介
      */
     private String briefIntroduction;
-
+    /**
+     * 角色
+     */
+    private List<String> roles;
 }

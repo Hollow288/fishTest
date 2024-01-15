@@ -48,16 +48,16 @@ public class UsersController {
 
 
 
-    @PostMapping("/users/{id}/enable")
+    @PostMapping("/users/{userId}/enable")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseResult setUserEnable(@PathVariable("id") Integer id){
-        return usersService.setUserEnable(id);
+    public ResponseResult setUserEnable(@PathVariable("userId") Integer userId){
+        return usersService.setUserEnable(userId);
     }
 
 
-    @PostMapping("/users/{id}/disable")
+    @PostMapping("/users/{userId}/disable")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseResult setUserDisable(@PathVariable("id") Integer id){
-        return usersService.setUserDisable(id);
+    public ResponseResult setUserDisable(@PathVariable("userId") Integer userId){
+        return usersService.setUserDisable(userId);
     }
 }

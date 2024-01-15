@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserMapper extends BaseMapper<User> {
 
-    User selectUserById(Integer id);
+    User selectUserById(Integer userId);
 }

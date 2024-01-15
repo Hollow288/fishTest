@@ -10,7 +10,7 @@ public interface UsersService {
 
     ResponseResult getUsersByPage(Integer page, Integer pageSize, String searchText, Date startDate, Date endDate, String sort, String order);
 
-    ResponseResult setUserEnable(Integer id);
+    ResponseResult setUserEnable(Integer userId);
 
-    ResponseResult setUserDisable(Integer id);
+    ResponseResult setUserDisable(Integer userId);
 }
