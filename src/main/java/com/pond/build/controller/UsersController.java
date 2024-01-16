@@ -1,6 +1,8 @@
 package com.pond.build.controller;
 
 import com.pond.build.model.ResponseResult;
+import com.pond.build.model.Student;
+import com.pond.build.model.User;
 import com.pond.build.service.LoginService;
 import com.pond.build.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.Map;
 
 @RestController
 public class UsersController {
@@ -59,5 +62,11 @@ public class UsersController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseResult setUserDisable(@PathVariable("userId") Integer userId){
         return usersService.setUserDisable(userId);
+    }
+
+    @PatchMapping("/users/{userId}")
+    @PreAuthorize("permitAll")
+    public ResponseResult updateUserInfoByUserId(@PathVariable("userId") Integer userId, @RequestBody User user){
+        return usersService.updateUserInfoByUserId(userId, user);
     }
 }

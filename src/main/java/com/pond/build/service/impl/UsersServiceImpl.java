@@ -38,7 +38,7 @@ public class UsersServiceImpl implements UsersService {
         User userInfo = loginUser.getUser();
         List<String> permissions = loginUser.getPermissions();
         Map<String, Object> userInfoMap = loginService.putUserInfoToMap(userInfo.getUserId(), userInfo.getUserName(),
-                userInfo.getNickName(), userInfo.getEmail(), userInfo.getAvatar(), userInfo.getPhoneNumber(), userInfo.getGender(), userInfo.getStatus(), permissions);
+                userInfo.getNickName(), userInfo.getEmail(), userInfo.getAvatarUrl(), userInfo.getPhoneNumber(), userInfo.getGender(), userInfo.getStatus(), permissions);
 
         return new ResponseResult(HttpStatusCode.OK.getCode(),"获取成功",userInfoMap);
 
@@ -67,16 +67,16 @@ public class UsersServiceImpl implements UsersService {
 //
 //            userResponseList.add(userResponse);
 //        }
-        userResponseList.stream().filter(Objects::nonNull) // 过滤掉可能为空的用户对象
-                .forEach(userResponse ->{
-                    if(Objects.equals(userResponse.getGender(),"0")){
-                        userResponse.setGenderLabel("女");
-                    }else if (Objects.equals(userResponse.getGender(),"1")){
-                        userResponse.setGenderLabel("男");
-                    }else {
-                        userResponse.setGenderLabel("未知");
-                    }
-                });
+//        userResponseList.stream().filter(Objects::nonNull) // 过滤掉可能为空的用户对象
+//                .forEach(userResponse ->{
+//                    if(Objects.equals(userResponse.getGender(),"0")){
+//                        userResponse.setGenderLabel("女");
+//                    }else if (Objects.equals(userResponse.getGender(),"1")){
+//                        userResponse.setGenderLabel("男");
+//                    }else {
+//                        userResponse.setGenderLabel("未知");
+//                    }
+//                });
 
 //        users.stream()
 //                .filter(Objects::nonNull) // 过滤掉可能为空的用户对象
@@ -103,7 +103,9 @@ public class UsersServiceImpl implements UsersService {
         // 执行更新操作
         boolean updateResult = usersMapper.update(null, updateWrapper) > 0;
 
-        if (updateResult) {
+        boolean recordResult = this.setUpdateByAndUpdateTime(userId);
+
+        if (updateResult && recordResult) {
             // 更新成功的处理逻辑
             return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
         } else {
@@ -125,12 +127,64 @@ public class UsersServiceImpl implements UsersService {
         // 执行更新操作
         boolean updateResult = usersMapper.update(null, updateWrapper) > 0;
 
-        if (updateResult) {
+        boolean recordResult = this.setUpdateByAndUpdateTime(userId);
+
+        if (updateResult && recordResult) {
             // 更新成功的处理逻辑
             return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
         } else {
             // 更新失败的处理逻辑
             return new ResponseResult(HttpStatusCode.REQUEST_SERVER_ERROR.getCode(),HttpStatusCode.REQUEST_SERVER_ERROR.getCnMessage());
         }
+    }
+
+    @Override
+    public ResponseResult updateUserInfoByUserId(Integer userId,  User user) {
+        UsernamePasswordAuthenticationToken authentication =
+                (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        List<String> permissions = loginUser.getPermissions();
+        User userInfo = loginUser.getUser();
+        if(Objects.equals(userId,userInfo.getUserId()) && permissions.contains("ROLE_ADMIN")){
+            UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
+            updateWrapper.eq("user_id", userId);
+
+            updateWrapper.set("nick_name", user.getNickName());
+            updateWrapper.set("email", user.getEmail());
+            updateWrapper.set("city", user.getCity());
+            updateWrapper.set("country", user.getCountry());
+            updateWrapper.set("province", user.getProvince());
+            updateWrapper.set("phone_number", user.getPhoneNumber());
+            updateWrapper.set("gender", user.getGender());
+            updateWrapper.set("birth_Date", user.getBirthDate());
+            updateWrapper.set("address", user.getAddress());
+
+            boolean updateResult = usersMapper.update(null, updateWrapper) > 0;
+            boolean recordResult = this.setUpdateByAndUpdateTime(userId);
+
+            return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
+
+        }else {
+            return new ResponseResult(HttpStatusCode.FORBIDDEN_ROLE_ERR.getCode(),HttpStatusCode.FORBIDDEN_ROLE_ERR.getCnMessage());
+        }
+    }
+
+
+    public boolean setUpdateByAndUpdateTime(Integer userId){
+        //当前操作人
+        UsernamePasswordAuthenticationToken authentication =
+                (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        User userInfo = loginUser.getUser();
+
+        UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("user_id", userId);
+
+        updateWrapper.set("update_by",userInfo.getUserId());
+        updateWrapper.set("update_time",new Date());
+
+        return usersMapper.update(null, updateWrapper) > 0;
     }
 }

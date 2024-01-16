@@ -58,7 +58,7 @@ public class User implements Serializable {
     /**
      * 头像
      */
-    private String avatar;
+    private String avatarUrl;
     /**
      * 用户类型（0管理员，1普通用户）
      */
@@ -110,6 +110,6 @@ public class User implements Serializable {
     /**
      * 简介
      */
-    private String briefIntroduction;
+    private String biography;
 
 }

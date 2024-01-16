@@ -43,7 +43,7 @@ public class UserResponse {
     /**
      * 头像
      */
-    private String avatar;
+    private String avatarUrl;
     /**
      * 用户类型（0管理员，1普通用户）
      */
@@ -95,7 +95,7 @@ public class UserResponse {
     /**
      * 简介
      */
-    private String briefIntroduction;
+    private String biography;
     /**
      * 角色
      */

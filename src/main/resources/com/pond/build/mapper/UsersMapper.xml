@@ -10,7 +10,7 @@
         <result property="email" column="email" jdbcType="VARCHAR"/>
         <result property="phoneNumber" column="phone_number" jdbcType="VARCHAR"/>
         <result property="gender" column="gender" jdbcType="VARCHAR"/>
-        <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+        <result property="avatarUrl" column="avatar_Url" jdbcType="VARCHAR"/>
         <result property="userType" column="user_type" jdbcType="VARCHAR"/>
         <result property="createBy" column="create_by" jdbcType="INTEGER"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
@@ -23,7 +23,7 @@
         <result property="province" column="province" jdbcType="VARCHAR"/>
         <result property="city" column="city" jdbcType="VARCHAR"/>
         <result property="address" column="address" jdbcType="VARCHAR"/>
-        <result property="briefIntroduction" column="brief_introduction" jdbcType="VARCHAR"/>
+        <result property="biography" column="biography" jdbcType="VARCHAR"/>
 <!--        <collection property="roles" ofType="com.pond.build.model.SysRole" resultMap="SysRoleMap"/>-->
 <!--        <collection property="roles" ofType="java.lang.String" column="role_name">-->
 <!--            <result column="role"/>-->
@@ -53,7 +53,13 @@
 
 
     <select id="getUsersByPage" resultMap="userWithRolesResultMap">
-        SELECT * FROM sys_user
+        SELECT  *,
+            case
+            when gender = '0' then '女'
+            when gender = '1' then '男'
+            when gender = '2' then '未知'
+            end Gender_Label
+        FROM sys_user
             <where>
                 <!-- 模糊搜索条件 -->
                 <if test="searchText != null and searchText != ''">

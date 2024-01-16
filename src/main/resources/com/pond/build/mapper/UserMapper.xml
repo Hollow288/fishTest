@@ -12,7 +12,7 @@
         <result column="email" property="email" />
         <result column="phone_number" property="phoneNumber" />
         <result column="gender" property="gender" />
-        <result column="avatar" property="avatar" />
+        <result column="avatar_Url" property="avatarUrl" />
         <result column="user_type" property="userType" />
         <result column="create_by" property="createBy" />
         <result column="create_time" property="createTime" />

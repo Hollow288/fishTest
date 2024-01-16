@@ -73,7 +73,7 @@ public class LoginServiceImpl implements LoginService {
         User userInfo = loginUser.getUser();
         List<String> permissions = loginUser.getPermissions();
         Map<String, Object> userInfoMap = this.putUserInfoToMap(userInfo.getUserId(), userInfo.getUserName(),
-                userInfo.getNickName(), userInfo.getEmail(), userInfo.getAvatar(), userInfo.getPhoneNumber(), userInfo.getGender(), userInfo.getStatus(), permissions);
+                userInfo.getNickName(), userInfo.getEmail(), userInfo.getAvatarUrl(), userInfo.getPhoneNumber(), userInfo.getGender(), userInfo.getStatus(), permissions);
 
         map.put("user",JSONObject.toJSONString(userInfoMap));
 
@@ -166,14 +166,14 @@ public class LoginServiceImpl implements LoginService {
 
 
     //返回给前端的用户信息
-    public Map<String,Object> putUserInfoToMap(Long userId, String userName, String nickName, String email, String avatar, String phoneNumber, String gender, String status, List<String> roles){
+    public Map<String,Object> putUserInfoToMap(Long userId, String userName, String nickName, String email, String avatarUrl, String phoneNumber, String gender, String status, List<String> roles){
         Map<String, Object> userInfoMap = new HashMap<>();
         userInfoMap.put("userId", userId);
         userInfoMap.put("userName", userName);
         userInfoMap.put("email", email);
         userInfoMap.put("phoneNumber", phoneNumber);
         userInfoMap.put("nickName", nickName);
-        userInfoMap.put("avatarUrl", avatar);
+        userInfoMap.put("avatarUrl", avatarUrl);
         userInfoMap.put("gender", gender);
         if(Objects.equals(gender,"0")){
             userInfoMap.put("genderLabel", "女");
