@@ -59,11 +59,11 @@
             when gender = '1' then '男'
             when gender = '2' then '未知'
             end Gender_Label
-        FROM sys_user
+        FROM sys_user su
             <where>
                 <!-- 模糊搜索条件 -->
                 <if test="searchText != null and searchText != ''">
-                    AND (su.nick_name LIKE CONCAT('%', #{searchText}, '%') OR su.email LIKE CONCAT('%', #{searchText}, '%'))
+                    AND (su.user_name LIKE CONCAT('%', #{searchText}, '%') OR su.email LIKE CONCAT('%', #{searchText}, '%'))
                 </if>
 
                 <!-- 开始时间条件 -->

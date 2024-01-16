@@ -146,11 +146,12 @@ public class UsersServiceImpl implements UsersService {
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         List<String> permissions = loginUser.getPermissions();
         User userInfo = loginUser.getUser();
-        if(Objects.equals(userId,userInfo.getUserId()) && permissions.contains("ROLE_ADMIN")){
+        if(Objects.equals((long)userId,userInfo.getUserId()) && permissions.contains("ROLE_ADMIN")){
             UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
             updateWrapper.eq("user_id", userId);
 
             updateWrapper.set("nick_name", user.getNickName());
+            updateWrapper.set("name", user.getName());
             updateWrapper.set("email", user.getEmail());
             updateWrapper.set("city", user.getCity());
             updateWrapper.set("country", user.getCountry());
@@ -159,6 +160,7 @@ public class UsersServiceImpl implements UsersService {
             updateWrapper.set("gender", user.getGender());
             updateWrapper.set("birth_Date", user.getBirthDate());
             updateWrapper.set("address", user.getAddress());
+            updateWrapper.set("biography", user.getBiography());
 
             boolean updateResult = usersMapper.update(null, updateWrapper) > 0;
             boolean recordResult = this.setUpdateByAndUpdateTime(userId);
