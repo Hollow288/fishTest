@@ -55,9 +55,9 @@
     <select id="getUsersByPage" resultMap="userWithRolesResultMap">
         SELECT  *,
             case
-            when gender = '0' then '女'
-            when gender = '1' then '男'
-            when gender = '2' then '未知'
+                when gender = '0' then '女'
+                when gender = '1' then '男'
+                when gender = '2' then '未知'
             end Gender_Label
         FROM sys_user su
             <where>
@@ -104,6 +104,17 @@
                 AND create_time <![CDATA[<=]]> #{endDate}
             </if>
         </where>
+    </select>
+
+
+    <select id="getUserInfoById" resultMap="userWithRolesResultMap">
+        SELECT  *,
+        case
+            when gender = '0' then '女'
+            when gender = '1' then '男'
+            when gender = '2' then '未知'
+        end Gender_Label
+        FROM sys_user su where user_id = #{userId}
     </select>
 
 </mapper>

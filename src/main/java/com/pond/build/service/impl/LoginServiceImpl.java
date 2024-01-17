@@ -18,10 +18,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 public class LoginServiceImpl implements LoginService {
@@ -72,8 +69,8 @@ public class LoginServiceImpl implements LoginService {
         //前端需要的用户个人信息
         User userInfo = loginUser.getUser();
         List<String> permissions = loginUser.getPermissions();
-        Map<String, Object> userInfoMap = this.putUserInfoToMap(userInfo.getUserId(), userInfo.getUserName(),
-                userInfo.getNickName(), userInfo.getEmail(), userInfo.getAvatarUrl(), userInfo.getPhoneNumber(), userInfo.getGender(), userInfo.getStatus(), permissions);
+        Map<String, Object> userInfoMap = this.putUserInfoToMap(userInfo.getUserId(), userInfo.getUserName(), userInfo.getName(), userInfo.getBirthDate(),  userInfo.getBiography(),
+                userInfo.getNickName(), userInfo.getEmail(), userInfo.getAvatarUrl(), userInfo.getPhoneNumber(), userInfo.getGender(), userInfo.getStatus(), userInfo.getAddress(), permissions);
 
         map.put("user",JSONObject.toJSONString(userInfoMap));
 
@@ -166,10 +163,12 @@ public class LoginServiceImpl implements LoginService {
 
 
     //返回给前端的用户信息
-    public Map<String,Object> putUserInfoToMap(Long userId, String userName, String nickName, String email, String avatarUrl, String phoneNumber, String gender, String status, List<String> roles){
+    public Map<String,Object> putUserInfoToMap(Long userId, String userName, String name, Date birthDate, String biography, String nickName, String email, String avatarUrl, String phoneNumber, String gender, String status, String address, List<String> roles){
         Map<String, Object> userInfoMap = new HashMap<>();
         userInfoMap.put("userId", userId);
         userInfoMap.put("userName", userName);
+        userInfoMap.put("name", name);
+        userInfoMap.put("birthDate", birthDate);
         userInfoMap.put("email", email);
         userInfoMap.put("phoneNumber", phoneNumber);
         userInfoMap.put("nickName", nickName);
@@ -187,6 +186,8 @@ public class LoginServiceImpl implements LoginService {
         }else {
             userInfoMap.put("enabled", false);
         }
+        userInfoMap.put("biography", biography);
+        userInfoMap.put("address", address);
         userInfoMap.put("roles", roles);
         return  userInfoMap;
     }

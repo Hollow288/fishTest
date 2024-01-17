@@ -21,4 +21,6 @@ public interface UsersMapper  extends BaseMapper<User> {
                                       @Param("offset") Integer offset, @Param("limit") Integer limit, @Param("sort") String sort, @Param("order") String order);
 
     Integer getUsersCountByPage(@Param("searchText") String searchText, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
+
+    UserResponse getUserInfoById(Integer userId);
 }

@@ -576,7 +576,7 @@ class TestApplicationTests {
 
             FileWriter file = new FileWriter("C:\\Users\\11\\Desktop\\employeesAccountExcelToSql.sql");
 
-            FileInputStream fileInputStream = new FileInputStream("C:\\Users\\11\\Desktop\\个人账户管理导入模板.xlsx");
+            FileInputStream fileInputStream = new FileInputStream("C:\\Users\\11\\Desktop\\安评个人账户初始化.xlsx");
 //            sheets对象
             XSSFWorkbook sheets = new XSSFWorkbook(fileInputStream);
             //总共的工作表数量
@@ -598,11 +598,11 @@ class TestApplicationTests {
                 //所在公司
                 String bearUnitName = dataFormatter.formatCellValue(row.getCell(5));
                 //转
-                if(bearUnitName.equals("合肥") || bearUnitName.equals("安庆")){
-                    bearUnitName = "总部" + bearUnitName;
-                }else{
-                    bearUnitName = bearUnitName + "分公司";
-                }
+//                if(bearUnitName.equals("合肥") || bearUnitName.equals("安庆")){
+//                    bearUnitName = "总部" + bearUnitName;
+//                }else{
+//                    bearUnitName = bearUnitName + "分公司";
+//                }
 
                 StringBuffer stringBuffer = this.pjEmployeesAccount(bankAccount, bankName, bankAccountName, createdByNumber, bearUnitName);
 
@@ -702,13 +702,15 @@ class TestApplicationTests {
         //拼接
         temSb.append("', N'");
         //Bear_Unit_code
-        temSb.append(bearUnitMap.get(bearUnitName));
+//        temSb.append(bearUnitMap.get(bearUnitName));
+        temSb.append("AP");
         //拼接
         temSb.append("', N'");
         //Bear_Unit_name
-        temSb.append(bearUnitName);
+//        temSb.append(bearUnitName);
+        temSb.append("安评公司");
         //拼接
-        temSb.append("', N'fm_vendor_GR');");
+        temSb.append("', N'fm_vendor_GR_AN');");
 //        System.out.println(temSb);
 //        System.out.println();
 //        System.out.println("go");

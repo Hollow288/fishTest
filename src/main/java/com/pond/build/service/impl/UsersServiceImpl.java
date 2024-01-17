@@ -37,8 +37,8 @@ public class UsersServiceImpl implements UsersService {
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         User userInfo = loginUser.getUser();
         List<String> permissions = loginUser.getPermissions();
-        Map<String, Object> userInfoMap = loginService.putUserInfoToMap(userInfo.getUserId(), userInfo.getUserName(),
-                userInfo.getNickName(), userInfo.getEmail(), userInfo.getAvatarUrl(), userInfo.getPhoneNumber(), userInfo.getGender(), userInfo.getStatus(), permissions);
+        Map<String, Object> userInfoMap = loginService.putUserInfoToMap(userInfo.getUserId(), userInfo.getUserName(), userInfo.getName(), userInfo.getBirthDate(), userInfo.getBiography(),
+                userInfo.getNickName(), userInfo.getEmail(), userInfo.getAvatarUrl(), userInfo.getPhoneNumber(), userInfo.getGender(), userInfo.getStatus(),  userInfo.getAddress(),permissions);
 
         return new ResponseResult(HttpStatusCode.OK.getCode(),"获取成功",userInfoMap);
 
@@ -156,7 +156,7 @@ public class UsersServiceImpl implements UsersService {
             updateWrapper.set("city", user.getCity());
             updateWrapper.set("country", user.getCountry());
             updateWrapper.set("province", user.getProvince());
-            updateWrapper.set("phone_number", user.getPhoneNumber());
+            updateWrapper.set("phone_Number", user.getPhoneNumber());
             updateWrapper.set("gender", user.getGender());
             updateWrapper.set("birth_Date", user.getBirthDate());
             updateWrapper.set("address", user.getAddress());
@@ -165,7 +165,9 @@ public class UsersServiceImpl implements UsersService {
             boolean updateResult = usersMapper.update(null, updateWrapper) > 0;
             boolean recordResult = this.setUpdateByAndUpdateTime(userId);
 
-            return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
+            UserResponse userInfoResult = this.getUserInfoById(userId);
+
+            return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功",userInfoResult);
 
         }else {
             return new ResponseResult(HttpStatusCode.FORBIDDEN_ROLE_ERR.getCode(),HttpStatusCode.FORBIDDEN_ROLE_ERR.getCnMessage());
@@ -188,5 +190,10 @@ public class UsersServiceImpl implements UsersService {
         updateWrapper.set("update_time",new Date());
 
         return usersMapper.update(null, updateWrapper) > 0;
+    }
+
+
+    public UserResponse getUserInfoById(Integer userId){
+        return usersMapper.getUserInfoById(userId);
     }
 }
