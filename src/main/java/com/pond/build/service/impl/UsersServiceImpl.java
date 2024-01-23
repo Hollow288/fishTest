@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pond.build.enums.HttpStatusCode;
+import com.pond.build.mapper.MenuMapper;
 import com.pond.build.mapper.UsersMapper;
 import com.pond.build.model.LoginUser;
 import com.pond.build.model.Response.UserResponse;
@@ -14,6 +15,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +30,12 @@ public class UsersServiceImpl implements UsersService {
 
     @Autowired
     private UsersMapper usersMapper;
+    
+    @Autowired
+    private MenuMapper menuMapper;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public ResponseResult getMeInfo() {
@@ -167,7 +175,57 @@ public class UsersServiceImpl implements UsersService {
 
             UserResponse userInfoResult = this.getUserInfoById(userId);
 
+            List<String> permsList = menuMapper.selectPermsByUserId(user.getUserId());
+            //定义个亿角色集合
+            List<String> rolesList = menuMapper.selectRolesByUserId(user.getUserId());
+
+            List<String> roleAll = new ArrayList<>();
+            roleAll.addAll(permsList);
+            roleAll.addAll(rolesList);
+
+            userInfoResult.setRoles(roleAll);
+
             return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功",userInfoResult);
+
+        }else {
+            return new ResponseResult(HttpStatusCode.FORBIDDEN_ROLE_ERR.getCode(),HttpStatusCode.FORBIDDEN_ROLE_ERR.getCnMessage());
+        }
+    }
+
+    @Override
+    public ResponseResult changePassword(Integer userId, String passWord) {
+        UsernamePasswordAuthenticationToken authentication =
+                (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        List<String> permissions = loginUser.getPermissions();
+        User userInfo = loginUser.getUser();
+        if(Objects.equals((long)userId,userInfo.getUserId()) && permissions.contains("ROLE_ADMIN")){
+            UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
+            updateWrapper.eq("user_id", userId);
+
+
+            //Todo 密码更新
+
+//            updateWrapper.set()
+//
+//
+//            boolean updateResult = usersMapper.update(null, updateWrapper) > 0;
+//            boolean recordResult = this.setUpdateByAndUpdateTime(userId);
+//
+//            UserResponse userInfoResult = this.getUserInfoById(userId);
+//
+//            List<String> permsList = menuMapper.selectPermsByUserId(user.getUserId());
+//            //定义个亿角色集合
+//            List<String> rolesList = menuMapper.selectRolesByUserId(user.getUserId());
+//
+//            List<String> roleAll = new ArrayList<>();
+//            roleAll.addAll(permsList);
+//            roleAll.addAll(rolesList);
+//
+//            userInfoResult.setRoles(roleAll);
+
+            return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
 
         }else {
             return new ResponseResult(HttpStatusCode.FORBIDDEN_ROLE_ERR.getCode(),HttpStatusCode.FORBIDDEN_ROLE_ERR.getCnMessage());

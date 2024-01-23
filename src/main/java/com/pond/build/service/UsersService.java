@@ -17,4 +17,6 @@ public interface UsersService {
     ResponseResult setUserDisable(Integer userId);
 
     ResponseResult updateUserInfoByUserId(Integer userId,  User user);
+
+    ResponseResult changePassword(Integer userId, String passWord);
 }

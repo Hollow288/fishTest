@@ -69,4 +69,10 @@ public class UsersController {
     public ResponseResult updateUserInfoByUserId(@PathVariable("userId") Integer userId, @RequestBody User user){
         return usersService.updateUserInfoByUserId(userId, user);
     }
+
+    @PostMapping("/users/{userId}/change-password")
+    @PreAuthorize("permitAll")
+    public ResponseResult changePassword(@PathVariable("userId") Integer userId, @RequestBody String passWord){
+        return usersService.changePassword(userId, passWord);
+    }
 }
