@@ -177,6 +177,15 @@ public class SecurityConfig{
         return authenticationConfiguration.getAuthenticationManager();
     }
 
+
+    /*
+     * 注入BCryptPasswordEncoder
+     */
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
 }
 
 

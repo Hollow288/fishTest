@@ -203,27 +203,10 @@ public class UsersServiceImpl implements UsersService {
         if(Objects.equals((long)userId,userInfo.getUserId()) && permissions.contains("ROLE_ADMIN")){
             UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
             updateWrapper.eq("user_id", userId);
+            updateWrapper.set("pass_word",bCryptPasswordEncoder.encode(passWord));
 
-
-            //Todo 密码更新
-
-//            updateWrapper.set()
-//
-//
-//            boolean updateResult = usersMapper.update(null, updateWrapper) > 0;
-//            boolean recordResult = this.setUpdateByAndUpdateTime(userId);
-//
-//            UserResponse userInfoResult = this.getUserInfoById(userId);
-//
-//            List<String> permsList = menuMapper.selectPermsByUserId(user.getUserId());
-//            //定义个亿角色集合
-//            List<String> rolesList = menuMapper.selectRolesByUserId(user.getUserId());
-//
-//            List<String> roleAll = new ArrayList<>();
-//            roleAll.addAll(permsList);
-//            roleAll.addAll(rolesList);
-//
-//            userInfoResult.setRoles(roleAll);
+            boolean updateResult = usersMapper.update(null, updateWrapper) > 0;
+            boolean recordResult = this.setUpdateByAndUpdateTime(userId);
 
             return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
 

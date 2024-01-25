@@ -11,7 +11,7 @@
  Target Server Version : 80035
  File Encoding         : 65001
 
- Date: 16/01/2024 18:01:55
+ Date: 25/01/2024 17:59:28
 */
 
 SET NAMES utf8mb4;
@@ -163,7 +163,7 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (3, '1', '管理员张三', '$2a$10$SFmzm8FYtoilOCrpYBQfEeWOC0NRH7rkYhJnPe3swsvYZZ2xD0bjC', '0', '571339274@qq.com', '13577777777', '0', NULL, '0', NULL, NULL, NULL, NULL, 0, '张三', '2024-01-15 16:18:49', '中国', '河北省', '邯郸市', '长秋', NULL);
+INSERT INTO `sys_user` VALUES (3, '1', '管理员张三8', '$2a$10$w0syuJWWA4c1Q0NqQ4LVFONX2k179F4iqz7W1UUP8Hj6aYChTniZG', '0', '5713392748@qq.com', '13577777778', '0', NULL, '0', NULL, NULL, 3, '2024-01-23 15:34:23', 0, '张三88', '2024-01-15 08:00:00', NULL, NULL, NULL, '长秋秋', '111111222333');
 INSERT INTO `sys_user` VALUES (5, '2', '普通人张三', '$2a$10$SFmzm8FYtoilOCrpYBQfEeWOC0NRH7rkYhJnPe3swsvYZZ2xD0bjC', '0', NULL, '13577777777', '1', NULL, '1', NULL, '2024-01-08 16:05:42', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_user` VALUES (6, '3', '普通人张四', '$2a$10$SFmzm8FYtoilOCrpYBQfEeWOC0NRH7rkYhJnPe3swsvYZZ2xD0bjC', '1', NULL, '13577777777', '0', NULL, '1', NULL, '2024-01-08 16:05:42', 3, '2024-01-16 11:37:36', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_user` VALUES (7, '4', '普通人张五', '$2a$10$SFmzm8FYtoilOCrpYBQfEeWOC0NRH7rkYhJnPe3swsvYZZ2xD0bjC', '1', NULL, NULL, '0', NULL, '1', NULL, '2024-01-08 16:05:42', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
