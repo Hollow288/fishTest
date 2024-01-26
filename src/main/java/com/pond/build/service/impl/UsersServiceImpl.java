@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,7 +36,7 @@ public class UsersServiceImpl implements UsersService {
     private MenuMapper menuMapper;
 
     @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public ResponseResult getMeInfo() {
@@ -193,17 +194,31 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public ResponseResult changePassword(Integer userId, String passWord) {
+    public ResponseResult changePassword(Integer userId, Map<String,String> passWord) {
         UsernamePasswordAuthenticationToken authentication =
                 (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
 
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         List<String> permissions = loginUser.getPermissions();
         User userInfo = loginUser.getUser();
+
+//        passWord.get("oldPassword")
+
+        if(!Objects.equals(passWord.get("newPassword"),passWord.get("confirmPassword"))){
+            return new ResponseResult(HttpStatusCode.USERNAME_PASSWORD_ERR.getCode(),"两次输入的密码不一致");
+        }
+
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(User::getUserId,userId);
+        User user = usersMapper.selectOne(queryWrapper);
+        if(!passwordEncoder.matches(passWord.get("oldPassword"),user.getPassWord())){
+            return new ResponseResult(HttpStatusCode.USERNAME_PASSWORD_ERR.getCode(),"旧密码错误");
+        }
         if(Objects.equals((long)userId,userInfo.getUserId()) && permissions.contains("ROLE_ADMIN")){
             UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
             updateWrapper.eq("user_id", userId);
-            updateWrapper.set("pass_word",bCryptPasswordEncoder.encode(passWord));
+            String newPassword = passWord.get("newPassword");
+            updateWrapper.set("pass_word",passwordEncoder.encode(newPassword));
 
             boolean updateResult = usersMapper.update(null, updateWrapper) > 0;
             boolean recordResult = this.setUpdateByAndUpdateTime(userId);
@@ -212,6 +227,19 @@ public class UsersServiceImpl implements UsersService {
 
         }else {
             return new ResponseResult(HttpStatusCode.FORBIDDEN_ROLE_ERR.getCode(),HttpStatusCode.FORBIDDEN_ROLE_ERR.getCnMessage());
+        }
+    }
+
+    @Override
+    public ResponseResult resetPassword(Integer userId, Map<String,String> passWord) {
+        UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("user_id", userId);
+        updateWrapper.set("pass_word",passwordEncoder.encode(passWord.get("passWord")));
+        boolean updateResult = usersMapper.update(null, updateWrapper) > 0;
+        if(updateResult){
+            return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
+        }else {
+            return new ResponseResult(HttpStatusCode.REQUEST_SERVER_ERROR.getCode(),HttpStatusCode.REQUEST_SERVER_ERROR.getCnMessage());
         }
     }
 

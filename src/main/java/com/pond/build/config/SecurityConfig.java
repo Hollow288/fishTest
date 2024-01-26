@@ -178,13 +178,6 @@ public class SecurityConfig{
     }
 
 
-    /*
-     * 注入BCryptPasswordEncoder
-     */
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
 }
 

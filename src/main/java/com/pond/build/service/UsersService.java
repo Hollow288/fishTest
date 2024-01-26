@@ -18,5 +18,7 @@ public interface UsersService {
 
     ResponseResult updateUserInfoByUserId(Integer userId,  User user);
 
-    ResponseResult changePassword(Integer userId, String passWord);
+    ResponseResult changePassword(Integer userId, Map<String,String> passWord);
+
+    ResponseResult resetPassword(Integer userId, Map<String,String> passWord);
 }

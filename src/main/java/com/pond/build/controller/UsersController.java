@@ -72,7 +72,13 @@ public class UsersController {
 
     @PostMapping("/users/{userId}/change-password")
     @PreAuthorize("permitAll")
-    public ResponseResult changePassword(@PathVariable("userId") Integer userId, @RequestBody String passWord){
+    public ResponseResult changePassword(@PathVariable("userId") Integer userId, @RequestBody Map<String,String> passWord){
         return usersService.changePassword(userId, passWord);
+    }
+
+    @PostMapping("/users/{userId}/reset-password")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult resetPassword(@PathVariable("userId") Integer userId, @RequestBody Map<String,String> passWord){
+        return usersService.resetPassword(userId, passWord);
     }
 }
