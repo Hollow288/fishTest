@@ -11,6 +11,7 @@ import com.pond.build.model.Response.UserResponse;
 import com.pond.build.model.ResponseResult;
 import com.pond.build.model.User;
 import com.pond.build.service.UsersService;
+import com.pond.build.utils.CommonUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -155,7 +157,7 @@ public class UsersServiceImpl implements UsersService {
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         List<String> permissions = loginUser.getPermissions();
         User userInfo = loginUser.getUser();
-        if(Objects.equals((long)userId,userInfo.getUserId()) && permissions.contains("ROLE_ADMIN")){
+        if(Objects.equals((long)userId,userInfo.getUserId()) || permissions.contains("ROLE_ADMIN")){
             UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
             updateWrapper.eq("user_id", userId);
 
@@ -241,6 +243,36 @@ public class UsersServiceImpl implements UsersService {
         }else {
             return new ResponseResult(HttpStatusCode.REQUEST_SERVER_ERROR.getCode(),HttpStatusCode.REQUEST_SERVER_ERROR.getCnMessage());
         }
+    }
+
+    @Override
+    public ResponseResult createUser(User user) {
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(User::getUserName,user.getUserName());
+        User result = usersMapper.selectOne(queryWrapper);
+        if(result != null){
+            return new ResponseResult(HttpStatusCode.REQUEST_SERVER_ERROR.getCode(),"该用户名已经存在");
+        }
+        //当前操作人
+        UsernamePasswordAuthenticationToken authentication =
+                (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        User userInfo = loginUser.getUser();
+
+        user.setCreateBy(userInfo.getUserId());
+        user.setCreateTime(new Date());
+        user.setUpdateBy(userInfo.getUserId());
+        user.setUpdateTime(new Date());
+
+        LocalDate currentDate = LocalDate.now();
+        int year = currentDate.getYear();
+        String randomNumber = CommonUtil.generateRandomNumericString(10);
+        user.setNickName(year + randomNumber);
+
+        user.setPassWord(passwordEncoder.encode(user.getPassWord()));
+        usersMapper.insert(user);
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
     }
 
 

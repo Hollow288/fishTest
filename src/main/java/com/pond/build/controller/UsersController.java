@@ -81,4 +81,10 @@ public class UsersController {
     public ResponseResult resetPassword(@PathVariable("userId") Integer userId, @RequestBody Map<String,String> passWord){
         return usersService.resetPassword(userId, passWord);
     }
+
+    @PostMapping("/users")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult createUser(@RequestBody User user){
+        return usersService.createUser(user);
+    }
 }

@@ -21,4 +21,6 @@ public interface UsersService {
     ResponseResult changePassword(Integer userId, Map<String,String> passWord);
 
     ResponseResult resetPassword(Integer userId, Map<String,String> passWord);
+
+    ResponseResult createUser(User user);
 }
