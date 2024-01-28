@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : fishDB
+ Source Server         : 本地MYSQL
  Source Server Type    : MySQL
- Source Server Version : 80035
+ Source Server Version : 80035 (8.0.35)
  Source Host           : localhost:3306
  Source Schema         : fishdb
 
  Target Server Type    : MySQL
- Target Server Version : 80035
+ Target Server Version : 80035 (8.0.35)
  File Encoding         : 65001
 
- Date: 25/01/2024 17:59:28
+ Date: 28/01/2024 23:35:58
 */
 
 SET NAMES utf8mb4;
@@ -28,7 +28,7 @@ CREATE TABLE `student`  (
                             `birthday` date NULL DEFAULT NULL COMMENT '生日',
                             `tid` int NULL DEFAULT NULL COMMENT '教师id',
                             PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 55 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 55 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of student
@@ -81,7 +81,7 @@ CREATE TABLE `sys_menu`  (
                              `del_flag` int NULL DEFAULT 0 COMMENT '是否删除（0未删除 1已删除）',
                              `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
                              PRIMARY KEY (`menu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_menu
@@ -105,7 +105,7 @@ CREATE TABLE `sys_role`  (
                              `update_time` datetime NULL DEFAULT NULL,
                              `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
                              PRIMARY KEY (`role_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '角色表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '角色表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_role
@@ -121,7 +121,7 @@ CREATE TABLE `sys_role_menu`  (
                                   `role_id` bigint NOT NULL AUTO_INCREMENT COMMENT '角色ID',
                                   `menu_id` bigint NOT NULL DEFAULT 0 COMMENT '菜单id',
                                   PRIMARY KEY (`role_id`, `menu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_role_menu
@@ -138,7 +138,7 @@ CREATE TABLE `sys_user`  (
                              `user_id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
                              `user_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'NULL' COMMENT '用户名',
                              `nick_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'NULL' COMMENT '呢称',
-                             `pass_word` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'NULL' COMMENT '密码',
+                             `pass_word` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
                              `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '账号状态（0正常1停用)',
                              `email` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '邮箱',
                              `phone_number` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '手机号',
@@ -158,16 +158,16 @@ CREATE TABLE `sys_user`  (
                              `address` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '地址',
                              `biography` varchar(1500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '简介',
                              PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1751108099067248643 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (3, '1', '管理员张三8', '$2a$10$w0syuJWWA4c1Q0NqQ4LVFONX2k179F4iqz7W1UUP8Hj6aYChTniZG', '0', '5713392748@qq.com', '13577777778', '0', NULL, '0', NULL, NULL, 3, '2024-01-23 15:34:23', 0, '张三88', '2024-01-15 08:00:00', NULL, NULL, NULL, '长秋秋', '111111222333');
-INSERT INTO `sys_user` VALUES (5, '2', '普通人张三', '$2a$10$SFmzm8FYtoilOCrpYBQfEeWOC0NRH7rkYhJnPe3swsvYZZ2xD0bjC', '0', NULL, '13577777777', '1', NULL, '1', NULL, '2024-01-08 16:05:42', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_user` VALUES (3, '1', '管理员张三8', '$2a$10$nUOJlRvPXRdtb53KdJ303O0kdjEaAzGv4hO1IGABAeHca237PXdq2', '0', '5713392748@qq.com', '13577777778', '1', NULL, '0', NULL, NULL, 3, '2024-01-26 23:24:21', 0, '张三88', '2024-01-15 08:00:00', NULL, NULL, NULL, '长秋秋', '11111122233344');
+INSERT INTO `sys_user` VALUES (5, '2', '普通人张三', '$2a$10$YdV4TVf8Gm31BMgZOlHCeubVl2oe.peeYIcfFAxOsmtsVMIhFuUme', '0', NULL, '13577777777', '1', NULL, '1', NULL, '2024-01-08 16:05:42', 3, '2024-01-26 23:19:22', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_user` VALUES (6, '3', '普通人张四', '$2a$10$SFmzm8FYtoilOCrpYBQfEeWOC0NRH7rkYhJnPe3swsvYZZ2xD0bjC', '1', NULL, '13577777777', '0', NULL, '1', NULL, '2024-01-08 16:05:42', 3, '2024-01-16 11:37:36', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_user` VALUES (7, '4', '普通人张五', '$2a$10$SFmzm8FYtoilOCrpYBQfEeWOC0NRH7rkYhJnPe3swsvYZZ2xD0bjC', '1', NULL, NULL, '0', NULL, '1', NULL, '2024-01-08 16:05:42', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_user` VALUES (8, '5', '普通人张六', '$2a$10$SFmzm8FYtoilOCrpYBQfEeWOC0NRH7rkYhJnPe3swsvYZZ2xD0bjC', '0', NULL, '13577777777', '1', NULL, '1', NULL, '2024-01-08 16:05:42', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_user` VALUES (8, '5', '普通人张六', '$2a$10$SFmzm8FYtoilOCrpYBQfEeWOC0NRH7rkYhJnPe3swsvYZZ2xD0bjC', '0', 'qqq@qq.com', '', '1', NULL, '1', NULL, '2024-01-08 16:05:42', 8, '2024-01-27 13:22:03', 0, 'Hollow', '2024-01-27 08:00:00', NULL, NULL, NULL, 'zhong', '111');
 INSERT INTO `sys_user` VALUES (9, '6', '普通人张三', '$2a$10$SFmzm8FYtoilOCrpYBQfEeWOC0NRH7rkYhJnPe3swsvYZZ2xD0bjC', '0', NULL, '13577777777', '1', NULL, '1', NULL, '2024-01-08 16:05:42', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_user` VALUES (10, '7', '普通人张三', '$2a$10$SFmzm8FYtoilOCrpYBQfEeWOC0NRH7rkYhJnPe3swsvYZZ2xD0bjC', '0', NULL, NULL, '1', NULL, '1', NULL, '2024-01-08 16:05:42', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_user` VALUES (11, '8', '普通人张三', '$2a$10$SFmzm8FYtoilOCrpYBQfEeWOC0NRH7rkYhJnPe3swsvYZZ2xD0bjC', '0', NULL, NULL, '0', NULL, '1', NULL, '2024-01-08 16:05:42', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -175,6 +175,7 @@ INSERT INTO `sys_user` VALUES (12, '9', '普通人张三', '$2a$10$SFmzm8FYtoilO
 INSERT INTO `sys_user` VALUES (13, '10', '普通人张三', '$2a$10$SFmzm8FYtoilOCrpYBQfEeWOC0NRH7rkYhJnPe3swsvYZZ2xD0bjC', '0', NULL, NULL, '1', NULL, '1', NULL, '2024-01-08 16:05:42', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_user` VALUES (14, '11', '普通人张三', '$2a$10$SFmzm8FYtoilOCrpYBQfEeWOC0NRH7rkYhJnPe3swsvYZZ2xD0bjC', '0', NULL, NULL, '0', NULL, '1', NULL, '2024-01-08 16:05:42', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_user` VALUES (15, '12', '普通人张三', '$2a$10$SFmzm8FYtoilOCrpYBQfEeWOC0NRH7rkYhJnPe3swsvYZZ2xD0bjC', '0', NULL, NULL, '2', NULL, '1', NULL, '2024-01-08 16:05:42', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_user` VALUES (1751108099067248642, 'createTest', '20247686826684', '$2a$10$dsyIzjN2GLiupi83BppopO6e1q9IkSpzfKWUV5PA5yuQypfUHRQey', '0', NULL, NULL, NULL, NULL, '1', 3, '2024-01-27 13:01:19', 3, '2024-01-27 13:01:19', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -184,7 +185,7 @@ CREATE TABLE `sys_user_role`  (
                                   `user_id` bigint NOT NULL AUTO_INCREMENT COMMENT '用户id',
                                   `role_id` bigint NOT NULL DEFAULT 0 COMMENT '角色id',
                                   PRIMARY KEY (`user_id`, `role_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1751108099067248643 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_user_role
@@ -192,6 +193,7 @@ CREATE TABLE `sys_user_role`  (
 INSERT INTO `sys_user_role` VALUES (3, 3);
 INSERT INTO `sys_user_role` VALUES (3, 4);
 INSERT INTO `sys_user_role` VALUES (5, 4);
+INSERT INTO `sys_user_role` VALUES (1751108099067248642, 4);
 
 -- ----------------------------
 -- Table structure for teacher
@@ -201,7 +203,7 @@ CREATE TABLE `teacher`  (
                             `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
                             `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '姓名',
                             PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of teacher
