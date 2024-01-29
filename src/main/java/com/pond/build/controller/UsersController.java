@@ -53,32 +53,32 @@ public class UsersController {
 
     @PostMapping("/users/{userId}/enable")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseResult setUserEnable(@PathVariable("userId") Integer userId){
+    public ResponseResult setUserEnable(@PathVariable("userId") long userId){
         return usersService.setUserEnable(userId);
     }
 
 
     @PostMapping("/users/{userId}/disable")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseResult setUserDisable(@PathVariable("userId") Integer userId){
+    public ResponseResult setUserDisable(@PathVariable("userId") long userId){
         return usersService.setUserDisable(userId);
     }
 
     @PatchMapping("/users/{userId}")
     @PreAuthorize("permitAll")
-    public ResponseResult updateUserInfoByUserId(@PathVariable("userId") Integer userId, @RequestBody User user){
+    public ResponseResult updateUserInfoByUserId(@PathVariable("userId") long userId, @RequestBody User user){
         return usersService.updateUserInfoByUserId(userId, user);
     }
 
     @PostMapping("/users/{userId}/change-password")
     @PreAuthorize("permitAll")
-    public ResponseResult changePassword(@PathVariable("userId") Integer userId, @RequestBody Map<String,String> passWord){
+    public ResponseResult changePassword(@PathVariable("userId") long userId, @RequestBody Map<String,String> passWord){
         return usersService.changePassword(userId, passWord);
     }
 
     @PostMapping("/users/{userId}/reset-password")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseResult resetPassword(@PathVariable("userId") Integer userId, @RequestBody Map<String,String> passWord){
+    public ResponseResult resetPassword(@PathVariable("userId") long userId, @RequestBody Map<String,String> passWord){
         return usersService.resetPassword(userId, passWord);
     }
 

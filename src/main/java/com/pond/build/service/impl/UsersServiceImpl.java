@@ -48,7 +48,7 @@ public class UsersServiceImpl implements UsersService {
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         User userInfo = loginUser.getUser();
         List<String> permissions = loginUser.getPermissions();
-        Map<String, Object> userInfoMap = loginService.putUserInfoToMap(userInfo.getUserId(), userInfo.getUserName(), userInfo.getName(), userInfo.getBirthDate(), userInfo.getBiography(),
+        Map<String, Object> userInfoMap = loginService.putUserInfoToMap(userInfo.getUserId().toString(), userInfo.getUserName(), userInfo.getName(), userInfo.getBirthDate(), userInfo.getBiography(),
                 userInfo.getNickName(), userInfo.getEmail(), userInfo.getAvatarUrl(), userInfo.getPhoneNumber(), userInfo.getGender(), userInfo.getStatus(),  userInfo.getAddress(),permissions);
 
         return new ResponseResult(HttpStatusCode.OK.getCode(),"获取成功",userInfoMap);
@@ -103,7 +103,7 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public ResponseResult setUserEnable(Integer userId) {
+    public ResponseResult setUserEnable(long userId) {
         // 创建更新对象
         UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
         // 设置更新条件，假设id为传入的参数
@@ -127,7 +127,7 @@ public class UsersServiceImpl implements UsersService {
 
 
     @Override
-    public ResponseResult setUserDisable(Integer userId) {
+    public ResponseResult setUserDisable(long userId) {
         // 创建更新对象
         UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
         // 设置更新条件，假设id为传入的参数
@@ -150,14 +150,14 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public ResponseResult updateUserInfoByUserId(Integer userId,  User user) {
+    public ResponseResult updateUserInfoByUserId(long userId,  User user) {
         UsernamePasswordAuthenticationToken authentication =
                 (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
 
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         List<String> permissions = loginUser.getPermissions();
         User userInfo = loginUser.getUser();
-        if(Objects.equals((long)userId,userInfo.getUserId()) || permissions.contains("ROLE_ADMIN")){
+        if(Objects.equals(userId,userInfo.getUserId()) || permissions.contains("ROLE_ADMIN")){
             UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
             updateWrapper.eq("user_id", userId);
 
@@ -196,7 +196,7 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public ResponseResult changePassword(Integer userId, Map<String,String> passWord) {
+    public ResponseResult changePassword(long userId, Map<String,String> passWord) {
         UsernamePasswordAuthenticationToken authentication =
                 (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
 
@@ -233,7 +233,7 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public ResponseResult resetPassword(Integer userId, Map<String,String> passWord) {
+    public ResponseResult resetPassword(long userId, Map<String,String> passWord) {
         UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
         updateWrapper.eq("user_id", userId);
         updateWrapper.set("pass_word",passwordEncoder.encode(passWord.get("passWord")));
@@ -268,7 +268,7 @@ public class UsersServiceImpl implements UsersService {
         LocalDate currentDate = LocalDate.now();
         int year = currentDate.getYear();
         String randomNumber = CommonUtil.generateRandomNumericString(10);
-        user.setNickName(year + randomNumber);
+        user.setNickName("用户" + year + randomNumber);
 
         user.setPassWord(passwordEncoder.encode(user.getPassWord()));
         usersMapper.insert(user);
@@ -276,7 +276,7 @@ public class UsersServiceImpl implements UsersService {
     }
 
 
-    public boolean setUpdateByAndUpdateTime(Integer userId){
+    public boolean setUpdateByAndUpdateTime(long userId){
         //当前操作人
         UsernamePasswordAuthenticationToken authentication =
                 (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
@@ -294,7 +294,7 @@ public class UsersServiceImpl implements UsersService {
     }
 
 
-    public UserResponse getUserInfoById(Integer userId){
+    public UserResponse getUserInfoById(long userId){
         return usersMapper.getUserInfoById(userId);
     }
 }

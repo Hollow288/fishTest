@@ -3,7 +3,7 @@
 <mapper namespace="com.pond.build.mapper.UsersMapper">
 
     <resultMap type="com.pond.build.model.Response.UserResponse" id="userWithRolesResultMap">
-        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
         <result property="userName" column="user_name" jdbcType="VARCHAR"/>
         <result property="nickName" column="nick_name" jdbcType="VARCHAR"/>
         <result property="status" column="status" jdbcType="VARCHAR"/>

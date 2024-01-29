@@ -12,15 +12,15 @@ public interface UsersService {
 
     ResponseResult getUsersByPage(Integer page, Integer pageSize, String searchText, Date startDate, Date endDate, String sort, String order);
 
-    ResponseResult setUserEnable(Integer userId);
+    ResponseResult setUserEnable(long userId);
 
-    ResponseResult setUserDisable(Integer userId);
+    ResponseResult setUserDisable(long userId);
 
-    ResponseResult updateUserInfoByUserId(Integer userId,  User user);
+    ResponseResult updateUserInfoByUserId(long userId,  User user);
 
-    ResponseResult changePassword(Integer userId, Map<String,String> passWord);
+    ResponseResult changePassword(long userId, Map<String,String> passWord);
 
-    ResponseResult resetPassword(Integer userId, Map<String,String> passWord);
+    ResponseResult resetPassword(long userId, Map<String,String> passWord);
 
     ResponseResult createUser(User user);
 }

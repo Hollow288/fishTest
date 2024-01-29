@@ -11,7 +11,8 @@ import java.util.List;
 @Getter
 @Setter
 public class UserResponse {
-    private Long userId;
+    //js中最长数字17位数字 改string吧 隔壁的User实体类一般用去接数据,java的long比较长,就不改了
+    private String userId;
     /**
      * 用户名
      */

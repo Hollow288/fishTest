@@ -69,7 +69,7 @@ public class LoginServiceImpl implements LoginService {
         //前端需要的用户个人信息
         User userInfo = loginUser.getUser();
         List<String> permissions = loginUser.getPermissions();
-        Map<String, Object> userInfoMap = this.putUserInfoToMap(userInfo.getUserId(), userInfo.getUserName(), userInfo.getName(), userInfo.getBirthDate(),  userInfo.getBiography(),
+        Map<String, Object> userInfoMap = this.putUserInfoToMap(userInfo.getUserId().toString(), userInfo.getUserName(), userInfo.getName(), userInfo.getBirthDate(),  userInfo.getBiography(),
                 userInfo.getNickName(), userInfo.getEmail(), userInfo.getAvatarUrl(), userInfo.getPhoneNumber(), userInfo.getGender(), userInfo.getStatus(), userInfo.getAddress(), permissions);
 
         map.put("user",JSONObject.toJSONString(userInfoMap));
@@ -163,7 +163,7 @@ public class LoginServiceImpl implements LoginService {
 
 
     //返回给前端的用户信息
-    public Map<String,Object> putUserInfoToMap(Long userId, String userName, String name, Date birthDate, String biography, String nickName, String email, String avatarUrl, String phoneNumber, String gender, String status, String address, List<String> roles){
+    public Map<String,Object> putUserInfoToMap(String userId, String userName, String name, Date birthDate, String biography, String nickName, String email, String avatarUrl, String phoneNumber, String gender, String status, String address, List<String> roles){
         Map<String, Object> userInfoMap = new HashMap<>();
         userInfoMap.put("userId", userId);
         userInfoMap.put("userName", userName);

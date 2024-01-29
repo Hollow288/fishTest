@@ -15,12 +15,12 @@ import java.util.List;
 @Repository
 public interface UsersMapper  extends BaseMapper<User> {
 
-    String findRoleById(@Param("userId")Integer userId);
+    String findRoleById(@Param("userId")long userId);
 
     List<UserResponse> getUsersByPage(@Param("searchText") String searchText, @Param("startDate") Date startDate, @Param("endDate") Date endDate,
                                       @Param("offset") Integer offset, @Param("limit") Integer limit, @Param("sort") String sort, @Param("order") String order);
 
     Integer getUsersCountByPage(@Param("searchText") String searchText, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
-    UserResponse getUserInfoById(Integer userId);
+    UserResponse getUserInfoById(long userId);
 }
