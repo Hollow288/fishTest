@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 本地MYSQL
+ Source Server         : fishDB
  Source Server Type    : MySQL
- Source Server Version : 80035 (8.0.35)
+ Source Server Version : 80035
  Source Host           : localhost:3306
  Source Schema         : fishdb
 
  Target Server Type    : MySQL
- Target Server Version : 80035 (8.0.35)
+ Target Server Version : 80035
  File Encoding         : 65001
 
- Date: 28/01/2024 23:35:58
+ Date: 29/01/2024 17:40:38
 */
 
 SET NAMES utf8mb4;
@@ -158,7 +158,7 @@ CREATE TABLE `sys_user`  (
                              `address` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '地址',
                              `biography` varchar(1500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '简介',
                              PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1751108099067248643 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1751864693792419842 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_user
@@ -172,10 +172,11 @@ INSERT INTO `sys_user` VALUES (9, '6', '普通人张三', '$2a$10$SFmzm8FYtoilOC
 INSERT INTO `sys_user` VALUES (10, '7', '普通人张三', '$2a$10$SFmzm8FYtoilOCrpYBQfEeWOC0NRH7rkYhJnPe3swsvYZZ2xD0bjC', '0', NULL, NULL, '1', NULL, '1', NULL, '2024-01-08 16:05:42', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_user` VALUES (11, '8', '普通人张三', '$2a$10$SFmzm8FYtoilOCrpYBQfEeWOC0NRH7rkYhJnPe3swsvYZZ2xD0bjC', '0', NULL, NULL, '0', NULL, '1', NULL, '2024-01-08 16:05:42', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_user` VALUES (12, '9', '普通人张三', '$2a$10$SFmzm8FYtoilOCrpYBQfEeWOC0NRH7rkYhJnPe3swsvYZZ2xD0bjC', '0', NULL, NULL, '2', NULL, '1', NULL, '2024-01-08 16:05:42', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_user` VALUES (13, '10', '普通人张三', '$2a$10$SFmzm8FYtoilOCrpYBQfEeWOC0NRH7rkYhJnPe3swsvYZZ2xD0bjC', '0', NULL, NULL, '1', NULL, '1', NULL, '2024-01-08 16:05:42', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_user` VALUES (13, '10', '普通人张三', '$2a$10$s7iZYbu3zSl/w2AXDTwAxucOsodd649FU/buPbixJvnOi0aFCTt0.', '0', NULL, NULL, '1', NULL, '1', NULL, '2024-01-08 16:05:42', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_user` VALUES (14, '11', '普通人张三', '$2a$10$SFmzm8FYtoilOCrpYBQfEeWOC0NRH7rkYhJnPe3swsvYZZ2xD0bjC', '0', NULL, NULL, '0', NULL, '1', NULL, '2024-01-08 16:05:42', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_user` VALUES (15, '12', '普通人张三', '$2a$10$SFmzm8FYtoilOCrpYBQfEeWOC0NRH7rkYhJnPe3swsvYZZ2xD0bjC', '0', NULL, NULL, '2', NULL, '1', NULL, '2024-01-08 16:05:42', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_user` VALUES (1751108099067248642, 'createTest', '20247686826684', '$2a$10$dsyIzjN2GLiupi83BppopO6e1q9IkSpzfKWUV5PA5yuQypfUHRQey', '0', NULL, NULL, NULL, NULL, '1', 3, '2024-01-27 13:01:19', 3, '2024-01-27 13:01:19', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_user` VALUES (1751108099067248642, 'createTest', '20247686826684', '$2a$10$7R/TVXG6efrDXd3GcGEfh.MaXc1Bld/NRnMxKLILx.TCkBZE/plo2', '0', 'string@qq.com', NULL, '1', NULL, '1', 3, '2024-01-27 13:01:19', 3, '2024-01-29 16:04:26', 0, 'string@qq.com', '2024-01-26 08:00:00', NULL, NULL, NULL, '这是地址', '这是简介');
+INSERT INTO `sys_user` VALUES (1751864693792419841, 'ttttt', '20248346481858', '$2a$10$rH1pYtvhCDv6LRGplFQdvOZbjKjpJBLWypJmSS84Ud9EaosBN2q7C', '0', NULL, NULL, NULL, NULL, '1', 3, '2024-01-29 15:07:46', 3, '2024-01-29 15:07:46', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_user_role
