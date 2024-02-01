@@ -36,7 +36,11 @@ mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
-
+minio:
+  endpoint: http://127.0.0.1:9000
+  accessKey: myname
+  secretKey: mypassword
+  bucketName: fishtest
 
 logging:
   config: classpath:Log4j2-spring.xml
