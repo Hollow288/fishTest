@@ -15,6 +15,7 @@ import com.pond.build.utils.CommonUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -42,9 +43,7 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public ResponseResult getMeInfo() {
-        UsernamePasswordAuthenticationToken authentication =
-                (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         User userInfo = loginUser.getUser();
         List<String> permissions = loginUser.getPermissions();
@@ -151,8 +150,7 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public ResponseResult updateUserInfoByUserId(long userId,  User user) {
-        UsernamePasswordAuthenticationToken authentication =
-                (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         List<String> permissions = loginUser.getPermissions();
@@ -197,8 +195,7 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public ResponseResult changePassword(long userId, Map<String,String> passWord) {
-        UsernamePasswordAuthenticationToken authentication =
-                (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         List<String> permissions = loginUser.getPermissions();
@@ -216,7 +213,7 @@ public class UsersServiceImpl implements UsersService {
         if(!passwordEncoder.matches(passWord.get("oldPassword"),user.getPassWord())){
             return new ResponseResult(HttpStatusCode.USERNAME_PASSWORD_ERR.getCode(),"旧密码错误");
         }
-        if(Objects.equals((long)userId,userInfo.getUserId()) && permissions.contains("ROLE_ADMIN")){
+        if(Objects.equals(userId,userInfo.getUserId()) && permissions.contains("ROLE_ADMIN")){
             UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
             updateWrapper.eq("user_id", userId);
             String newPassword = passWord.get("newPassword");
@@ -254,8 +251,7 @@ public class UsersServiceImpl implements UsersService {
             return new ResponseResult(HttpStatusCode.REQUEST_SERVER_ERROR.getCode(),"该用户名已经存在");
         }
         //当前操作人
-        UsernamePasswordAuthenticationToken authentication =
-                (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         User userInfo = loginUser.getUser();
@@ -278,8 +274,7 @@ public class UsersServiceImpl implements UsersService {
 
     public boolean setUpdateByAndUpdateTime(long userId){
         //当前操作人
-        UsernamePasswordAuthenticationToken authentication =
-                (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         User userInfo = loginUser.getUser();

@@ -1,8 +1,13 @@
 package com.pond.build.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.pond.build.enums.HttpStatusCode;
+import com.pond.build.mapper.MenuMapper;
+import com.pond.build.mapper.UserMapper;
+import com.pond.build.mapper.UsersMapper;
 import com.pond.build.model.LoginUser;
+import com.pond.build.model.Response.UserResponse;
 import com.pond.build.model.ResponseResult;
 import com.pond.build.model.User;
 import com.pond.build.service.LoginService;
@@ -29,12 +34,18 @@ public class LoginServiceImpl implements LoginService {
     @Autowired
     private RedisUtil redisUtil;
 
+    @Autowired
+    private UserMapper userMapper;
+
+    @Autowired
+    private MenuMapper menuMapper;
+
 
     @Override
     public ResponseResult login(User user) {
 
         //通过UsernamePasswordAuthenticationToken获取用户名和密码
-        UsernamePasswordAuthenticationToken authenticationToken=new UsernamePasswordAuthenticationToken(user.getUserName(),user.getPassWord());
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getUserName(),user.getPassWord());
 
         //AuthenticationManager委托机制对authenticationToken 进行用户认证
         Authentication authenticate = null;
@@ -87,8 +98,7 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public ResponseResult logout() {
         //从SecurityContextHolder中的userid
-        UsernamePasswordAuthenticationToken authentication =
-                (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         Long userid = loginUser.getUser().getUserId();
@@ -125,10 +135,24 @@ public class LoginServiceImpl implements LoginService {
                 return new ResponseResult(HttpStatusCode.REFRESH_TOKEN_ERR.getCode(),HttpStatusCode.REFRESH_TOKEN_ERR.getCnMessage(),null);
             }
 
-            Object userInfo = redisUtil.get("refresh_token:" + userid);
+            //Todo 这里要改一下，要重新去库里查信息，因为如果在中途改了用户信息，Atoken失效后，会把老的用户信息重新传给前端
+//            Object userInfo = redisUtil.get("refresh_token:" + userid);
+            LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(User::getUserId,Long.parseLong(userid));
+            User user = userMapper.selectOne(queryWrapper);
+
+            //定义一个权限集合
+            List<String> permsList = menuMapper.selectPermsByUserId(user.getUserId());
+            List<String> rolesList = menuMapper.selectRolesByUserId(user.getUserId());
+            List<String> resultList = new ArrayList<>();
+            resultList.addAll(permsList);
+            resultList.addAll(rolesList);
+
+            LoginUser loginUser = new LoginUser(user, resultList);
+
             //重置AccessToken和RefreshToken过期时间(秒)
-            redisUtil.set("access_token:"+ userid,userInfo.toString(),JwtUtil.JWT_ACCESS_TTL/1000);
-            redisUtil.set("refresh_token:"+ userid,userInfo.toString(),JwtUtil.JWT_REFRESH_TTL/1000);
+            redisUtil.set("access_token:"+ userid,JSONObject.toJSONString(loginUser),JwtUtil.JWT_ACCESS_TTL/1000);
+            redisUtil.set("refresh_token:"+ userid,JSONObject.toJSONString(loginUser),JwtUtil.JWT_REFRESH_TTL/1000);
 
             //生成新的AccessToken和RefreshToken
             Map<String, String> map = new HashMap<>();

@@ -36,8 +36,8 @@ public class MinioUtil {
     @Autowired
     private MinioClient minioClient;
 
-    @Value("${minio.bucketName}")
-    private String bucketName;
+//    @Value("${minio.bucketName}")
+//    private String bucketName;
 
     /**
      * description: 判断bucket是否存在，不存在则创建
@@ -96,17 +96,17 @@ public class MinioUtil {
      * @param multipartFile
      * @return: java.lang.String
      */
-    public List<String> upload(MultipartFile[] multipartFile) {
-        return upload(multipartFile, bucketName,"");
-    }
+//    public List<String> upload(MultipartFile[] multipartFile) {
+//        return upload(multipartFile, bucketName,"");
+//    }
     /**
      * description: 上传文件     *
      * @param multipartFile
      * @return: java.lang.String
      */
-    public List<String> upload(MultipartFile[] multipartFile,String filePath) {
-        return upload(multipartFile, bucketName,filePath);
-    }
+//    public List<String> upload(MultipartFile[] multipartFile,String filePath) {
+//        return upload(multipartFile, bucketName,filePath);
+//    }
     /**
      * description: 上传文件
      *
@@ -163,46 +163,46 @@ public class MinioUtil {
      * @param fileName
      * @return: org.springframework.http.ResponseEntity<byte [ ]>
      */
-    public ResponseEntity<byte[]> download(String fileName) {
-        ResponseEntity<byte[]> responseEntity = null;
-        InputStream in = null;
-        ByteArrayOutputStream out = null;
-        try {
-            in = minioClient.getObject(GetObjectArgs.builder().bucket(bucketName).object(fileName).build());
-            out = new ByteArrayOutputStream();
-            IOUtils.copy(in, out);
-            //封装返回值
-            byte[] bytes = out.toByteArray();
-            HttpHeaders headers = new HttpHeaders();
-            try {
-                headers.add("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-            headers.setContentLength(bytes.length);
-            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-            headers.setAccessControlExposeHeaders(Arrays.asList("*"));
-            responseEntity = new ResponseEntity<byte[]>(bytes, headers, HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (in != null) {
-                    try {
-                        in.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                if (out != null) {
-                    out.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return responseEntity;
-    }
+//    public ResponseEntity<byte[]> download(String fileName) {
+//        ResponseEntity<byte[]> responseEntity = null;
+//        InputStream in = null;
+//        ByteArrayOutputStream out = null;
+//        try {
+//            in = minioClient.getObject(GetObjectArgs.builder().bucket(bucketName).object(fileName).build());
+//            out = new ByteArrayOutputStream();
+//            IOUtils.copy(in, out);
+//            //封装返回值
+//            byte[] bytes = out.toByteArray();
+//            HttpHeaders headers = new HttpHeaders();
+//            try {
+//                headers.add("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
+//            } catch (UnsupportedEncodingException e) {
+//                e.printStackTrace();
+//            }
+//            headers.setContentLength(bytes.length);
+//            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+//            headers.setAccessControlExposeHeaders(Arrays.asList("*"));
+//            responseEntity = new ResponseEntity<byte[]>(bytes, headers, HttpStatus.OK);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                if (in != null) {
+//                    try {
+//                        in.close();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//                if (out != null) {
+//                    out.close();
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        return responseEntity;
+//    }
 
     /**
      * 查看文件对象
@@ -321,10 +321,10 @@ public class MinioUtil {
      * @param objectName 文件名称
      * @return url
      */
-    @SneakyThrows(Exception.class)
-    public String getUploadObjectUrl(String objectName) {
-        return getUploadObjectUrl(objectName,60*60);
-    }
+//    @SneakyThrows(Exception.class)
+//    public String getUploadObjectUrl(String objectName) {
+//        return getUploadObjectUrl(objectName,60*60);
+//    }
 
     /**
      * 获取文件外链
@@ -332,10 +332,10 @@ public class MinioUtil {
      * @param expires    过期时间
      * @return url
      */
-    @SneakyThrows(Exception.class)
-    public String getUploadObjectUrl(String objectName, Integer expires) {
-        return getUploadObjectUrl(bucketName,objectName,expires);
-    }
+//    @SneakyThrows(Exception.class)
+//    public String getUploadObjectUrl(String objectName, Integer expires) {
+//        return getUploadObjectUrl(bucketName,objectName,expires);
+//    }
     /**
      * 获取文件外链
      *
