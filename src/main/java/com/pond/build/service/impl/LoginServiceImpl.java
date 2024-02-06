@@ -11,6 +11,7 @@ import com.pond.build.model.Response.UserResponse;
 import com.pond.build.model.ResponseResult;
 import com.pond.build.model.User;
 import com.pond.build.service.LoginService;
+import com.pond.build.utils.CommonUtil;
 import com.pond.build.utils.JwtUtil;
 import com.pond.build.utils.RedisUtil;
 import io.jsonwebtoken.Claims;
@@ -196,7 +197,7 @@ public class LoginServiceImpl implements LoginService {
         userInfoMap.put("email", email);
         userInfoMap.put("phoneNumber", phoneNumber);
         userInfoMap.put("nickName", nickName);
-        userInfoMap.put("avatarUrl", avatarUrl);
+        userInfoMap.put("avatarUrl", CommonUtil.fileUrlEncoderChance(avatarUrl));
         userInfoMap.put("gender", gender);
         if(Objects.equals(gender,"0")){
             userInfoMap.put("genderLabel", "女");

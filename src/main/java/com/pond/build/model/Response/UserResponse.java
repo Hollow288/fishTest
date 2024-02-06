@@ -1,5 +1,6 @@
 package com.pond.build.model.Response;
 
+import com.pond.build.utils.CommonUtil;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -101,4 +102,8 @@ public class UserResponse {
      * 角色
      */
     private List<String> roles;
+
+    public String getAvatarUrl() {
+        return CommonUtil.fileUrlEncoderChance(avatarUrl);
+    }
 }

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pond.build.enums.HttpStatusCode;
 import com.pond.build.mapper.MenuMapper;
+import com.pond.build.mapper.UserMapper;
 import com.pond.build.mapper.UsersMapper;
 import com.pond.build.model.LoginUser;
 import com.pond.build.model.Response.UserResponse;
@@ -41,16 +42,39 @@ public class UsersServiceImpl implements UsersService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private UserMapper userMapper;
+
     @Override
     public ResponseResult getMeInfo() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         User userInfo = loginUser.getUser();
-        List<String> permissions = loginUser.getPermissions();
-        Map<String, Object> userInfoMap = loginService.putUserInfoToMap(userInfo.getUserId().toString(), userInfo.getUserName(), userInfo.getName(), userInfo.getBirthDate(), userInfo.getBiography(),
-                userInfo.getNickName(), userInfo.getEmail(), userInfo.getAvatarUrl(), userInfo.getPhoneNumber(), userInfo.getGender(), userInfo.getStatus(),  userInfo.getAddress(),permissions);
+//        List<String> permissions = loginUser.getPermissions();
+//        Map<String, Object> userInfoMap = loginService.putUserInfoToMap(userInfo.getUserId().toString(), userInfo.getUserName(), userInfo.getName(), userInfo.getBirthDate(), userInfo.getBiography(),
+//                userInfo.getNickName(), userInfo.getEmail(), userInfo.getAvatarUrl(), userInfo.getPhoneNumber(), userInfo.getGender(), userInfo.getStatus(),  userInfo.getAddress(),permissions);
 
-        return new ResponseResult(HttpStatusCode.OK.getCode(),"获取成功",userInfoMap);
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(User::getUserId,userInfo.getUserId());
+        User user = userMapper.selectOne(queryWrapper);
+        user.setPassWord("");
+
+        UserResponse userResponse = new UserResponse();
+        BeanUtils.copyProperties(user,userResponse);
+
+        //定义一个权限集合
+        List<String> permsList = menuMapper.selectPermsByUserId(user.getUserId());
+        List<String> rolesList = menuMapper.selectRolesByUserId(user.getUserId());
+        List<String> resultList = new ArrayList<>();
+        resultList.addAll(permsList);
+        resultList.addAll(rolesList);
+
+        userResponse.setRoles(resultList);
+        userResponse.setUserId(user.getUserId().toString());
+
+
+
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"获取成功",userResponse);
 
     }
 
