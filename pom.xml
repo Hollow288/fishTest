@@ -103,7 +103,7 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-generator</artifactId>
             <version>3.0.5</version>
-<!--      mybatis-plus-boot-starter里面也有这个依赖 需要排除掉      -->
+<!--      mybatis-plus-boot-starter里面也有这个依赖 需要排除掉(生成代码的时候需要)      -->
             <exclusions>
                 <exclusion>
                     <groupId>com.baomidou</groupId>

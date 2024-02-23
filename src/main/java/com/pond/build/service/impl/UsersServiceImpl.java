@@ -63,10 +63,10 @@ public class UsersServiceImpl implements UsersService {
         BeanUtils.copyProperties(user,userResponse);
 
         //定义一个权限集合
-        List<String> permsList = menuMapper.selectPermsByUserId(user.getUserId());
+//        List<String> permsList = menuMapper.selectPermsByUserId(user.getUserId());
         List<String> rolesList = menuMapper.selectRolesByUserId(user.getUserId());
         List<String> resultList = new ArrayList<>();
-        resultList.addAll(permsList);
+//        resultList.addAll(permsList);
         resultList.addAll(rolesList);
 
         userResponse.setRoles(resultList);
@@ -200,12 +200,12 @@ public class UsersServiceImpl implements UsersService {
 
             UserResponse userInfoResult = this.getUserInfoById(userId);
 
-            List<String> permsList = menuMapper.selectPermsByUserId(user.getUserId());
+//            List<String> permsList = menuMapper.selectPermsByUserId(user.getUserId());
             //定义个亿角色集合
             List<String> rolesList = menuMapper.selectRolesByUserId(user.getUserId());
 
             List<String> roleAll = new ArrayList<>();
-            roleAll.addAll(permsList);
+//            roleAll.addAll(permsList);
             roleAll.addAll(rolesList);
 
             userInfoResult.setRoles(roleAll);

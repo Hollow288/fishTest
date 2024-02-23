@@ -40,13 +40,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         // (授权，即查询用户具有哪些权限)查询对应的用户信息
         //定义一个权限集合
-        List<String> permsList = menuMapper.selectPermsByUserId(user.getUserId());
+//        List<String> permsList = menuMapper.selectPermsByUserId(user.getUserId());
         //定义个亿角色集合
         List<String> rolesList = menuMapper.selectRolesByUserId(user.getUserId());
 
         List<String> resultList = new ArrayList<>();
 
-        resultList.addAll(permsList);
+//        resultList.addAll(permsList);
         resultList.addAll(rolesList);
 
         //把数据封装成UserDetails返回

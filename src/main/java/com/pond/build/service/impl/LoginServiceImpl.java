@@ -143,10 +143,10 @@ public class LoginServiceImpl implements LoginService {
             User user = userMapper.selectOne(queryWrapper);
 
             //定义一个权限集合
-            List<String> permsList = menuMapper.selectPermsByUserId(user.getUserId());
+//            List<String> permsList = menuMapper.selectPermsByUserId(user.getUserId());
             List<String> rolesList = menuMapper.selectRolesByUserId(user.getUserId());
             List<String> resultList = new ArrayList<>();
-            resultList.addAll(permsList);
+//            resultList.addAll(permsList);
             resultList.addAll(rolesList);
 
             LoginUser loginUser = new LoginUser(user, resultList);
