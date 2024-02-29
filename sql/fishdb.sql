@@ -11,7 +11,7 @@
  Target Server Version : 80035
  File Encoding         : 65001
 
- Date: 29/01/2024 17:40:38
+ Date: 29/02/2024 17:52:03
 */
 
 SET NAMES utf8mb4;
@@ -67,7 +67,10 @@ INSERT INTO `student` VALUES (51, 'tom', 23, NULL, NULL);
 DROP TABLE IF EXISTS `sys_menu`;
 CREATE TABLE `sys_menu`  (
                              `menu_id` bigint NOT NULL AUTO_INCREMENT,
-                             `menu_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'NULL' COMMENT '菜单名',
+                             `key_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'NULL' COMMENT 'key/name',
+                             `title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '路由title',
+                             `label` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '菜单label',
+                             `sort` int NULL DEFAULT NULL COMMENT '排序',
                              `path` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '路由地址',
                              `component` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '组件路径',
                              `visible` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '菜单状态（0显示 1隐藏）',
@@ -78,16 +81,24 @@ CREATE TABLE `sys_menu`  (
                              `create_time` datetime NULL DEFAULT NULL,
                              `update_by` bigint NULL DEFAULT NULL,
                              `update_time` datetime NULL DEFAULT NULL,
-                             `del_flag` int NULL DEFAULT 0 COMMENT '是否删除（0未删除 1已删除）',
+                             `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '是否删除（0未删除 1已删除）',
                              `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
+                             `disable_auth` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '登录验证（默认为0需要验证）',
+                             `dismiss_tab` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '选项卡（默认为0有）',
+                             `router_parent_id` bigint NULL DEFAULT 1 COMMENT '路由父id',
+                             `menu_parent_id` bigint NULL DEFAULT 0 COMMENT '菜单父id',
+                             `is_Leaf` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
                              PRIMARY KEY (`menu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_menu
 -- ----------------------------
-INSERT INTO `sys_menu` VALUES (2, 'NULL', NULL, NULL, '0', '0', 'updateUser', '#', NULL, NULL, NULL, NULL, 0, NULL);
-INSERT INTO `sys_menu` VALUES (3, 'NULL', NULL, NULL, '0', '0', 'check', '#', NULL, NULL, NULL, NULL, 0, NULL);
+INSERT INTO `sys_menu` VALUES (1, 'base-layout', NULL, NULL, 1, '/', '@/layouts/BaseLayout', '1', '0', NULL, '#', NULL, NULL, NULL, '2024-02-23 15:34:47', '0', '1', '0', '0', 0, 0, '0');
+INSERT INTO `sys_menu` VALUES (2, 'navigation', 'MENU.Navigation', 'MENU.Navigation', 1, '/', '@/views/Navigation', '0', '0', NULL, '~icons/mdi/compass-outline', NULL, NULL, NULL, NULL, '0', NULL, '0', '0', 1, 0, '0');
+INSERT INTO `sys_menu` VALUES (3, 'system-functions', '', 'MENU.SystemFunctions', 2, NULL, NULL, '0', '0', NULL, '~icons/mdi/function-variant', NULL, NULL, NULL, NULL, '0', NULL, '0', '0', 1, 0, '1');
+INSERT INTO `sys_menu` VALUES (4, 'user-management', 'MENU.UserManagement', 'MENU.UserManagement', 1, '${SYSTEM_FUNCTIONS_PREFIX}/user-management', '@/views/SystemFunctions/UserManagement', '0', '0', NULL, '~icons/mdi/account-cog-outline', NULL, NULL, NULL, NULL, '0', NULL, '0', '0', 1, 3, '0');
+INSERT INTO `sys_menu` VALUES (5, 'menu-management', 'MENU.MenuManagement', 'MENU.MenuManagement', 2, '${SYSTEM_FUNCTIONS_PREFIX}/menu-management', '@/views/SystemFunctions/MenuManagement', '0', '0', NULL, '~icons/mdi/account-cog-outline', NULL, NULL, NULL, NULL, '0', NULL, '0', '0', 1, 3, '0');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -163,9 +174,9 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (3, '1', '管理员张三8', '$2a$10$nUOJlRvPXRdtb53KdJ303O0kdjEaAzGv4hO1IGABAeHca237PXdq2', '0', '5713392748@qq.com', '13577777778', '1', NULL, '0', NULL, NULL, 3, '2024-01-26 23:24:21', 0, '张三88', '2024-01-15 08:00:00', NULL, NULL, NULL, '长秋秋', '11111122233344');
+INSERT INTO `sys_user` VALUES (3, '1', '管理员张三8', '$2a$10$nUOJlRvPXRdtb53KdJ303O0kdjEaAzGv4hO1IGABAeHca237PXdq2', '0', '5713392748@qq.com', '13577777778', '1', 'http://127.0.0.1:9000/fishtest-avatar/2024-02-02/圣诞树_1706845763769.svg', '0', NULL, NULL, 3, '2024-02-02 11:49:24', 0, '张三88', '2024-01-15 08:00:00', NULL, NULL, NULL, '长秋秋', '11111122233344');
 INSERT INTO `sys_user` VALUES (5, '2', '普通人张三', '$2a$10$YdV4TVf8Gm31BMgZOlHCeubVl2oe.peeYIcfFAxOsmtsVMIhFuUme', '0', NULL, '13577777777', '1', NULL, '1', NULL, '2024-01-08 16:05:42', 3, '2024-01-26 23:19:22', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_user` VALUES (6, '3', '普通人张四', '$2a$10$SFmzm8FYtoilOCrpYBQfEeWOC0NRH7rkYhJnPe3swsvYZZ2xD0bjC', '1', NULL, '13577777777', '0', NULL, '1', NULL, '2024-01-08 16:05:42', 3, '2024-01-16 11:37:36', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_user` VALUES (6, '3', '普通人张四', '$2a$10$DC8H1hZ5lnCdMu7glYqJ8u6nW1ECQ.gfyTGtPHuDX0twyxj7xPVuO', '1', NULL, '13577777777', '0', NULL, '1', NULL, '2024-01-08 16:05:42', 3, '2024-02-02 10:54:52', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_user` VALUES (7, '4', '普通人张五', '$2a$10$SFmzm8FYtoilOCrpYBQfEeWOC0NRH7rkYhJnPe3swsvYZZ2xD0bjC', '1', NULL, NULL, '0', NULL, '1', NULL, '2024-01-08 16:05:42', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_user` VALUES (8, '5', '普通人张六', '$2a$10$SFmzm8FYtoilOCrpYBQfEeWOC0NRH7rkYhJnPe3swsvYZZ2xD0bjC', '0', 'qqq@qq.com', '', '1', NULL, '1', NULL, '2024-01-08 16:05:42', 8, '2024-01-27 13:22:03', 0, 'Hollow', '2024-01-27 08:00:00', NULL, NULL, NULL, 'zhong', '111');
 INSERT INTO `sys_user` VALUES (9, '6', '普通人张三', '$2a$10$SFmzm8FYtoilOCrpYBQfEeWOC0NRH7rkYhJnPe3swsvYZZ2xD0bjC', '0', NULL, '13577777777', '1', NULL, '1', NULL, '2024-01-08 16:05:42', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
