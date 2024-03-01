@@ -6,5 +6,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface MenuService {
     ResponseResult getAllMenu(Integer page, Integer pageSize);
 
+    ResponseResult getOnlyMenu(Integer page, Integer pageSize);
+
     ResponseResult menuByParentId(long menuId);
 }

@@ -21,6 +21,12 @@ public class MenuController {
         return menuService.getAllMenu(page, pageSize);
     }
 
+    @GetMapping("/menu/only-menu")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult getOnlyMenu(@RequestParam(value = "page") Integer page, @RequestParam(value = "pageSize") Integer pageSize){
+        return menuService.getOnlyMenu(page, pageSize);
+    }
+
 
     @GetMapping("/menu/{menuId}/children-menu")
     @PreAuthorize("hasRole('ADMIN')")

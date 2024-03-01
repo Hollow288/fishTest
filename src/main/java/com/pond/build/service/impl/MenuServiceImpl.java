@@ -30,6 +30,33 @@ public class MenuServiceImpl implements MenuService {
         LambdaQueryWrapper<Menu> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(Menu::getDelFlag, "0");
         lambdaQueryWrapper.eq(Menu::getMenuParentId, "0");
+        lambdaQueryWrapper.orderByAsc(Menu::getSort);
+
+//        List<Menu> menus = menuMapper.selectList(lambdaQueryWrapper);
+        IPage<Menu> menuPage = menuMapper.selectPage(pages, lambdaQueryWrapper);
+        List<Menu> menus = menuPage.getRecords();
+        long total = menuPage.getTotal();
+
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("data",menus);
+        resultMap.put("total",total);
+
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"获取成功",resultMap);
+
+    }
+
+
+    @Override
+    public ResponseResult getOnlyMenu(Integer page, Integer pageSize) {
+
+        Page<Menu> pages = new Page<>(page, pageSize);
+
+
+        LambdaQueryWrapper<Menu> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(Menu::getDelFlag, "0");
+        lambdaQueryWrapper.eq(Menu::getMenuParentId, "0");
+        lambdaQueryWrapper.isNotNull(Menu::getLabel);
+        lambdaQueryWrapper.orderByAsc(Menu::getSort);
 
 //        List<Menu> menus = menuMapper.selectList(lambdaQueryWrapper);
         IPage<Menu> menuPage = menuMapper.selectPage(pages, lambdaQueryWrapper);
