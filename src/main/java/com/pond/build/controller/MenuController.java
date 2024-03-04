@@ -7,6 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.Objects;
 
 @RestController
 public class MenuController {
@@ -34,4 +35,10 @@ public class MenuController {
         return menuService.menuByParentId(menuId);
     }
 
+    //http://localhost:5173/fish-api/menu/1/revise-menusort
+    @PutMapping("/menu/{menuId}/revise-menusort")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult reviseMenuSortByMenuId(@PathVariable("menuId") long menuId,@RequestBody Map<String,String> map){
+        return menuService.reviseMenuSortByMenuId(menuId, Objects.isNull(map.get("sort"))?0 : Integer.parseInt(map.get("sort")));
+    }
 }

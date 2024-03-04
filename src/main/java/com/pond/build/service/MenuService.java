@@ -9,4 +9,6 @@ public interface MenuService {
     ResponseResult getOnlyMenu(Integer page, Integer pageSize);
 
     ResponseResult menuByParentId(long menuId);
+
+    ResponseResult reviseMenuSortByMenuId(long menuId, Integer sort);
 }
