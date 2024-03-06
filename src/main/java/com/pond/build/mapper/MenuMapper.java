@@ -15,4 +15,6 @@ public interface MenuMapper extends BaseMapper<Menu> {
     List<String> selectPermsByUserId(Long userid);
 
     List<String> selectRolesByUserId(Long userid);
+
+    void refreshIsLeaf();
 }

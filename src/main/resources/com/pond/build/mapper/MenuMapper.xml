@@ -25,4 +25,24 @@
           and sr.status = 0
 
     </select>
+
+    <update id="refreshIsLeaf">
+        UPDATE sys_menu t
+        SET t.is_Leaf = (
+            SELECT CASE
+                       WHEN t.menu_id IN (
+                           SELECT menu_id
+                           FROM (
+                                    SELECT menu_id
+                                    FROM sys_menu sm
+                                    WHERE NOT EXISTS (
+                                        SELECT 1 FROM sys_menu
+                                        WHERE sm.menu_id = menu_parent_id and del_flag = '0'
+                                    )
+                                ) tmp
+                       ) THEN '0'
+                       ELSE '1'
+                       END
+        );
+    </update>
 </mapper>

@@ -1,5 +1,6 @@
 package com.pond.build.controller;
 
+import com.pond.build.model.Menu;
 import com.pond.build.model.ResponseResult;
 import com.pond.build.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +41,25 @@ public class MenuController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseResult reviseMenuSortByMenuId(@PathVariable("menuId") long menuId,@RequestBody Map<String,String> map){
         return menuService.reviseMenuSortByMenuId(menuId, Objects.isNull(map.get("sort"))?0 : Integer.parseInt(map.get("sort")));
+    }
+
+
+    @PatchMapping("/menu/{menuId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult updateMenuById(@PathVariable("menuId") long menuId, @RequestBody Menu menu){
+        return menuService.updateMenuById(menuId,menu);
+    }
+
+
+    @PostMapping("/menu")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult createMenu(@RequestBody Menu menu){
+        return menuService.createMenu(menu);
+    }
+
+    @PatchMapping("/menu/{menuId}/delete-menu")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult deleteMenuById(@PathVariable("menuId") long menuId){
+        return menuService.deleteMenuById(menuId);
     }
 }
