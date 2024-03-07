@@ -34,7 +34,7 @@
     </resultMap>
 
 
-    <resultMap type="com.pond.build.model.SysRole" id="SysRoleMap">
+    <resultMap type="com.pond.build.model.Role" id="SysRoleMap">
         <result property="roleId" column="role_id" jdbcType="INTEGER"/>
         <result property="roleName" column="role_name" jdbcType="VARCHAR"/>
         <result property="roleKey" column="role_key" jdbcType="VARCHAR"/>
@@ -48,7 +48,7 @@
     </resultMap>
 
     <select id="findRoleById" resultType="java.lang.String">
-        select sr.role_name from sys_role sr left join sys_user_role sur on  sur.role_id = sr.role_id where sur.user_id = #{userId}
+        select sr.role_name from sys_role sr left join sys_user_role sur on  sur.role_id = sr.role_id where sur.user_id = #{userId} and sr.status = '0' and sr.del_flag= '0'
     </select>
 
 

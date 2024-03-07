@@ -19,11 +19,11 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("sys_role")
-public class SysRole implements Serializable {
+public class Role implements Serializable {
     private static final long serialVersionUID = -13372344778559328L;
 
     @TableId
-    private Long roleId;
+    private String roleId;
 
     private String roleName;
 /**
