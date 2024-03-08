@@ -13,4 +13,9 @@ import java.util.List;
 @Repository
 public interface RoleMapper extends BaseMapper<Role> {
     Integer deleteRolesByIds(@Param("roleIds") List<String> roleIds,@Param("userId") Long userId,@Param("date") Date date);
+
+    Integer insertUsersRole(@Param("userIds") List<String> userIds,@Param("roleId") String roleId);
+
+
+    Integer deleteByRoleId(@Param("roleId") String roleId);
 }

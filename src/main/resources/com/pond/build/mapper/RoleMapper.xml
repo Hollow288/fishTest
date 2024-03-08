@@ -17,12 +17,24 @@
 
 
     <update id ="deleteRolesByIds" >
-        update sys_role set create_by = #{userId}, create_time = #{date},del_flag = '1'
+        update sys_role set update_by = #{userId}, update_time = #{date},del_flag = '1'
         where role_id in
         <foreach collection="roleIds" item="roleId" open="(" separator="," close=")">
             #{roleId}
         </foreach>
 
     </update>
+
+
+    <insert id="insertUsersRole">
+        <foreach collection="userIds" item="userId" separator=";">
+            insert sys_user_role (role_id,user_id) value (#{roleId},#{userId})
+        </foreach>
+    </insert>
+
+
+    <delete id="deleteByRoleId">
+        delete from sys_user_role where role_id = #{roleId}
+    </delete>
 
 </mapper>

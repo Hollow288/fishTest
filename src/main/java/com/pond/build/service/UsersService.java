@@ -23,4 +23,8 @@ public interface UsersService {
     ResponseResult resetPassword(long userId, Map<String,String> passWord);
 
     ResponseResult createUser(User user);
+
+    ResponseResult getAllUserByRole(String roleId);
+
+    ResponseResult getAllUserRole();
 }

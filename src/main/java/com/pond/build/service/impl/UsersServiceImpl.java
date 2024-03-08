@@ -295,6 +295,18 @@ public class UsersServiceImpl implements UsersService {
         return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
     }
 
+    @Override
+    public ResponseResult getAllUserByRole(String roleId) {
+        List<String> list = usersMapper.getAllUserByRole(roleId);
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功",list);
+    }
+
+    @Override
+    public ResponseResult getAllUserRole() {
+        List<Map<String, Object>> list = usersMapper.getAllUserRole();
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功",list);
+    }
+
 
     public boolean setUpdateByAndUpdateTime(long userId){
         //当前操作人

@@ -87,4 +87,16 @@ public class UsersController {
     public ResponseResult createUser(@RequestBody User user){
         return usersService.createUser(user);
     }
+
+    @GetMapping("/users/{roleId}/all-user-by-role")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult getAllUserByRole(@PathVariable("roleId") String roleId){
+        return usersService.getAllUserByRole(roleId);
+    }
+
+    @GetMapping("/users/all-user-role")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult getAllUserRole(){
+        return usersService.getAllUserRole();
+    }
 }

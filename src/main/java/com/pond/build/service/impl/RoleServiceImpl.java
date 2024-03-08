@@ -14,11 +14,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Transactional
@@ -111,13 +109,15 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public ResponseResult deleteRolesByIds(List<String> roleIds) {
+    public ResponseResult deleteRolesByIds(Map<String,Object> roleIds) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         User userInfo = loginUser.getUser();
 
-        Integer effectNum = roleMapper.deleteRolesByIds(roleIds, userInfo.getUserId(), new Date());
+        List<String> ids = (List<String>) roleIds.get("ids");
+
+        Integer effectNum = roleMapper.deleteRolesByIds(ids, userInfo.getUserId(), new Date());
 
         if(effectNum > 0) {
             return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
@@ -126,5 +126,16 @@ public class RoleServiceImpl implements RoleService {
         }
 
 
+    }
+
+    @Override
+    public ResponseResult addUsersRole(String roleId, Map<String, Object> userIds) {
+
+        roleMapper.deleteByRoleId(roleId);
+        List<String> ids = (List<String>)userIds.get("userIds");
+        if(!CollectionUtils.isEmpty(ids)){
+            roleMapper.insertUsersRole(ids, roleId);
+        }
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
     }
 }

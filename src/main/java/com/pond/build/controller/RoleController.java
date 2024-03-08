@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Map;
 
 @RestController
 public class RoleController {
@@ -41,8 +41,14 @@ public class RoleController {
 
     @PatchMapping("/role/delete-roles")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseResult deleteRolesByIds(@RequestBody List<String> roleIds){
+    public ResponseResult deleteRolesByIds(@RequestBody Map<String,Object> roleIds){
         return roleService.deleteRolesByIds(roleIds);
+    }
+
+    @PostMapping("/role/{roleId}/add-users-role")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult addUsersRole(@PathVariable String roleId,@RequestBody Map<String,Object> userIds){
+        return roleService.addUsersRole(roleId,userIds);
     }
 
 

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 @Repository
@@ -23,4 +24,10 @@ public interface UsersMapper  extends BaseMapper<User> {
     Integer getUsersCountByPage(@Param("searchText") String searchText, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
     UserResponse getUserInfoById(long userId);
+
+    List<String> getAllUserByRole(String roleId);
+
+    List<Map<String,Object>> getAllUserRole();
+
+
 }
