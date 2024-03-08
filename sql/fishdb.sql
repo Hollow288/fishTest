@@ -11,7 +11,7 @@
  Target Server Version : 80035
  File Encoding         : 65001
 
- Date: 29/02/2024 17:52:03
+ Date: 08/03/2024 17:57:14
 */
 
 SET NAMES utf8mb4;
@@ -89,16 +89,21 @@ CREATE TABLE `sys_menu`  (
                              `menu_parent_id` bigint NULL DEFAULT 0 COMMENT '菜单父id',
                              `is_Leaf` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
                              PRIMARY KEY (`menu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1765289441486381058 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_menu
 -- ----------------------------
-INSERT INTO `sys_menu` VALUES (1, 'base-layout', NULL, NULL, 1, '/', '@/layouts/BaseLayout', '1', '0', NULL, '#', NULL, NULL, NULL, '2024-02-23 15:34:47', '0', '1', '0', '0', 0, 0, '0');
-INSERT INTO `sys_menu` VALUES (2, 'navigation', 'MENU.Navigation', 'MENU.Navigation', 1, '/', '@/views/Navigation', '0', '0', NULL, '~icons/mdi/compass-outline', NULL, NULL, NULL, NULL, '0', NULL, '0', '0', 1, 0, '0');
-INSERT INTO `sys_menu` VALUES (3, 'system-functions', '', 'MENU.SystemFunctions', 2, NULL, NULL, '0', '0', NULL, '~icons/mdi/function-variant', NULL, NULL, NULL, NULL, '0', NULL, '0', '0', 1, 0, '1');
-INSERT INTO `sys_menu` VALUES (4, 'user-management', 'MENU.UserManagement', 'MENU.UserManagement', 1, '${SYSTEM_FUNCTIONS_PREFIX}/user-management', '@/views/SystemFunctions/UserManagement', '0', '0', NULL, '~icons/mdi/account-cog-outline', NULL, NULL, NULL, NULL, '0', NULL, '0', '0', 1, 3, '0');
-INSERT INTO `sys_menu` VALUES (5, 'menu-management', 'MENU.MenuManagement', 'MENU.MenuManagement', 2, '${SYSTEM_FUNCTIONS_PREFIX}/menu-management', '@/views/SystemFunctions/MenuManagement', '0', '0', NULL, '~icons/mdi/account-cog-outline', NULL, NULL, NULL, NULL, '0', NULL, '0', '0', 1, 3, '0');
+INSERT INTO `sys_menu` VALUES (1, 'base-layout', NULL, NULL, 1, '/', '@/layouts/BaseLayout', '1', '0', NULL, '#', NULL, NULL, 3, '2024-03-06 14:18:58', '0', '（仅路由）', '0', '0', 0, 0, '0');
+INSERT INTO `sys_menu` VALUES (2, 'navigation', 'MENU.Navigation', 'MENU.Navigation', 1, '/', '@/views/Navigation', '0', '0', NULL, '~icons/mdi/compass-outline', NULL, NULL, 3, '2024-03-06 14:18:48', '0', '（菜单）站点导航', '0', '0', 1, 0, '0');
+INSERT INTO `sys_menu` VALUES (3, 'system-functions', '', 'MENU.SystemFunctions', 2, NULL, NULL, '0', '0', NULL, '~icons/mdi/function-variant', NULL, NULL, 3, '2024-03-06 14:19:16', '0', '（菜单）系统功能', '0', '0', 1, 0, '1');
+INSERT INTO `sys_menu` VALUES (4, 'user-management', 'MENU.UserManagement', 'MENU.UserManagement', 1, '${SYSTEM_FUNCTIONS_PREFIX}/user-management', '@/views/SystemFunctions/UserManagement', '0', '0', NULL, '~icons/mdi/account-cog-outline', NULL, NULL, 3, '2024-03-04 16:10:51', '0', NULL, '0', '0', 1, 3, '0');
+INSERT INTO `sys_menu` VALUES (5, 'menu-management', 'MENU.MenuManagement', 'MENU.MenuManagement', 2, '${SYSTEM_FUNCTIONS_PREFIX}/menu-management', '@/views/SystemFunctions/MenuManagement', '0', '0', NULL, '~icons/mdi/account-cog-outline', NULL, NULL, 3, '2024-03-04 16:52:39', '0', NULL, '0', '0', 1, 3, '0');
+INSERT INTO `sys_menu` VALUES (1765204642725765122, '测试', '测试1', '测试2', 3, '测试3', '测试5', '1', '0', NULL, '测试4', 3, '2024-03-06 10:35:57', 3, '2024-03-06 14:17:06', '1', '测试6', '0', '1', 1, 0, '0');
+INSERT INTO `sys_menu` VALUES (1765264444961271809, '测试123', '测试123', '测试123', NULL, '测试123', '测试123', '0', '0', NULL, '测试123', 3, '2024-03-06 14:33:35', 3, '2024-03-06 14:34:04', '1', '测试123', '0', '0', 1, 3, '0');
+INSERT INTO `sys_menu` VALUES (1765264892720046081, '测试123测试123', '测试123测试123', '测试123测试123', NULL, '测试123测试123', '测试123测试123', '0', '0', NULL, '测试123测试123', 3, '2024-03-06 14:35:22', 3, '2024-03-06 15:32:07', '1', '测试123测试123', '0', '0', 1, 2, '0');
+INSERT INTO `sys_menu` VALUES (1765276843302920193, '999', '699', '999', NULL, '99', '99', '0', '0', NULL, '9', 3, '2024-03-06 15:22:51', 3, '2024-03-06 16:06:57', '1', '9', '0', '0', 1, 2, '0');
+INSERT INTO `sys_menu` VALUES (1765289441486381057, 'system-tools', NULL, 'MENU.SystemTools', 3, NULL, '@/views/SystemTools/QRCode', '0', '0', NULL, '~icons/ic/baseline-qrcode', 3, '2024-03-06 16:12:55', 3, '2024-03-07 16:51:17', '0', '（菜单）系统工具', '0', '0', 1, 0, '0');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -116,13 +121,14 @@ CREATE TABLE `sys_role`  (
                              `update_time` datetime NULL DEFAULT NULL,
                              `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
                              PRIMARY KEY (`role_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '角色表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1766013908521037827 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '角色表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
-INSERT INTO `sys_role` VALUES (3, '管理者', 'ROLE_ADMIN', '0', 0, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_role` VALUES (4, '普通用户', 'ROLE_ORDINARY', '0', 0, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_role` VALUES (3, '管理员', 'ROLE_ADMIN', '0', 0, NULL, '2024-03-07 11:02:14', 3, '2024-03-07 16:04:56', '删掉这个角色吧');
+INSERT INTO `sys_role` VALUES (4, '平民', 'ROLE_CIVILIAN', '0', 0, 3, '2024-03-08 09:09:41', 3, '2024-03-08 16:11:08', NULL);
+INSERT INTO `sys_role` VALUES (1766013908521037826, '猴子国王', 'ROLE_MonkeyKing', '0', 0, 3, '2024-03-08 16:11:41', NULL, NULL, '猴子国王是猴子王国的国王');
 
 -- ----------------------------
 -- Table structure for sys_role_menu
@@ -169,12 +175,12 @@ CREATE TABLE `sys_user`  (
                              `address` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '地址',
                              `biography` varchar(1500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '简介',
                              PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1751864693792419842 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1766020802417471491 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (3, '1', '管理员张三8', '$2a$10$nUOJlRvPXRdtb53KdJ303O0kdjEaAzGv4hO1IGABAeHca237PXdq2', '0', '5713392748@qq.com', '13577777778', '1', 'http://127.0.0.1:9000/fishtest-avatar/2024-02-02/圣诞树_1706845763769.svg', '0', NULL, NULL, 3, '2024-02-02 11:49:24', 0, '张三88', '2024-01-15 08:00:00', NULL, NULL, NULL, '长秋秋', '11111122233344');
+INSERT INTO `sys_user` VALUES (3, 'admin', '管理员张三8', '$2a$10$fsZXpWU9r7WR5ca7s7SNT.vxzarjEtJyqpdSb15gI3.n0qkhBIYUG', '0', '5713392748@qq.com', '13577777778', '1', 'http://127.0.0.1:9000/fishtest-avatar/2024-03-06/icon_1709713499655.svg', '0', NULL, NULL, 3, '2024-03-08 16:27:19', 0, '张三88', '2024-01-15 08:00:00', NULL, NULL, NULL, '长秋秋', '11111122233344');
 INSERT INTO `sys_user` VALUES (5, '2', '普通人张三', '$2a$10$YdV4TVf8Gm31BMgZOlHCeubVl2oe.peeYIcfFAxOsmtsVMIhFuUme', '0', NULL, '13577777777', '1', NULL, '1', NULL, '2024-01-08 16:05:42', 3, '2024-01-26 23:19:22', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_user` VALUES (6, '3', '普通人张四', '$2a$10$DC8H1hZ5lnCdMu7glYqJ8u6nW1ECQ.gfyTGtPHuDX0twyxj7xPVuO', '1', NULL, '13577777777', '0', NULL, '1', NULL, '2024-01-08 16:05:42', 3, '2024-02-02 10:54:52', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_user` VALUES (7, '4', '普通人张五', '$2a$10$SFmzm8FYtoilOCrpYBQfEeWOC0NRH7rkYhJnPe3swsvYZZ2xD0bjC', '1', NULL, NULL, '0', NULL, '1', NULL, '2024-01-08 16:05:42', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -186,8 +192,9 @@ INSERT INTO `sys_user` VALUES (12, '9', '普通人张三', '$2a$10$SFmzm8FYtoilO
 INSERT INTO `sys_user` VALUES (13, '10', '普通人张三', '$2a$10$s7iZYbu3zSl/w2AXDTwAxucOsodd649FU/buPbixJvnOi0aFCTt0.', '0', NULL, NULL, '1', NULL, '1', NULL, '2024-01-08 16:05:42', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_user` VALUES (14, '11', '普通人张三', '$2a$10$SFmzm8FYtoilOCrpYBQfEeWOC0NRH7rkYhJnPe3swsvYZZ2xD0bjC', '0', NULL, NULL, '0', NULL, '1', NULL, '2024-01-08 16:05:42', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_user` VALUES (15, '12', '普通人张三', '$2a$10$SFmzm8FYtoilOCrpYBQfEeWOC0NRH7rkYhJnPe3swsvYZZ2xD0bjC', '0', NULL, NULL, '2', NULL, '1', NULL, '2024-01-08 16:05:42', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_user` VALUES (1751108099067248642, 'createTest', '20247686826684', '$2a$10$7R/TVXG6efrDXd3GcGEfh.MaXc1Bld/NRnMxKLILx.TCkBZE/plo2', '0', 'string@qq.com', NULL, '1', NULL, '1', 3, '2024-01-27 13:01:19', 3, '2024-01-29 16:04:26', 0, 'string@qq.com', '2024-01-26 08:00:00', NULL, NULL, NULL, '这是地址', '这是简介');
+INSERT INTO `sys_user` VALUES (1751108099067248642, 'createTest', '我ID很长', '$2a$10$7R/TVXG6efrDXd3GcGEfh.MaXc1Bld/NRnMxKLILx.TCkBZE/plo2', '0', 'string@qq.com', NULL, '1', NULL, '1', 3, '2024-01-27 13:01:19', 3, '2024-03-08 16:38:10', 0, '鲨包', '2024-01-26 08:00:00', NULL, NULL, NULL, '这是地址', '这是简介');
 INSERT INTO `sys_user` VALUES (1751864693792419841, 'ttttt', '20248346481858', '$2a$10$rH1pYtvhCDv6LRGplFQdvOZbjKjpJBLWypJmSS84Ud9EaosBN2q7C', '0', NULL, NULL, NULL, NULL, '1', 3, '2024-01-29 15:07:46', 3, '2024-01-29 15:07:46', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_user` VALUES (1766020802417471490, '再建一个试试', '用户20247032771639', '$2a$10$nB0.KPxepCiosheKeMERnejUBlXk.rSqgX3xccWmxajXjBcwlnSlS', '0', '123@qq.com', NULL, NULL, NULL, '1', 3, '2024-03-08 16:39:05', 1766020802417471490, '2024-03-08 16:40:43', 0, '狗剩', NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -197,7 +204,7 @@ CREATE TABLE `sys_user_role`  (
                                   `user_id` bigint NOT NULL AUTO_INCREMENT COMMENT '用户id',
                                   `role_id` bigint NOT NULL DEFAULT 0 COMMENT '角色id',
                                   PRIMARY KEY (`user_id`, `role_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1751108099067248643 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1766020802417471491 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_user_role
@@ -205,7 +212,20 @@ CREATE TABLE `sys_user_role`  (
 INSERT INTO `sys_user_role` VALUES (3, 3);
 INSERT INTO `sys_user_role` VALUES (3, 4);
 INSERT INTO `sys_user_role` VALUES (5, 4);
+INSERT INTO `sys_user_role` VALUES (5, 1766013908521037826);
+INSERT INTO `sys_user_role` VALUES (6, 4);
+INSERT INTO `sys_user_role` VALUES (7, 4);
+INSERT INTO `sys_user_role` VALUES (8, 4);
+INSERT INTO `sys_user_role` VALUES (9, 4);
+INSERT INTO `sys_user_role` VALUES (10, 4);
+INSERT INTO `sys_user_role` VALUES (11, 4);
+INSERT INTO `sys_user_role` VALUES (12, 4);
+INSERT INTO `sys_user_role` VALUES (13, 4);
+INSERT INTO `sys_user_role` VALUES (14, 4);
+INSERT INTO `sys_user_role` VALUES (15, 4);
 INSERT INTO `sys_user_role` VALUES (1751108099067248642, 4);
+INSERT INTO `sys_user_role` VALUES (1751864693792419841, 4);
+INSERT INTO `sys_user_role` VALUES (1766020802417471490, 4);
 
 -- ----------------------------
 -- Table structure for teacher
