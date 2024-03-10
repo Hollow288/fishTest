@@ -18,6 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 
@@ -188,6 +189,16 @@ public class MenuServiceImpl implements MenuService {
         if(updateResult){
             return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
         }else {
+            return new ResponseResult(HttpStatusCode.REQUEST_SERVER_ERROR.getCode(),HttpStatusCode.REQUEST_SERVER_ERROR.getCnMessage());
+        }
+    }
+
+    @Override
+    public ResponseResult allMenuAneChildren() {
+        List<Map<String, Object>> maps = menuMapper.selectMenuAndChildren();
+        if(!CollectionUtils.isEmpty(maps)){
+            return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功",maps);
+        }else{
             return new ResponseResult(HttpStatusCode.REQUEST_SERVER_ERROR.getCode(),HttpStatusCode.REQUEST_SERVER_ERROR.getCnMessage());
         }
     }

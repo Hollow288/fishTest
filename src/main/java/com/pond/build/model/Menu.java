@@ -4,19 +4,15 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 
 @TableName(value="sys_menu")
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 // Jackson 库中的注解，它用于控制在序列化 Java 对象为 JSON 字符串时，是否包含值为 null 的属性。
 //@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Menu implements Serializable {
@@ -24,6 +20,10 @@ public class Menu implements Serializable {
 
     @TableId
     private String menuId;
+
+
+    @TableField(exist = false)
+    private List<Menu> children;
 
     /**
      * key/name

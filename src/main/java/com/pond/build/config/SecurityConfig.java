@@ -108,6 +108,7 @@ public class SecurityConfig{
                         .requestMatchers("/user/refresh").permitAll()
                         .requestMatchers("/allItems").permitAll()
                         .requestMatchers("/hello").permitAll()
+                        .requestMatchers("/fishTest/*").permitAll()
                         .anyRequest().authenticated());
                 // 对于登录接口 允许匿名访问
 //                .antMatchers("/user/login").permitAll()

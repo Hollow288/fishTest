@@ -2,6 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pond.build.mapper.MenuMapper">
 
+    <resultMap type="com.pond.build.model.Response.MenuRoleResponse" id="MenuMap">
+        <result property="value" column="menu_id" jdbcType="VARCHAR"/>
+        <result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+        <result property="label" column="remark" jdbcType="VARCHAR"/>
+        <result property="menuParentId" column="menu_parent_id" jdbcType="VARCHAR"/>
+        <collection property="children" ofType="com.pond.build.model.Response.MenuRoleResponse" >
+            <result property="value" column="child_menu_id" jdbcType="VARCHAR"/>
+            <result property="delFlag" column="child_del_flag" jdbcType="VARCHAR"/>
+            <result property="label" column="child_remark" jdbcType="VARCHAR"/>
+            <result property="menuParentId" column="child_menu_parent_id" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
+
+
+    <select id="selectMenuAndChildren" resultMap="MenuMap">
+        SELECT parent.menu_id,parent.del_flag,parent.remark, child.menu_id AS child_menu_id, child.del_flag as child_del_flag,child.remark as child_remark,child.menu_parent_id as child_menu_parent_id
+        FROM sys_menu parent
+            left JOIN sys_menu child ON parent.menu_id = child.menu_parent_id and  child.del_flag = '0' where parent.del_flag='0' and parent.menu_parent_id = '0'
+    </select>
+
 
     <select id="selectPermsByUserId" resultType="java.lang.String">
 
@@ -45,4 +66,9 @@
                        END
         );
     </update>
+
+
+
+
+
 </mapper>

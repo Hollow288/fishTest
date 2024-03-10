@@ -18,4 +18,6 @@ public interface MenuService {
     ResponseResult createMenu(Menu menu);
 
     ResponseResult deleteMenuById(long menuId);
+
+    ResponseResult allMenuAneChildren();
 }

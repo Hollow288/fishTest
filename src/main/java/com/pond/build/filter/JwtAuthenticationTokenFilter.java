@@ -45,7 +45,8 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         String requestURI = request.getRequestURI();
 
         if(requestURI.equals(contextPath + "/user/login") && "POST".equalsIgnoreCase(request.getMethod()) ||
-                requestURI.equals(contextPath + "/user/refresh") && "POST".equalsIgnoreCase(request.getMethod())){
+                requestURI.equals(contextPath + "/user/refresh") && "POST".equalsIgnoreCase(request.getMethod())||
+                requestURI.startsWith(contextPath + "/fishTest")){
             //放行
             filterChain.doFilter(request, response);
             return;

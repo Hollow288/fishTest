@@ -1,6 +1,7 @@
 package com.pond.build.controller;
 
 
+import com.pond.build.mapper.MenuMapper;
 import com.pond.build.service.CommonService;
 import com.pond.build.utils.MinioUtil;
 import org.apache.logging.log4j.LogManager;
@@ -11,14 +12,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.beans.factory.annotation.Value;
 import javax.swing.*;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping(("/fishTest"))
 public class MenuTestController {
 
     private static final Logger logger = LogManager.getLogger(Example.class);
@@ -26,6 +30,17 @@ public class MenuTestController {
 
     @Autowired
     private CommonService commonService;
+
+
+    @Autowired
+    private MenuMapper menuMapper;
+
+
+    @GetMapping("/test1")
+    public void fishTest(){
+        List<Map<String, Object>> maps = menuMapper.selectMenuAndChildren();
+        System.out.println(maps);
+    }
 
 //    @PreAuthorize
 //    注解的一些常用权限表达式：

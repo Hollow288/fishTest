@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 @Repository
@@ -17,4 +18,6 @@ public interface MenuMapper extends BaseMapper<Menu> {
     List<String> selectRolesByUserId(Long userid);
 
     void refreshIsLeaf();
+
+    List<Map<String,Object>> selectMenuAndChildren();
 }

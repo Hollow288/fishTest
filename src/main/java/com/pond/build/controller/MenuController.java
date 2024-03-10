@@ -62,4 +62,10 @@ public class MenuController {
     public ResponseResult deleteMenuById(@PathVariable("menuId") long menuId){
         return menuService.deleteMenuById(menuId);
     }
+
+    @GetMapping("/menu/all-menu-children")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult allMenuAneChildren(){
+        return menuService.allMenuAneChildren();
+    }
 }
