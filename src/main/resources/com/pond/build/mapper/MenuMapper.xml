@@ -20,7 +20,7 @@
     <select id="selectMenuAndChildren" resultMap="MenuMap">
         SELECT parent.menu_id,parent.del_flag,parent.remark, child.menu_id AS child_menu_id, child.del_flag as child_del_flag,child.remark as child_remark,child.menu_parent_id as child_menu_parent_id
         FROM sys_menu parent
-            left JOIN sys_menu child ON parent.menu_id = child.menu_parent_id and  child.del_flag = '0' where parent.del_flag='0' and parent.menu_parent_id = '0'
+            left JOIN sys_menu child ON parent.menu_id = child.menu_parent_id and  child.del_flag = '0' where parent.del_flag='0' and parent.menu_parent_id = '0' and parent.label is not null and  parent.label != ""
     </select>
 
 
@@ -68,7 +68,21 @@
     </update>
 
 
+    <select id="allMenuIdByRoleId" resultType="java.lang.String">
+        select srm.menu_id from sys_role_menu srm left join sys_menu sm  on srm.menu_id = sm.menu_id  where role_id =#{roleId} and sm.del_flag = '0'
+    </select>
 
+
+    <delete id="deleteMenuIdByRoleId">
+        delete from sys_role_menu where role_id = #{roleId}
+    </delete>
+
+
+    <insert id="insertMenuIdByRoleId">
+        <foreach collection="menuIds" item="menuId" separator=";">
+            insert sys_role_menu (role_id,menu_id) value (#{roleId},#{menuId})
+        </foreach>
+    </insert>
 
 
 </mapper>

@@ -64,6 +64,7 @@ public class MenuServiceImpl implements MenuService {
         lambdaQueryWrapper.eq(Menu::getDelFlag, "0");
         lambdaQueryWrapper.eq(Menu::getMenuParentId, "0");
         lambdaQueryWrapper.isNotNull(Menu::getLabel);
+        lambdaQueryWrapper.ne(Menu::getLabel, "");
         lambdaQueryWrapper.orderByAsc(Menu::getSort);
 
 //        List<Menu> menus = menuMapper.selectList(lambdaQueryWrapper);
@@ -201,5 +202,26 @@ public class MenuServiceImpl implements MenuService {
         }else{
             return new ResponseResult(HttpStatusCode.REQUEST_SERVER_ERROR.getCode(),HttpStatusCode.REQUEST_SERVER_ERROR.getCnMessage());
         }
+    }
+
+    @Override
+    public ResponseResult allMenuIdByRoleId(String roleId) {
+
+        List<String> menuIds = menuMapper.allMenuIdByRoleId(roleId);
+
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功",menuIds);
+    }
+
+    @Override
+    public ResponseResult addMenuIdByRoleId(String roleId, Map<String, Object> menuIds) {
+        menuMapper.deleteMenuIdByRoleId(roleId);
+
+        List<String> ids = (List<String>)menuIds.get("menuIds");
+
+        if(!CollectionUtils.isEmpty(ids)){
+            menuMapper.insertMenuIdByRoleId(roleId,ids);
+        }
+
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
     }
 }

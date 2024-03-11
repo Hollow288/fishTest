@@ -68,4 +68,17 @@ public class MenuController {
     public ResponseResult allMenuAneChildren(){
         return menuService.allMenuAneChildren();
     }
+
+
+    @GetMapping("/menu/{roleId}/all-menuid-by-roleid")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult allMenuIdByRoleId(@PathVariable("roleId") String roleId){
+        return menuService.allMenuIdByRoleId(roleId);
+    }
+
+    @PostMapping("menu/{roleId}/add-menuid-by-roleid")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult addMenuIdByRoleId(@PathVariable("roleId") String roleId,@RequestBody Map<String,Object> menuIds){
+        return menuService.addMenuIdByRoleId(roleId,menuIds);
+    }
 }
