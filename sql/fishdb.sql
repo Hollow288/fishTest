@@ -11,11 +11,59 @@
  Target Server Version : 80035
  File Encoding         : 65001
 
- Date: 11/03/2024 15:56:48
+ Date: 12/03/2024 18:05:02
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for notice_management
+-- ----------------------------
+DROP TABLE IF EXISTS `notice_management`;
+CREATE TABLE `notice_management`  (
+                                      `notice_id` bigint NOT NULL AUTO_INCREMENT COMMENT '通知主键',
+                                      `message` varchar(3000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '通知内容',
+                                      `create_by` bigint NULL DEFAULT NULL COMMENT '创建人',
+                                      `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+                                      `update_by` bigint NULL DEFAULT NULL COMMENT '更新人',
+                                      `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                                      `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '是否删除（0未删除 1已删除）',
+                                      `need_processed_num` int NULL DEFAULT NULL COMMENT '总需读人数',
+                                      `end_processed_num` int NULL DEFAULT NULL COMMENT '已读人数',
+                                      `release_date` datetime NULL DEFAULT NULL COMMENT '发布日期',
+                                      PRIMARY KEY (`notice_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of notice_management
+-- ----------------------------
+INSERT INTO `notice_management` VALUES (1, '啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL);
+INSERT INTO `notice_management` VALUES (2, '不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不不', NULL, NULL, NULL, NULL, '0', NULL, NULL, '2024-03-12 10:48:34');
+INSERT INTO `notice_management` VALUES (3, 'ww', NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL);
+
+-- ----------------------------
+-- Table structure for pending_notification
+-- ----------------------------
+DROP TABLE IF EXISTS `pending_notification`;
+CREATE TABLE `pending_notification`  (
+                                         `pending_id` bigint NOT NULL AUTO_INCREMENT COMMENT '待处理通知主键',
+                                         `notice_id` bigint NULL DEFAULT NULL COMMENT '原通知主键',
+                                         `Processed` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '是否已读（0没读 1已读）',
+                                         `user_id` bigint NULL DEFAULT NULL COMMENT '待处理人',
+                                         `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '是否删除（0未删除 1已删除）',
+                                         PRIMARY KEY (`pending_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of pending_notification
+-- ----------------------------
+INSERT INTO `pending_notification` VALUES (1, 1, '0', NULL, '0');
+INSERT INTO `pending_notification` VALUES (2, 1, '1', NULL, '0');
+INSERT INTO `pending_notification` VALUES (3, 1, '0', NULL, '0');
+INSERT INTO `pending_notification` VALUES (4, 1, '1', NULL, '0');
+INSERT INTO `pending_notification` VALUES (5, 1, '1', NULL, '0');
+INSERT INTO `pending_notification` VALUES (6, 1, '1', NULL, '0');
 
 -- ----------------------------
 -- Table structure for student
