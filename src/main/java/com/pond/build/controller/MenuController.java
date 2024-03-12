@@ -76,7 +76,7 @@ public class MenuController {
         return menuService.allMenuIdByRoleId(roleId);
     }
 
-    @PostMapping("menu/{roleId}/add-menuid-by-roleid")
+    @PostMapping("/menu/{roleId}/add-menuid-by-roleid")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseResult addMenuIdByRoleId(@PathVariable("roleId") String roleId,@RequestBody Map<String,Object> menuIds){
         return menuService.addMenuIdByRoleId(roleId,menuIds);
