@@ -2,6 +2,8 @@ package com.pond.build.controller;
 
 
 import com.pond.build.mapper.MenuMapper;
+import com.pond.build.mapper.SseMapper;
+import com.pond.build.model.Response.NoticeResponse;
 import com.pond.build.service.CommonService;
 import com.pond.build.utils.MinioUtil;
 import org.apache.logging.log4j.LogManager;
@@ -36,10 +38,16 @@ public class MenuTestController {
     private MenuMapper menuMapper;
 
 
+    @Autowired
+    private SseMapper sseMapper;
+
+
     @GetMapping("/test1")
     public void fishTest(){
-        List<Map<String, Object>> maps = menuMapper.selectMenuAndChildren();
-        System.out.println(maps);
+//        List<Map<String, Object>> maps = menuMapper.selectMenuAndChildren();
+        List<NoticeResponse> noticeResponses = sseMapper.getAllNeedPendingNotice();
+
+        System.out.println(noticeResponses);
     }
 
 //    @PreAuthorize

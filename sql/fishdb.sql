@@ -11,7 +11,7 @@
  Target Server Version : 80035
  File Encoding         : 65001
 
- Date: 13/03/2024 13:52:47
+ Date: 13/03/2024 17:57:00
 */
 
 SET NAMES utf8mb4;
@@ -32,14 +32,15 @@ CREATE TABLE `notice_management`  (
                                       `need_processed_num` int NULL DEFAULT NULL COMMENT '总需读人数',
                                       `end_processed_num` int NULL DEFAULT NULL COMMENT '已读人数',
                                       `release_date` datetime NULL DEFAULT NULL COMMENT '发布日期',
+                                      `release_by` bigint NULL DEFAULT NULL COMMENT '发布人id',
                                       PRIMARY KEY (`notice_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of notice_management
 -- ----------------------------
-INSERT INTO `notice_management` VALUES (1, '这是一条测试的骚扰通知··', 1, '2024-03-13 11:41:18', 1, '2024-03-13 11:53:41', '0', NULL, NULL, '2024-03-13 11:53:41');
-INSERT INTO `notice_management` VALUES (2, '这是创建并发布的骚扰通知 ×2', 1, '2024-03-13 11:58:57', NULL, NULL, '0', NULL, NULL, '2024-03-13 11:58:57');
+INSERT INTO `notice_management` VALUES (1, '这是一条测试的骚扰通知··', 1, '2024-03-13 11:41:18', 1, '2024-03-13 11:53:41', '0', NULL, NULL, '2024-03-13 11:53:41', 1);
+INSERT INTO `notice_management` VALUES (2, '这是创建并发布的骚扰通知 ×2', 1, '2024-03-13 11:58:57', NULL, NULL, '0', NULL, NULL, '2024-03-13 11:58:57', 1);
 
 -- ----------------------------
 -- Table structure for pending_notification
@@ -63,7 +64,7 @@ INSERT INTO `pending_notification` VALUES (3, 1, '0', 2, '1');
 INSERT INTO `pending_notification` VALUES (4, 1, '0', 1, '0');
 INSERT INTO `pending_notification` VALUES (5, 1, '0', 3, '0');
 INSERT INTO `pending_notification` VALUES (6, 1, '0', 2, '0');
-INSERT INTO `pending_notification` VALUES (7, 2, '0', 2, '0');
+INSERT INTO `pending_notification` VALUES (7, 2, '0', 1, '0');
 INSERT INTO `pending_notification` VALUES (8, 2, '0', 7, '0');
 
 -- ----------------------------

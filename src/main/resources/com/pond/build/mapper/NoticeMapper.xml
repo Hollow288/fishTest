@@ -12,6 +12,7 @@
         <result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
         <result property="needProcessedNum" column="need_processed_num" jdbcType="INTEGER"/>
         <result property="endProcessedNum" column="end_processed_num" jdbcType="INTEGER"/>
+        <result property="releaseBy" column="release_by" jdbcType="VARCHAR"/>
         <result property="releaseDate" column="release_date" jdbcType="TIMESTAMP"/>
     </resultMap>
 

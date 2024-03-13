@@ -63,6 +63,10 @@ public class NoticeManagement implements Serializable {
      */
     private Integer endProcessedNum;
     /**
+     *
+     */
+    private String releaseBy;
+    /**
      * 完成度
      */
     @TableField(exist = false)

@@ -15,7 +15,7 @@ public class SseController {
     private NotificationService notificationService;
 
 
-    @GetMapping("/base-api/sse/notification")
+    @GetMapping("/sse/notification")
     public void handleSSE(@RequestParam("userId")String userId, HttpServletResponse response) {
         response.setContentType(MediaType.TEXT_EVENT_STREAM_VALUE);
         response.setCharacterEncoding("UTF-8");

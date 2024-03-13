@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pond.build.mapper.SseMapper">
+
+    <resultMap type="com.pond.build.model.Response.NoticeResponse" id="NoticeResultMap">
+        <result property="pendingId" column="pending_id" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="nickName" column="nick_name" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="avatarUrl" column="avatar_Url" jdbcType="VARCHAR"/>
+        <result property="releaseDate" column="release_date" jdbcType="VARCHAR"/>
+        <result property="message" column="message" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <select id="getAllNeedPendingNotice" resultMap="NoticeResultMap">
+        select pn.pending_id,
+               pn.user_id,
+               nm.message,
+               nm.release_date,
+               su.nick_name,
+               su.name,
+               su.avatar_Url
+        from pending_notification pn
+                 inner join notice_management nm on pn.notice_id = nm.notice_id and nm.del_flag='0' and release_date is not null
+                 left join sys_user su on nm.release_by = su.user_id
+        where pn.del_flag='0' and pn.Processed = '0'
+    </select>
+
+
+
+    <select id="getAllNeedPendingNoticeByUserId" resultMap="NoticeResultMap">
+        select pn.pending_id,
+               pn.user_id,
+               nm.message,
+               nm.release_date,
+               su.nick_name,
+               su.name,
+               su.avatar_Url
+        from pending_notification pn
+                 inner join notice_management nm on pn.notice_id = nm.notice_id and nm.del_flag='0' and release_date is not null
+                 left join sys_user su on nm.release_by = su.user_id
+        where pn.del_flag='0' and pn.Processed = '0' and pn.user_id = #{userId}
+    </select>
+
+</mapper>

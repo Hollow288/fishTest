@@ -7,6 +7,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableCaching
 @EnableAsync
 @EnableWebSecurity
+@EnableScheduling
 public class FishTestApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {

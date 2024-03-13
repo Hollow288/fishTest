@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 
 import com.pond.build.enums.HttpStatusCode;
 import com.pond.build.mapper.NoticeMapper;
+import com.pond.build.mapper.SseMapper;
 import com.pond.build.model.*;
+import com.pond.build.model.Response.NoticeResponse;
 import com.pond.build.service.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -20,6 +22,9 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Autowired
     private NoticeMapper noticeMapper;
+
+    @Autowired
+    private SseMapper sseMapper;
 
     @Override
     public ResponseResult getNoticeListByPage(Integer page, Integer pageSize, String searchText) {
@@ -132,6 +137,7 @@ public class NoticeServiceImpl implements NoticeService {
         noticeManagementUpdateWrapper.set("update_by",userInfo.getUserId().toString());
         noticeManagementUpdateWrapper.set("update_time",new Date());
         noticeManagementUpdateWrapper.set("release_date",new Date());
+        noticeManagementUpdateWrapper.set("release_by",userInfo.getUserId().toString());
 
         noticeMapper.update(null, noticeManagementUpdateWrapper);
 
@@ -158,6 +164,7 @@ public class NoticeServiceImpl implements NoticeService {
         noticeManagement.setCreateTime(new Date());
         noticeManagement.setReleaseDate(new Date());
         noticeManagement.setMessage((String) notice.get("message"));
+        noticeManagement.setReleaseBy(String.valueOf(userInfo.getUserId()));
         int insert = noticeMapper.insert(noticeManagement);
 
         String noticeId = noticeManagement.getNoticeId();
@@ -168,5 +175,13 @@ public class NoticeServiceImpl implements NoticeService {
 
         return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
 
+    }
+
+    @Override
+    public ResponseResult noticesByUserId(String userId) {
+
+        List<NoticeResponse> noticeResponses = sseMapper.getAllNeedPendingNoticeByUserId(userId);
+
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功",noticeResponses);
     }
 }

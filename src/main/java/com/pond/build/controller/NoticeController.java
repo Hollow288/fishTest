@@ -66,4 +66,11 @@ public class NoticeController {
     public ResponseResult createAndPublishNotice(@RequestBody HashMap<String,Object> notice){
         return noticeService.createAndPublishNotice(notice);
     }
+
+
+    @GetMapping("/notice/{userId}/notice-me")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult noticesByUserId(@PathVariable String userId){
+        return noticeService.noticesByUserId(userId);
+    }
 }

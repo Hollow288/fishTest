@@ -18,4 +18,6 @@ public interface NoticeService {
     ResponseResult updateAndPublishNotice(String noticeId, HashMap<String, Object> notice);
 
     ResponseResult createAndPublishNotice(HashMap<String, Object> notice);
+
+    ResponseResult noticesByUserId(String userId);
 }
