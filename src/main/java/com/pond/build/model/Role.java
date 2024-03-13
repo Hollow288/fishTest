@@ -1,5 +1,6 @@
 package com.pond.build.model;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -22,7 +23,7 @@ import java.io.Serializable;
 public class Role implements Serializable {
     private static final long serialVersionUID = -13372344778559328L;
 
-    @TableId
+    @TableId(type = IdType.AUTO)
     private String roleId;
 
     private String roleName;

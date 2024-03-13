@@ -1,5 +1,7 @@
 package com.pond.build.model;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -16,6 +18,7 @@ public class PendingNotification implements Serializable {
 /**
      * 待处理通知主键
      */
+    @TableId(type = IdType.AUTO)
     private String pendingId;
 /**
      * 原通知主键

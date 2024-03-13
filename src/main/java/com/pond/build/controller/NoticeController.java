@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -29,5 +30,40 @@ public class NoticeController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseResult allUserIdByNoticeId(@PathVariable("noticeId") String noticeId){
         return noticeService.allUserIdByNoticeId(noticeId);
+    }
+
+
+    @PostMapping("/notice")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult createNotice(@RequestBody HashMap<String,Object> notices){
+        return noticeService.createNotice(notices);
+    }
+
+
+    @PatchMapping("/notice/delete-notices")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult deleteNoticeByIds(@RequestBody HashMap<String,Object> noticeIds){
+        return noticeService.deleteNoticeByIds(noticeIds);
+    }
+
+
+    @PatchMapping("/notice/{noticeId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult updateNoticeById(@PathVariable("noticeId") String noticeId, @RequestBody HashMap<String,Object> notice){
+        return noticeService.updateNoticeById(noticeId,notice);
+    }
+
+
+    @PutMapping("/notice/{noticeId}/update-publish-notice")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult updateAndPublishNotice(@PathVariable("noticeId") String noticeId, @RequestBody HashMap<String,Object> notice){
+        return noticeService.updateAndPublishNotice(noticeId,notice);
+    }
+
+
+    @PostMapping("/notice/create-publish-notice")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult createAndPublishNotice(@RequestBody HashMap<String,Object> notice){
+        return noticeService.createAndPublishNotice(notice);
     }
 }

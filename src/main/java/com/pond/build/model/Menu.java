@@ -1,9 +1,6 @@
 package com.pond.build.model;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.*;
 
 import java.io.Serializable;
@@ -18,7 +15,7 @@ import java.util.List;
 public class Menu implements Serializable {
     private static final long serialVersionUID = 912709152728809735L;
 
-    @TableId
+    @TableId(type = IdType.AUTO)
     private String menuId;
 
 

@@ -18,4 +18,10 @@ public interface NoticeMapper extends BaseMapper<NoticeManagement> {
     Integer getNoticeCountByPage(@Param("searchText") String searchText);
 
     List<String> allUserIdByNoticeId(@Param("noticeId")String noticeId);
+
+    void insertPendingNotification(@Param("noticeId") String noticeId,@Param("userIds") List<String> userIds);
+
+    void deleteNoticeById(@Param("ids") List<String> ids,@Param("userId") String userId,@Param("date") Date date);
+
+    void deletePendingNotificationByNoticeIds(@Param("ids") List<String> ids);
 }
