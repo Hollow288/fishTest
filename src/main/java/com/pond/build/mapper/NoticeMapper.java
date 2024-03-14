@@ -24,4 +24,6 @@ public interface NoticeMapper extends BaseMapper<NoticeManagement> {
     void deleteNoticeById(@Param("ids") List<String> ids,@Param("userId") String userId,@Param("date") Date date);
 
     void deletePendingNotificationByNoticeIds(@Param("ids") List<String> ids);
+
+    void processedNoticeById(@Param("pendingId") String pendingId);
 }

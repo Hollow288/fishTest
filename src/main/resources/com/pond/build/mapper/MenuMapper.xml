@@ -38,13 +38,10 @@
     </select>
 
     <select id="selectRolesByUserId" resultType="java.lang.String">
-
         select distinct sr.role_key
         from sys_user_role sur
-                 left join sys_role sr on sur.user_id = sr.role_id
+                 inner join sys_role sr on sur.role_id = sr.role_id  and sr.status = 0 and sr.del_flag='0'
         where sur.user_id = #{userid}
-          and sr.status = 0
-
     </select>
 
     <update id="refreshIsLeaf">

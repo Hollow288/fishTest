@@ -5,12 +5,14 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pond.build.enums.HttpStatusCode;
 import com.pond.build.mapper.MenuMapper;
+import com.pond.build.mapper.RoleMapper;
 import com.pond.build.mapper.UserMapper;
 import com.pond.build.mapper.UsersMapper;
 import com.pond.build.model.LoginUser;
 import com.pond.build.model.Response.UserResponse;
 import com.pond.build.model.ResponseResult;
 import com.pond.build.model.User;
+import com.pond.build.model.UserRole;
 import com.pond.build.service.UsersService;
 import com.pond.build.utils.CommonUtil;
 import org.springframework.beans.BeanUtils;
@@ -44,6 +46,9 @@ public class UsersServiceImpl implements UsersService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private RoleMapper roleMapper;
 
     @Override
     public ResponseResult getMeInfo() {
@@ -292,6 +297,10 @@ public class UsersServiceImpl implements UsersService {
 
         user.setPassWord(passwordEncoder.encode(user.getPassWord()));
         usersMapper.insert(user);
+
+        // 添加默认角色
+        roleMapper.insertOneUserRole(user.getUserId().toString(),"2");
+
         return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
     }
 

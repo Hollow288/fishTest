@@ -69,8 +69,14 @@ public class NoticeController {
 
 
     @GetMapping("/notice/{userId}/notice-me")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('CIVILIAN')")
     public ResponseResult noticesByUserId(@PathVariable String userId){
         return noticeService.noticesByUserId(userId);
+    }
+
+    @PatchMapping("/notice/{pendingId}/processed-notice/{userId}")
+    @PreAuthorize("hasRole('CIVILIAN')")
+    public ResponseResult processedNoticeById(@PathVariable("pendingId") String pendingId,@PathVariable("userId") String userId){
+        return noticeService.processedNoticeById(pendingId,userId);
     }
 }

@@ -81,5 +81,11 @@
     </update>
 
 
+    <update id="processedNoticeById">
+        update pending_notification set Processed = '1'
+        where pending_id = #{pendingId}
+    </update>
+
+
 
 </mapper>

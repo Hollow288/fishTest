@@ -37,4 +37,9 @@
         delete from sys_user_role where role_id = #{roleId}
     </delete>
 
+
+    <insert id="insertOneUserRole">
+        insert sys_user_role (role_id,user_id) value (#{roleId},#{userId});
+    </insert>
+
 </mapper>

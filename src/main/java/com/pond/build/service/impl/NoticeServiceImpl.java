@@ -184,4 +184,19 @@ public class NoticeServiceImpl implements NoticeService {
 
         return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功",noticeResponses);
     }
+
+    @Override
+    public ResponseResult processedNoticeById(String pendingId, String userId) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        User userInfo = loginUser.getUser();
+        if(!Objects.equals(userInfo.getUserId().toString(),userId)){
+            return new ResponseResult(HttpStatusCode.REQUEST_SERVER_ERROR.getCode(),"不能已阅读别人的通知");
+        }
+
+        noticeMapper.processedNoticeById(pendingId);
+
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
+    }
 }

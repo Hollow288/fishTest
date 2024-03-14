@@ -18,4 +18,6 @@ public interface RoleMapper extends BaseMapper<Role> {
 
 
     Integer deleteByRoleId(@Param("roleId") String roleId);
+
+    void insertOneUserRole(@Param("userId") String userId, @Param("roleId") String roleId);
 }

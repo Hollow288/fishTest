@@ -20,4 +20,6 @@ public interface NoticeService {
     ResponseResult createAndPublishNotice(HashMap<String, Object> notice);
 
     ResponseResult noticesByUserId(String userId);
+
+    ResponseResult processedNoticeById(String pendingId,String userId);
 }
