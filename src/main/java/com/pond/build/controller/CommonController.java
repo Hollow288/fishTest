@@ -20,4 +20,10 @@ public class CommonController {
     public ResponseResult getAllItems(@RequestParam String fieldName){
         return commonService.getAllItems(fieldName);
     }
+
+
+    @GetMapping
+    public ResponseResult getAllRouter(){
+        return commonService.getAllRouterAndChildren();
+    }
 }

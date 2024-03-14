@@ -40,7 +40,7 @@ public class MenuController {
     @PutMapping("/menu/{menuId}/revise-menusort")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseResult reviseMenuSortByMenuId(@PathVariable("menuId") long menuId,@RequestBody Map<String,String> map){
-        return menuService.reviseMenuSortByMenuId(menuId, Objects.isNull(map.get("sort"))?0 : Integer.parseInt(map.get("sort")));
+        return menuService.reviseMenuSortByMenuId(menuId, (Objects.isNull(map.get("sort"))|| map.get("sort").equals(""))?null : Integer.parseInt(map.get("sort")));
     }
 
 

@@ -63,7 +63,9 @@ public class MenuServiceImpl implements MenuService {
         LambdaQueryWrapper<Menu> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(Menu::getDelFlag, "0");
         lambdaQueryWrapper.eq(Menu::getMenuParentId, "0");
-        lambdaQueryWrapper.isNotNull(Menu::getLabel);
+        lambdaQueryWrapper.eq(Menu::getVisible, "0");
+//        lambdaQueryWrapper.isNotNull(Menu::getLabel);
+        //不显示的就是路由,显示的就是菜单（visible来区分）  菜单的显示使用（status来区分）
         lambdaQueryWrapper.ne(Menu::getLabel, "");
         lambdaQueryWrapper.orderByAsc(Menu::getSort);
 
@@ -85,6 +87,7 @@ public class MenuServiceImpl implements MenuService {
         LambdaQueryWrapper<Menu> menuLambdaQueryWrapper = new LambdaQueryWrapper<>();
         menuLambdaQueryWrapper.eq(Menu::getMenuParentId,menuId);
         menuLambdaQueryWrapper.eq(Menu::getDelFlag,'0');
+        menuLambdaQueryWrapper.orderBy(true, true, Menu::getSort); // true 表示升序，false 表示降序
 
         List<Menu> menus = menuMapper.selectList(menuLambdaQueryWrapper);
 

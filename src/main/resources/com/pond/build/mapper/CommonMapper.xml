@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pond.build.mapper.CommonMapper">
+
+    <resultMap type="com.pond.build.model.Response.RouterResponse" id="RouterMap">
+        <result property="menuId" column="menu_id" jdbcType="VARCHAR"/>
+        <result property="path" column="path" jdbcType="VARCHAR"/>
+        <result property="name" column="key_name" jdbcType="VARCHAR"/>
+        <result property="component" column="component" jdbcType="VARCHAR"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="icon" column="icon" jdbcType="VARCHAR"/>
+        <result property="disableAuth" column="disable_auth" jdbcType="VARCHAR"/>
+        <result property="dismissTab" column="dismiss_tab" jdbcType="VARCHAR"/>
+        <result property="routerParentId" column="router_parent_id" jdbcType="VARCHAR"/>
+        <collection property="children" ofType="com.pond.build.model.Response.RouterResponse" >
+            <result property="menuId" column="children_menu_id" jdbcType="VARCHAR"/>
+            <result property="path" column="children_path" jdbcType="VARCHAR"/>
+            <result property="name" column="children_key_name" jdbcType="VARCHAR"/>
+            <result property="component" column="children_component" jdbcType="VARCHAR"/>
+            <result property="title" column="children_title" jdbcType="VARCHAR"/>
+            <result property="icon" column="children_icon" jdbcType="VARCHAR"/>
+            <result property="disableAuth" column="children_disable_auth" jdbcType="VARCHAR"/>
+            <result property="dismissTab" column="children_dismiss_tab" jdbcType="VARCHAR"/>
+            <result property="routerParentId" column="children_router_parent_id" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
+
+    <select id="getAllRouterAndChildren" resultMap="RouterMap">
+        select parent.menu_id,
+               parent.path,
+               parent.key_name,
+               parent.component,
+               parent.title,
+               parent.icon,
+               parent.disable_auth,
+               parent.dismiss_tab,
+               parent.router_parent_id,
+               children.menu_id as children_menu_id,
+               children.path as children_path,
+               children.key_name as children_key_name,
+               children.component as children_component,
+               children.title as children_title,
+               children.icon as children_icon,
+               children.disable_auth as children_disable_auth,
+               children.dismiss_tab as children_dismiss_tab,
+               children.router_parent_id as children_router_parent_id
+        from sys_menu parent
+            left join sys_menu children on parent.menu_id = children.router_parent_id and  children.del_flag = '0'
+        where   parent.del_flag='0' and parent.router_parent_id = '0'
+    </select>
+
+
+</mapper>

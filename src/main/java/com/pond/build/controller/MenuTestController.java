@@ -1,6 +1,7 @@
 package com.pond.build.controller;
 
 
+import com.pond.build.mapper.CommonMapper;
 import com.pond.build.mapper.MenuMapper;
 import com.pond.build.mapper.SseMapper;
 import com.pond.build.model.Response.NoticeResponse;
@@ -42,12 +43,17 @@ public class MenuTestController {
     private SseMapper sseMapper;
 
 
+    @Autowired
+    private CommonMapper commonMapper;
+
+
     @GetMapping("/test1")
     public void fishTest(){
 //        List<Map<String, Object>> maps = menuMapper.selectMenuAndChildren();
-        List<NoticeResponse> noticeResponses = sseMapper.getAllNeedPendingNotice();
+//        List<NoticeResponse> noticeResponses = sseMapper.getAllNeedPendingNotice();
+        List<Map<String, Object>> allRouterAndChildren = commonMapper.getAllRouterAndChildren();
 
-        System.out.println(noticeResponses);
+        System.out.println(allRouterAndChildren);
     }
 
 //    @PreAuthorize

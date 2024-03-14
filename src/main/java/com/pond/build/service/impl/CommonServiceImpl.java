@@ -1,11 +1,13 @@
 package com.pond.build.service.impl;
 
 import com.pond.build.enums.HttpStatusCode;
+import com.pond.build.mapper.CommonMapper;
 import com.pond.build.model.ResponseResult;
 import com.pond.build.service.CommonService;
 import lombok.SneakyThrows;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Async;
@@ -18,6 +20,10 @@ import java.util.Map;
 public class CommonServiceImpl implements CommonService {
 
     private static final Logger logger = LogManager.getLogger(Example.class);
+
+
+    @Autowired
+    private CommonMapper commonMapper;
 
     @Override
     public ResponseResult getAllItems(String fieldName){
@@ -50,6 +56,13 @@ public class CommonServiceImpl implements CommonService {
     public void doTask1() {
         Thread.sleep(20000);
         logger.info("这里是异步执行,已经睡了20000毫秒");
+    }
+
+    @Override
+    public ResponseResult getAllRouterAndChildren() {
+
+        commonMapper.getAllRouterAndChildren();
+        return null;
     }
 
 }

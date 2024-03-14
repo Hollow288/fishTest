@@ -20,7 +20,7 @@
     <select id="selectMenuAndChildren" resultMap="MenuMap">
         SELECT parent.menu_id,parent.del_flag,parent.remark, child.menu_id AS child_menu_id, child.del_flag as child_del_flag,child.remark as child_remark,child.menu_parent_id as child_menu_parent_id
         FROM sys_menu parent
-            left JOIN sys_menu child ON parent.menu_id = child.menu_parent_id and  child.del_flag = '0' where parent.del_flag='0' and parent.menu_parent_id = '0' and parent.label is not null and  parent.label != ""
+            left JOIN sys_menu child ON parent.menu_id = child.menu_parent_id and  child.del_flag = '0' where parent.del_flag='0' and parent.menu_parent_id = '0' and parent.visible = '0'
     </select>
 
 

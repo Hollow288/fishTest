@@ -6,4 +6,6 @@ public interface CommonService {
     ResponseResult getAllItems(String fieldName);
 
     void doTask1();
+
+    ResponseResult getAllRouterAndChildren();
 }
