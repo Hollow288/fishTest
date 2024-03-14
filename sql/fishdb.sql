@@ -11,7 +11,7 @@
  Target Server Version : 80035
  File Encoding         : 65001
 
- Date: 13/03/2024 17:57:00
+ Date: 14/03/2024 18:07:28
 */
 
 SET NAMES utf8mb4;
@@ -34,13 +34,14 @@ CREATE TABLE `notice_management`  (
                                       `release_date` datetime NULL DEFAULT NULL COMMENT '发布日期',
                                       `release_by` bigint NULL DEFAULT NULL COMMENT '发布人id',
                                       PRIMARY KEY (`notice_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of notice_management
 -- ----------------------------
 INSERT INTO `notice_management` VALUES (1, '这是一条测试的骚扰通知··', 1, '2024-03-13 11:41:18', 1, '2024-03-13 11:53:41', '0', NULL, NULL, '2024-03-13 11:53:41', 1);
 INSERT INTO `notice_management` VALUES (2, '这是创建并发布的骚扰通知 ×2', 1, '2024-03-13 11:58:57', NULL, NULL, '0', NULL, NULL, '2024-03-13 11:58:57', 1);
+INSERT INTO `notice_management` VALUES (3, '单独发给管理员的骚扰通知😈', 1, '2024-03-14 13:49:06', NULL, NULL, '0', NULL, NULL, '2024-03-14 13:49:06', 1);
 
 -- ----------------------------
 -- Table structure for pending_notification
@@ -53,7 +54,7 @@ CREATE TABLE `pending_notification`  (
                                          `user_id` bigint NULL DEFAULT NULL COMMENT '待处理人',
                                          `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '是否删除（0未删除 1已删除）',
                                          PRIMARY KEY (`pending_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of pending_notification
@@ -61,11 +62,12 @@ CREATE TABLE `pending_notification`  (
 INSERT INTO `pending_notification` VALUES (1, 1, '0', 1, '1');
 INSERT INTO `pending_notification` VALUES (2, 1, '0', 3, '1');
 INSERT INTO `pending_notification` VALUES (3, 1, '0', 2, '1');
-INSERT INTO `pending_notification` VALUES (4, 1, '0', 1, '0');
+INSERT INTO `pending_notification` VALUES (4, 1, '1', 1, '0');
 INSERT INTO `pending_notification` VALUES (5, 1, '0', 3, '0');
 INSERT INTO `pending_notification` VALUES (6, 1, '0', 2, '0');
-INSERT INTO `pending_notification` VALUES (7, 2, '0', 1, '0');
-INSERT INTO `pending_notification` VALUES (8, 2, '0', 7, '0');
+INSERT INTO `pending_notification` VALUES (7, 2, '1', 1, '0');
+INSERT INTO `pending_notification` VALUES (8, 2, '1', 7, '0');
+INSERT INTO `pending_notification` VALUES (9, 3, '1', 1, '0');
 
 -- ----------------------------
 -- Table structure for student
@@ -139,17 +141,43 @@ CREATE TABLE `sys_menu`  (
                              `menu_parent_id` bigint NULL DEFAULT 0 COMMENT '菜单父id',
                              `is_Leaf` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
                              PRIMARY KEY (`menu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 33 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_menu
 -- ----------------------------
-INSERT INTO `sys_menu` VALUES (1, 'base-layout', NULL, '', 1, '/', '@/layouts/BaseLayout', '1', '0', NULL, '#', NULL, NULL, 3, '2024-03-06 14:18:58', '0', '（仅路由）', '0', '0', 0, 0, '0');
+INSERT INTO `sys_menu` VALUES (1, 'base-layout', NULL, '', NULL, '/', '@/layouts/BaseLayout', '1', '0', NULL, '#', NULL, NULL, 1, '2024-03-14 16:34:39', '0', '（仅路由）', '0', '0', 0, 0, '0');
 INSERT INTO `sys_menu` VALUES (2, 'navigation', 'MENU.Navigation', 'MENU.Navigation', 1, '/', '@/views/Navigation', '0', '0', NULL, '~icons/mdi/compass-outline', NULL, NULL, 3, '2024-03-06 14:18:48', '0', '（菜单）站点导航', '0', '0', 1, 0, '0');
 INSERT INTO `sys_menu` VALUES (3, 'system-functions', '', 'MENU.SystemFunctions', 2, NULL, NULL, '0', '0', NULL, '~icons/mdi/function-variant', NULL, NULL, 3, '2024-03-06 14:19:16', '0', '（菜单）系统功能', '0', '0', 1, 0, '1');
-INSERT INTO `sys_menu` VALUES (4, 'user-management', 'MENU.UserManagement', 'MENU.UserManagement', 1, '${SYSTEM_FUNCTIONS_PREFIX}/user-management', '@/views/SystemFunctions/UserManagement', '0', '0', NULL, '~icons/mdi/account-cog-outline', NULL, NULL, 3, '2024-03-11 09:35:32', '0', '（菜单）用户管理', '0', '0', 1, 3, '0');
-INSERT INTO `sys_menu` VALUES (5, 'menu-management', 'MENU.MenuManagement', 'MENU.MenuManagement', 2, '${SYSTEM_FUNCTIONS_PREFIX}/menu-management', '@/views/SystemFunctions/MenuManagement', '0', '0', NULL, '~icons/mdi/account-cog-outline', NULL, NULL, 3, '2024-03-11 09:35:49', '0', '（菜单）菜单管理', '0', '0', 1, 3, '0');
-INSERT INTO `sys_menu` VALUES (6, 'test-keyName', NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, '#', 3, '2024-03-13 11:33:07', 3, '2024-03-13 11:33:55', '0', '测试', '0', '0', 1, 0, '0');
+INSERT INTO `sys_menu` VALUES (4, 'user-management', 'MENU.UserManagement', 'MENU.UserManagement', 1, '/system-functions/user-management', '@/views/SystemFunctions/UserManagement', '0', '0', NULL, '~icons/mdi/account-cog-outline', NULL, NULL, 1, '2024-03-14 13:59:38', '0', '（菜单）用户管理', '0', '0', 1, 3, '0');
+INSERT INTO `sys_menu` VALUES (5, 'menu-management', 'MENU.MenuManagement', 'MENU.MenuManagement', 2, '/system-functions/menu-management', '@/views/SystemFunctions/MenuManagement', '0', '0', NULL, '~icons/mdi/account-cog-outline', NULL, NULL, 1, '2024-03-14 14:00:00', '0', '（菜单）菜单管理', '0', '0', 1, 3, '0');
+INSERT INTO `sys_menu` VALUES (6, 'test-keyName', NULL, NULL, 0, NULL, NULL, '0', '0', NULL, '#', 3, '2024-03-13 11:33:07', 1, '2024-03-14 15:12:58', '1', '测试', '0', '0', 1, 0, '0');
+INSERT INTO `sys_menu` VALUES (7, 'role-management', 'MENU.RoleManagement', 'MENU.RoleManagement', 3, '/system-functions/role-management', '@/views/SystemFunctions/RoleManagement', '0', '0', NULL, '@vicons/ionicons5/PricetagOutline', 1, '2024-03-14 15:57:55', 1, '2024-03-14 16:14:43', '0', '（菜单）角色管理', '0', '0', 1, 3, '0');
+INSERT INTO `sys_menu` VALUES (8, 'notice-management', 'MENU.NoticeManagement', 'MENU.RoleManagement', 4, '/system-functions/notice-management', '@/views/SystemFunctions/NoticeManagement', '0', '0', NULL, '@vicons/ionicons5/ChatbubbleEllipsesOutline', 1, '2024-03-14 15:59:31', 1, '2024-03-14 16:14:51', '0', '（菜单）通知公告', '0', '0', 1, 3, '0');
+INSERT INTO `sys_menu` VALUES (9, 'system-tools', NULL, 'MENU.SystemTools', 3, NULL, NULL, '0', '0', NULL, '~icons/mdi/tools', 1, '2024-03-14 16:01:34', 1, '2024-03-14 16:01:50', '0', '（菜单）系统工具', '0', '0', 1, 0, '1');
+INSERT INTO `sys_menu` VALUES (10, 'qrcode', 'MENU.QRCode', 'MENU.QRCode', 1, '/system-tools/qrcode', '@/views/SystemTools/QRCode', '0', '0', NULL, '~icons/ic/baseline-qrcode', 1, '2024-03-14 16:03:55', 1, '2024-03-14 16:12:29', '0', '（菜单）二维码', '0', '0', 1, 9, '0');
+INSERT INTO `sys_menu` VALUES (11, 'clipboard', 'MENU.Clipboard', 'MENU.Clipboard', 2, '/system-tools/clipboard', '@/views/SystemTools/Clipboard', '0', '0', NULL, '~icons/ic/baseline-content-copy', 1, '2024-03-14 16:05:36', 1, '2024-03-14 16:08:16', '0', '（菜单）剪切板', '0', '0', 1, 9, '0');
+INSERT INTO `sys_menu` VALUES (12, 'print', 'MENU.Print', 'MENU.Print', 3, '/system-tools/print', '@/views/SystemTools/Print', '0', '0', NULL, '~icons/ic/outline-local-printshop', 1, '2024-03-14 16:06:41', 1, '2024-03-14 16:08:20', '0', '（菜单）打印', '0', '0', 1, 9, '0');
+INSERT INTO `sys_menu` VALUES (13, 'websocket', 'MENU.WebSocket', 'MENU.WebSocket', 4, '/system-tools/websocket', '@/views/SystemTools/WebSocket', '0', '0', NULL, '~icons/tabler/brand-socket-io', 1, '2024-03-14 16:07:53', 1, '2024-03-14 16:08:23', '0', '（菜单）WebSocket', '0', '0', 1, 9, '0');
+INSERT INTO `sys_menu` VALUES (14, 'code-templates', NULL, 'MENU.ListTemplates', 4, NULL, NULL, '0', '0', NULL, '~icons/solar/code-bold', 1, '2024-03-14 16:13:21', 1, '2024-03-14 16:13:24', '0', '（菜单）代码模板', '0', '0', 1, 0, '1');
+INSERT INTO `sys_menu` VALUES (15, 'list-templates', 'MENU.ListTemplates', 'MENU.ListTemplates', 1, '/code-templates/list-templates', '@/views/CodeTemplates/ListTemplates', '0', '0', NULL, '~icons/ic/outline-list-alt', 1, '2024-03-14 16:14:30', 1, '2024-03-14 16:14:34', '0', '（菜单）列表模板', '0', '0', 1, 14, '0');
+INSERT INTO `sys_menu` VALUES (16, 'universal-components', NULL, 'MENU.UniversalComponents', 5, NULL, NULL, '0', '0', NULL, '~icons/ic/baseline-auto-awesome-mosaic', 1, '2024-03-14 16:16:13', 1, '2024-03-14 16:16:17', '0', '（菜单）通用组件', '0', '0', 1, 0, '1');
+INSERT INTO `sys_menu` VALUES (17, 'charts', 'MENU.Charts', 'MENU.Charts', 1, '/universal-components/charts', '@/views/UniversalComponents/Charts', '0', '0', NULL, '~icons/ic/baseline-bar-chart', 1, '2024-03-14 16:17:28', 1, '2024-03-14 16:17:31', '0', '（菜单）图表', '0', '0', 1, 16, '0');
+INSERT INTO `sys_menu` VALUES (18, 'builtin-components', NULL, 'MENU.BuiltinComponents', 6, NULL, NULL, '0', '0', NULL, '~icons/mdi/puzzle', 1, '2024-03-14 16:18:15', 1, '2024-03-14 16:18:18', '0', '（菜单）内置组件', '0', '0', 1, 0, '1');
+INSERT INTO `sys_menu` VALUES (19, 'digital-animation', 'MENU.DigitalAnimation', 'MENU.DigitalAnimation', 1, '/builtin-components/digital-animation', '@/views/BuiltinComponents/DigitalAnimation', '0', '0', NULL, '~icons/ic/baseline-hourglass-empty', 1, '2024-03-14 16:19:18', 1, '2024-03-14 16:20:29', '0', '（菜单）数字动画', '0', '0', 1, 18, '0');
+INSERT INTO `sys_menu` VALUES (20, 'timeline', 'MENU.Timeline', 'MENU.Timeline', 2, '/builtin-components/timeline', '@/views/BuiltinComponents/Timeline', '0', '0', NULL, '~icons/ic/baseline-timeline', 1, '2024-03-14 16:20:19', 1, '2024-03-14 16:20:35', '0', '（菜单）时间线', '0', '0', 1, 18, '0');
+INSERT INTO `sys_menu` VALUES (21, 'error-pages', NULL, 'MENU.ERROR.PAGES', 7, NULL, NULL, '0', '0', NULL, '~icons/ic/baseline-error-outline', 1, '2024-03-14 16:21:19', 1, '2024-03-14 16:21:26', '0', '（菜单）错误界面', '0', '0', 1, 0, '1');
+INSERT INTO `sys_menu` VALUES (22, '403', '403', '403', 1, '/error-pages/403', '@/pages/error-pages/403', '0', '0', NULL, '~icons/ic/baseline-do-not-disturb', 1, '2024-03-14 16:22:59', 1, '2024-03-14 16:25:30', '0', '（菜单）403', '0', '0', 1, 21, '0');
+INSERT INTO `sys_menu` VALUES (23, '404', '404', '404', 2, '/error-pages/404', '@/pages/error-pages/404', '0', '0', NULL, '~icons/tabler/error-404', 1, '2024-03-14 16:24:02', 1, '2024-03-14 16:25:35', '0', '（菜单）404', '0', '0', 1, 21, '0');
+INSERT INTO `sys_menu` VALUES (24, '418', '418', '418', 3, '/error-pages/418', '@/pages/error-pages/418', '0', '0', NULL, '~icons/icon-park-outline/tea-drink', 1, '2024-03-14 16:24:42', 1, '2024-03-14 16:25:40', '0', '（菜单）418', '0', '0', 1, 21, '0');
+INSERT INTO `sys_menu` VALUES (25, '500', '500', '500', 4, '/error-pages/500', '@/pages/error-pages/500', '0', '0', NULL, '~icons/lucide/server-off', 1, '2024-03-14 16:25:23', 1, '2024-03-14 16:25:42', '0', '（菜单）500', '0', '0', 1, 21, '0');
+INSERT INTO `sys_menu` VALUES (26, 'user-info', 'MENU.UserInfo', NULL, NULL, '/user-info', '@/views/User/UserInfo', '1', '0', NULL, '~icons/mdi/account-circle', 1, '2024-03-14 16:27:10', 1, '2024-03-14 16:27:26', '0', '（仅路由）', '0', '0', 1, 0, '0');
+INSERT INTO `sys_menu` VALUES (27, 'change-password', 'MENU.ChangePassword', NULL, NULL, '/change-password', '@/views/User/ChangePassword', '1', '0', NULL, '~icons/mdi/key', 1, '2024-03-14 16:29:56', NULL, NULL, '0', '（仅路由）', '0', '0', 1, 0, '0');
+INSERT INTO `sys_menu` VALUES (28, 'pathMatch', '404', NULL, NULL, '/:pathMatch(.*)*', '@/pages/error-pages/404', '1', '0', NULL, '~icons/tabler/error-404', 1, '2024-03-14 16:31:44', NULL, NULL, '0', '（仅路由）通配符路由', '0', '0', 1, 0, '0');
+INSERT INTO `sys_menu` VALUES (29, 'auth-layout', NULL, NULL, NULL, '/', '@/layouts/AuthLayout', '1', '0', NULL, '#', 1, '2024-03-14 16:41:22', NULL, NULL, '0', '（仅路由）认证页面', '1', '1', 0, 0, '1');
+INSERT INTO `sys_menu` VALUES (30, 'login', 'MENU.Login', NULL, NULL, '/login', '@/views/Auth/Login', '1', '0', NULL, '#', 1, '2024-03-14 16:42:24', NULL, NULL, '0', '（仅路由）', '1', '1', 29, 29, '0');
+INSERT INTO `sys_menu` VALUES (31, 'signup', 'MENU.Signup', NULL, NULL, '/signup', '@/views/Auth/Signup', '1', '0', NULL, '#', 1, '2024-03-14 16:43:16', NULL, NULL, '0', '（仅路由）', '1', '1', 29, 29, '0');
+INSERT INTO `sys_menu` VALUES (32, 'auth-redirect', 'TEMP.AuthRedirect.Authorizing', NULL, NULL, '/auth-redirect', '@/views/Auth/AuthRedirect', '1', '0', NULL, '#', 1, '2024-03-14 16:44:04', NULL, NULL, '0', '（仅路由）授权重定向页面', '1', '1', 0, 0, '0');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -182,9 +210,9 @@ INSERT INTO `sys_role` VALUES (3, '猴子国王', 'ROLE_MonkeyKing', '0', 0, 1, 
 DROP TABLE IF EXISTS `sys_role_menu`;
 CREATE TABLE `sys_role_menu`  (
                                   `role_id` bigint NOT NULL COMMENT '角色ID',
-                                  `menu_id` bigint NOT NULL DEFAULT 0 COMMENT '菜单id',
+                                  `menu_id` bigint NOT NULL COMMENT '菜单id',
                                   PRIMARY KEY (`role_id`, `menu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_role_menu
@@ -223,7 +251,7 @@ CREATE TABLE `sys_user`  (
                              `address` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '地址',
                              `biography` varchar(1500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '简介',
                              PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_user
@@ -234,13 +262,14 @@ INSERT INTO `sys_user` VALUES (3, '3', '普通人张四', '$2a$10$DC8H1hZ5lnCdMu
 INSERT INTO `sys_user` VALUES (4, '4', '普通人张五', '$2a$10$SFmzm8FYtoilOCrpYBQfEeWOC0NRH7rkYhJnPe3swsvYZZ2xD0bjC', '1', NULL, NULL, '0', NULL, '1', NULL, '2024-01-08 16:05:42', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_user` VALUES (5, '5', '普通人张六', '$2a$10$SFmzm8FYtoilOCrpYBQfEeWOC0NRH7rkYhJnPe3swsvYZZ2xD0bjC', '0', 'qqq@qq.com', '', '1', NULL, '1', NULL, '2024-01-08 16:05:42', 8, '2024-01-27 13:22:03', 0, 'Hollow', '2024-01-27 08:00:00', NULL, NULL, NULL, 'zhong', '111');
 INSERT INTO `sys_user` VALUES (6, '6', '普通人张三', '$2a$10$SFmzm8FYtoilOCrpYBQfEeWOC0NRH7rkYhJnPe3swsvYZZ2xD0bjC', '0', NULL, '13577777777', '1', NULL, '1', NULL, '2024-01-08 16:05:42', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_user` VALUES (7, '7', '普通人张三', '$2a$10$SFmzm8FYtoilOCrpYBQfEeWOC0NRH7rkYhJnPe3swsvYZZ2xD0bjC', '0', NULL, NULL, '1', NULL, '1', NULL, '2024-01-08 16:05:42', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_user` VALUES (7, '7', '普通人张三', '$2a$10$fsZXpWU9r7WR5ca7s7SNT.vxzarjEtJyqpdSb15gI3.n0qkhBIYUG', '0', NULL, NULL, '1', NULL, '1', NULL, '2024-01-08 16:05:42', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_user` VALUES (8, '8', '普通人张三', '$2a$10$SFmzm8FYtoilOCrpYBQfEeWOC0NRH7rkYhJnPe3swsvYZZ2xD0bjC', '0', NULL, NULL, '0', NULL, '1', NULL, '2024-01-08 16:05:42', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_user` VALUES (9, '9', '普通人张三', '$2a$10$SFmzm8FYtoilOCrpYBQfEeWOC0NRH7rkYhJnPe3swsvYZZ2xD0bjC', '0', NULL, NULL, '2', NULL, '1', NULL, '2024-01-08 16:05:42', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_user` VALUES (10, '10', '普通人张三', '$2a$10$s7iZYbu3zSl/w2AXDTwAxucOsodd649FU/buPbixJvnOi0aFCTt0.', '0', NULL, NULL, '1', NULL, '1', NULL, '2024-01-08 16:05:42', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_user` VALUES (11, '11', '普通人张三', '$2a$10$SFmzm8FYtoilOCrpYBQfEeWOC0NRH7rkYhJnPe3swsvYZZ2xD0bjC', '0', NULL, NULL, '0', NULL, '1', NULL, '2024-01-08 16:05:42', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_user` VALUES (12, '12', '普通人张三', '$2a$10$SFmzm8FYtoilOCrpYBQfEeWOC0NRH7rkYhJnPe3swsvYZZ2xD0bjC', '0', NULL, NULL, '2', NULL, '1', NULL, '2024-01-08 16:05:42', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_user` VALUES (13, 'testcreate', '用户20245558030231', '$2a$10$8097YThwalMC5FwqnyeZz.XgutVX63QaYPvTr5Z/EmmrPtXfTo91i', '0', NULL, NULL, NULL, NULL, '1', 1, '2024-03-13 11:40:12', 1, '2024-03-13 11:40:12', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_user` VALUES (14, 'jacktest', '用户20242635764175', '$2a$10$dYWqUy9tYok.RQsliSYaV.kaYo37y65VzLHwvYiXr/Jx1fdOGL.Qm', '0', NULL, NULL, NULL, NULL, '1', 1, '2024-03-14 13:38:12', 1, '2024-03-14 13:38:12', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -248,9 +277,9 @@ INSERT INTO `sys_user` VALUES (13, 'testcreate', '用户20245558030231', '$2a$10
 DROP TABLE IF EXISTS `sys_user_role`;
 CREATE TABLE `sys_user_role`  (
                                   `user_id` bigint NOT NULL COMMENT '用户id',
-                                  `role_id` bigint NOT NULL DEFAULT 0 COMMENT '角色id',
+                                  `role_id` bigint NOT NULL COMMENT '角色id',
                                   PRIMARY KEY (`user_id`, `role_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_user_role
@@ -269,6 +298,7 @@ INSERT INTO `sys_user_role` VALUES (10, 2);
 INSERT INTO `sys_user_role` VALUES (11, 2);
 INSERT INTO `sys_user_role` VALUES (12, 2);
 INSERT INTO `sys_user_role` VALUES (13, 3);
+INSERT INTO `sys_user_role` VALUES (14, 2);
 
 -- ----------------------------
 -- Table structure for teacher
