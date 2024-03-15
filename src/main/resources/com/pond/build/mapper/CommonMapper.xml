@@ -26,6 +26,22 @@
     </resultMap>
 
 
+    <resultMap type="com.pond.build.model.Response.MenuResponse" id="MenuMap">
+        <result property="menuId" column="menu_id" jdbcType="VARCHAR"/>
+        <result property="label" column="label" jdbcType="VARCHAR"/>
+        <result property="key" column="key_name" jdbcType="VARCHAR"/>
+        <result property="icon" column="icon" jdbcType="VARCHAR"/>
+        <result property="menuParentId" column="menu_parent_id" jdbcType="VARCHAR"/>
+        <collection property="children" ofType="com.pond.build.model.Response.MenuResponse" >
+            <result property="menuId" column="children_menu_id" jdbcType="VARCHAR"/>
+            <result property="label" column="children_label" jdbcType="VARCHAR"/>
+            <result property="key" column="children_key_name" jdbcType="VARCHAR"/>
+            <result property="icon" column="children_icon" jdbcType="VARCHAR"/>
+            <result property="menuParentId" column="children_menu_parent_id" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
+
     <select id="getAllRouterAndChildren" resultMap="RouterMap">
         select parent.menu_id,
                parent.path,
@@ -50,5 +66,37 @@
         where   parent.del_flag='0' and parent.router_parent_id = '0'
     </select>
 
+
+    <select id="getAllMenuAndChildren" resultMap="MenuMap">
+        select
+            parent.menu_id,
+            parent.label,
+            parent.key_name,
+            parent.icon,
+            parent.menu_parent_id,
+            children.menu_id as children_menu_id,
+            children.label as children_label,
+            children.key_name as children_key_name,
+            children.icon as children_icon,
+            children.menu_parent_id as children_menu_parent_id
+        from sys_menu parent
+        left join sys_menu children on parent.menu_id = children.menu_parent_id and children.del_flag='0' and children.status='0'
+        where parent.del_flag='0' and parent.visible='0' and parent.menu_parent_id = '0'
+    </select>
+
+    <select id="getAllMenuIdByUserId" resultType="java.lang.String">
+        select distinct menu_id from sys_role_menu srm
+        inner join sys_user_role sur on srm.role_id = sur.role_id
+        inner join sys_user su on sur.user_id = su.user_id and su.user_id = #{userId}
+    </select>
+
+
+    <select id="selectMenuParentId" resultType="java.lang.String">
+        select distinct menu_parent_id from sys_menu
+        where menu_id in
+        <foreach collection="menuIds" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
 
 </mapper>

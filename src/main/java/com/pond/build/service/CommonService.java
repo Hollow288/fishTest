@@ -8,4 +8,6 @@ public interface CommonService {
     void doTask1();
 
     ResponseResult getAllRouterAndChildren();
+
+    ResponseResult getAllMenuChildren();
 }

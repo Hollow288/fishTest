@@ -23,6 +23,7 @@ import javax.swing.*;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping(("/fishTest"))
@@ -51,9 +52,17 @@ public class MenuTestController {
     public void fishTest(){
 //        List<Map<String, Object>> maps = menuMapper.selectMenuAndChildren();
 //        List<NoticeResponse> noticeResponses = sseMapper.getAllNeedPendingNotice();
-        List<Map<String, Object>> allRouterAndChildren = commonMapper.getAllRouterAndChildren();
+//        List<Map<String, Object>> allRouterAndChildren = commonMapper.getAllRouterAndChildren();
+        List<String> menuIds = commonMapper.getAllMenuIdByUserId("1");
 
-        System.out.println(allRouterAndChildren);
+        List<String> strings = commonMapper.selectMenuParentId(menuIds);
+
+        List<String> mergedList = Stream.concat(menuIds.stream(), strings.stream())
+                .distinct() // 去重
+                .filter(id -> !id.equals("0")) // 过滤掉值为"0"的元素
+                .collect(Collectors.toList());
+
+        System.out.println(menuIds);
     }
 
 //    @PreAuthorize

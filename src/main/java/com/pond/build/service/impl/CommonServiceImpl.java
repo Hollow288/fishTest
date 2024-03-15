@@ -1,8 +1,12 @@
 package com.pond.build.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.pond.build.enums.HttpStatusCode;
 import com.pond.build.mapper.CommonMapper;
+import com.pond.build.model.LoginUser;
+import com.pond.build.model.Response.MenuResponse;
 import com.pond.build.model.ResponseResult;
+import com.pond.build.model.User;
 import com.pond.build.service.CommonService;
 import lombok.SneakyThrows;
 import org.apache.logging.log4j.LogManager;
@@ -11,10 +15,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class CommonServiceImpl implements CommonService {
@@ -61,8 +70,45 @@ public class CommonServiceImpl implements CommonService {
     @Override
     public ResponseResult getAllRouterAndChildren() {
 
-        commonMapper.getAllRouterAndChildren();
-        return null;
+        List<Map<String, Object>> allRouterAndChildren = commonMapper.getAllRouterAndChildren();
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功",allRouterAndChildren);
+    }
+
+    @Override
+    public ResponseResult getAllMenuChildren() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        User userInfo = loginUser.getUser();
+
+        //所有菜单,子父级
+        List<MenuResponse> allMenuAndChildren = commonMapper.getAllMenuAndChildren();
+        //该人员拥有的所有菜单menuId
+        List<String> menuIds = commonMapper.getAllMenuIdByUserId(userInfo.getUserId().toString());
+//        allMenuAndChildren.stream().filter(map->map.get("meanuId"))
+        List<String> parentMenuIds = commonMapper.selectMenuParentId(menuIds);
+
+        //最终用户拥有权限的菜单ID集合
+        List<String> mergedList = Stream.concat(menuIds.stream(), parentMenuIds.stream())
+                .distinct() // 去重
+                .filter(id -> !id.equals("0")) // 过滤掉值为"0"的元素
+                .collect(Collectors.toList());
+
+//        allMenuAndChildren.stream().filter(map->map.get("menuId"))
+
+        //所有用户拥有权限的菜单和子级的集合
+        List<MenuResponse> filteredMenuAndChildren = allMenuAndChildren.stream()
+                .filter(menuResponse -> mergedList.contains(menuResponse.getMenuId())) // 过滤出 menuId 在 mergedList 中存在的 MenuResponse
+                .map(menuResponse -> { // 根据 mergedList 中是否存在 menuId 来过滤 children
+                    List<MenuResponse> children = menuResponse.getChildren().stream()
+                            .filter(child -> mergedList.contains(child.getMenuId()))
+                            .collect(Collectors.toList());
+                    menuResponse.setChildren(children);
+                    return menuResponse;
+                })
+                .collect(Collectors.toList());
+
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功",filteredMenuAndChildren);
     }
 
 }
