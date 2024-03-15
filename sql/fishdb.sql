@@ -11,7 +11,7 @@
  Target Server Version : 80035
  File Encoding         : 65001
 
- Date: 14/03/2024 18:07:28
+ Date: 15/03/2024 18:03:29
 */
 
 SET NAMES utf8mb4;
@@ -221,6 +221,25 @@ INSERT INTO `sys_role_menu` VALUES (1, 2);
 INSERT INTO `sys_role_menu` VALUES (1, 3);
 INSERT INTO `sys_role_menu` VALUES (1, 4);
 INSERT INTO `sys_role_menu` VALUES (1, 5);
+INSERT INTO `sys_role_menu` VALUES (1, 7);
+INSERT INTO `sys_role_menu` VALUES (1, 8);
+INSERT INTO `sys_role_menu` VALUES (1, 9);
+INSERT INTO `sys_role_menu` VALUES (1, 10);
+INSERT INTO `sys_role_menu` VALUES (1, 11);
+INSERT INTO `sys_role_menu` VALUES (1, 12);
+INSERT INTO `sys_role_menu` VALUES (1, 13);
+INSERT INTO `sys_role_menu` VALUES (1, 14);
+INSERT INTO `sys_role_menu` VALUES (1, 15);
+INSERT INTO `sys_role_menu` VALUES (1, 16);
+INSERT INTO `sys_role_menu` VALUES (1, 17);
+INSERT INTO `sys_role_menu` VALUES (1, 18);
+INSERT INTO `sys_role_menu` VALUES (1, 19);
+INSERT INTO `sys_role_menu` VALUES (1, 20);
+INSERT INTO `sys_role_menu` VALUES (1, 21);
+INSERT INTO `sys_role_menu` VALUES (1, 22);
+INSERT INTO `sys_role_menu` VALUES (1, 23);
+INSERT INTO `sys_role_menu` VALUES (1, 24);
+INSERT INTO `sys_role_menu` VALUES (1, 25);
 INSERT INTO `sys_role_menu` VALUES (2, 2);
 
 -- ----------------------------
