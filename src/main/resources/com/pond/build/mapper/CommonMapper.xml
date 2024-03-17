@@ -68,20 +68,23 @@
 
 
     <select id="getAllMenuAndChildren" resultMap="MenuMap">
-        select
-            parent.menu_id,
-            parent.label,
-            parent.key_name,
-            parent.icon,
-            parent.menu_parent_id,
-            children.menu_id as children_menu_id,
-            children.label as children_label,
-            children.key_name as children_key_name,
-            children.icon as children_icon,
-            children.menu_parent_id as children_menu_parent_id
+        select parent.menu_id,
+               parent.label,
+               parent.key_name,
+               parent.icon,
+               parent.menu_parent_id,
+               children.menu_id        as children_menu_id,
+               children.label          as children_label,
+               children.key_name       as children_key_name,
+               children.icon           as children_icon,
+               children.menu_parent_id as children_menu_parent_id
         from sys_menu parent
-        left join sys_menu children on parent.menu_id = children.menu_parent_id and children.del_flag='0' and children.status='0'
-        where parent.del_flag='0' and parent.visible='0' and parent.menu_parent_id = '0'
+                 left join sys_menu children on parent.menu_id = children.menu_parent_id and children.del_flag = '0' and
+                                                children.status = '0'
+        where parent.del_flag = '0'
+          and parent.visible = '0'
+          and parent.menu_parent_id = '0'
+        order by parent.sort ,children.sort
     </select>
 
     <select id="getAllMenuIdByUserId" resultType="java.lang.String">
