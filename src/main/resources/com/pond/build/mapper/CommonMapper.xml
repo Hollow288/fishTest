@@ -62,8 +62,8 @@
                children.dismiss_tab as children_dismiss_tab,
                children.router_parent_id as children_router_parent_id
         from sys_menu parent
-            left join sys_menu children on parent.menu_id = children.router_parent_id and  children.del_flag = '0'
-        where   parent.del_flag='0' and parent.router_parent_id = '0'
+            left join sys_menu children on parent.menu_id = children.router_parent_id and  children.del_flag = '0' and children.path != '' and children.path is not null
+        where   parent.del_flag='0' and parent.router_parent_id = '0' and parent.path != '' and parent.path is not null
     </select>
 
 
