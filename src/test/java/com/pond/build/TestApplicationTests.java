@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.*;
+import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 
 
 import com.pond.build.model.User;
+import org.springframework.util.CollectionUtils;
 
 @SpringBootTest
 class TestApplicationTests {
@@ -717,5 +719,32 @@ class TestApplicationTests {
 //        System.out.println();
         return temSb;
 
+    }
+
+
+    @Test
+    public void testStringCols(){
+        String[] stringColByClass = getStringColByClass(User.class);
+    }
+
+    public static String[] getStringColByClass(Class clazz,String...noNeedCols){
+
+        String[] NoNeedBasicCols = {
+                "enabledFlag","rowGuid","toRowGuid",
+                "boeTypeCode","boeTypeName","operationTypeCode",
+                "operationTypeName","flowStatus","boeNum"
+        };
+        // 实体类的所有属性
+        List<String> allColList = new ArrayList<>();
+        Field[] fields = clazz.getDeclaredFields();
+        for (Field field : fields) {
+            allColList.add(field.getName());
+        }
+        //过滤基础字段和需要额外过滤的字段
+        List<String> resultCols = allColList.stream()
+                .filter(n -> !Arrays.asList(NoNeedBasicCols).contains(n))
+                .filter(n -> !Arrays.asList(noNeedCols).contains(n)).collect(Collectors.toList());
+
+        return resultCols.toArray(new String[]{});
     }
 }
