@@ -75,6 +75,10 @@ public class CabinetQuotationDetail implements Serializable {
      * 是否删除（0未删除 1已删除）
      */
     private String delFlag;
+    /**
+     * 子表种类（0橱柜类 1厨具五金类）
+     */
+    private String detailType;
 
 
 }

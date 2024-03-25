@@ -1,6 +1,7 @@
 package com.pond.build.model;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -8,6 +9,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * (CabinetQuotation)实体类
@@ -21,7 +23,7 @@ public class CabinetQuotation implements Serializable {
     private static final long serialVersionUID = 868817958688326921L;
 
     @TableId(type = IdType.AUTO)
-    private Integer quotationId;
+    private String quotationId;
 /**
      * 客户姓名
      */
@@ -86,6 +88,11 @@ public class CabinetQuotation implements Serializable {
      * 是否删除（0未删除 1已删除）
      */
     private String delFlag;
+    /**
+     * 子表
+     */
+    @TableField(exist = false)
+    private List<CabinetQuotationDetail> cabinetQuotationDetails;
 
 }
 
