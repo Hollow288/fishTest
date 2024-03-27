@@ -5,11 +5,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pond.build.enums.HttpStatusCode;
 import com.pond.build.mapper.CabinetMapper;
-import com.pond.build.model.CabinetQuotation;
-import com.pond.build.model.Menu;
-import com.pond.build.model.ResponseResult;
+import com.pond.build.model.*;
 import com.pond.build.service.CabinetService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -48,5 +48,23 @@ public class CabinetServiceImpl implements CabinetService {
         resultMap.put("total",total);
 
         return new ResponseResult(HttpStatusCode.OK.getCode(),"获取成功",resultMap);
+    }
+
+    @Override
+    public ResponseResult createQuotation(HashMap<String, Object> quotation) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        User userInfo = loginUser.getUser();
+
+
+        CabinetQuotation cabinetQuotation = new CabinetQuotation();
+        cabinetQuotation.setCustomerName(quotation.get("customerName").toString());
+        cabinetQuotation.setTelephone(quotation.get("telephone").toString());
+        cabinetQuotation.setAddress(quotation.get("address").toString());
+        cabinetQuotation.setProductName(quotation.get("productName").toString());
+
+
+
+        return null;
     }
 }
