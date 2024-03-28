@@ -1,10 +1,12 @@
 package com.pond.build.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pond.build.enums.HttpStatusCode;
 import com.pond.build.mapper.CabinetMapper;
+import com.pond.build.mapper.CabinetQuotationDetailMapper;
 import com.pond.build.model.*;
 import com.pond.build.service.CabinetService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +28,9 @@ public class CabinetServiceImpl implements CabinetService {
 
     @Autowired
     private CabinetMapper cabinetMapper;
+
+    @Autowired
+    private CabinetQuotationDetailMapper cabinetQuotationDetailMapper;
 
     @Override
     public ResponseResult getAllQuotation(Integer page, Integer pageSize, String searchText) {
@@ -51,20 +57,36 @@ public class CabinetServiceImpl implements CabinetService {
     }
 
     @Override
-    public ResponseResult createQuotation(HashMap<String, Object> quotation) {
+    public ResponseResult createQuotation(CabinetQuotation cabinetQuotation) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         User userInfo = loginUser.getUser();
 
+        cabinetQuotation.setCreateBy(userInfo.getUserId().toString());
+        cabinetQuotation.setCreateTime(new Date());
 
-        CabinetQuotation cabinetQuotation = new CabinetQuotation();
-        cabinetQuotation.setCustomerName(quotation.get("customerName").toString());
-        cabinetQuotation.setTelephone(quotation.get("telephone").toString());
-        cabinetQuotation.setAddress(quotation.get("address").toString());
-        cabinetQuotation.setProductName(quotation.get("productName").toString());
+        List<CabinetQuotationDetail> cabinetQuotationDetails = cabinetQuotation.getCabinetQuotationDetails();
 
+        cabinetMapper.insert(cabinetQuotation);
 
+        for (CabinetQuotationDetail cabinetQuotationDetail : cabinetQuotationDetails) {
+            cabinetQuotationDetail.setQuotationId(Integer.valueOf(cabinetQuotation.getQuotationId()));
+            cabinetQuotationDetail.setCreateBy(userInfo.getUserId().toString());
+            cabinetQuotationDetail.setCreateTime(new Date());
+            cabinetQuotationDetailMapper.insert(cabinetQuotationDetail);
+        }
 
-        return null;
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功",cabinetQuotation.getQuotationId());
+    }
+
+    @Override
+    public ResponseResult detailDataByQuotationId(String quotationId) {
+
+        LambdaQueryWrapper<CabinetQuotationDetail> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(CabinetQuotationDetail::getQuotationId,quotationId);
+        queryWrapper.eq(CabinetQuotationDetail::getDelFlag,"0");
+        List<CabinetQuotationDetail> cabinetQuotationDetails = cabinetQuotationDetailMapper.selectList(queryWrapper);
+
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功",cabinetQuotationDetails);
     }
 }

@@ -1,6 +1,7 @@
 package com.pond.build.controller;
 
 
+import com.pond.build.model.CabinetQuotation;
 import com.pond.build.model.ResponseResult;
 import com.pond.build.service.CabinetService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,15 @@ public class CabinetController {
 
     @PostMapping("/cabinet/quotation")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseResult createQuotation(@RequestBody HashMap<String,Object> quotation){
-        return cabinetService.createQuotation(quotation);
+    public ResponseResult createQuotation(@RequestBody CabinetQuotation cabinetQuotation){
+        return cabinetService.createQuotation(cabinetQuotation);
+    }
+
+
+    @GetMapping("/cabinet/{quotationId}/all-detail-by-quotationId")
+    @PreAuthorize("hasRole('CIVILIAN')")
+    public ResponseResult detailDataByQuotationId(@PathVariable String quotationId){
+        return cabinetService.detailDataByQuotationId(quotationId);
     }
 
 }
