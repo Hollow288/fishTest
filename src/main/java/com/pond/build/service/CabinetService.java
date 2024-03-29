@@ -11,4 +11,10 @@ public interface CabinetService {
     ResponseResult createQuotation(CabinetQuotation cabinetQuotation);
 
     ResponseResult detailDataByQuotationId(String quotationId);
+
+    ResponseResult attachDataByQuotationId(String quotationId);
+
+    ResponseResult updateQuotationById(String quotationId, CabinetQuotation cabinetQuotation);
+
+    ResponseResult removeQuotationAttachs(HashMap<String, Object> map);
 }

@@ -5,6 +5,7 @@ import org.apache.poi.util.StringUtil;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.Random;
@@ -40,7 +41,13 @@ public class CommonUtil {
 
             String fileName = path.substring(path.lastIndexOf('/') + 1);
 
-            String encodedFileName = URLEncoder.encode(fileName, "UTF-8");
+            String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8)
+                    .replaceAll("\\+", "%20")
+                    .replaceAll("%21", "!")
+                    .replaceAll("%27", "'")
+                    .replaceAll("%28", "(")
+                    .replaceAll("%29", ")")
+                    .replaceAll("%7E", "~");
             String baseUrl = originalPath.substring(0, originalPath.lastIndexOf('/') + 1);
 
             return baseUrl + encodedFileName;

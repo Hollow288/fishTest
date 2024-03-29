@@ -12,6 +12,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.*;
 import java.lang.reflect.Field;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -19,6 +22,8 @@ import java.time.LocalTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 
@@ -747,4 +752,21 @@ class TestApplicationTests {
 
         return resultCols.toArray(new String[]{});
     }
+
+
+    @Test
+    public void testUrl(){
+//        String urlString = "http://127.0.0.1:9000/fishtest-cabinet-quotation/2024-03-28/新建%20文本文档_1711618517026.txt";
+//        URL urlObj;
+        try {
+            String url = "http://127.0.0.1:9000/fishtest-cabinet-quotation/2024-03-28/新建%20文本文档_1711618517026.txt";
+
+            String[] split = url.split("/");
+            String fileName = "/"+split[split.length-2]+"/"+split[split.length-1];
+            System.out.println(fileName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

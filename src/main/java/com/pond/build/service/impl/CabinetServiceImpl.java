@@ -2,24 +2,33 @@ package com.pond.build.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pond.build.enums.HttpStatusCode;
+import com.pond.build.mapper.AttachmentInformationMapper;
 import com.pond.build.mapper.CabinetMapper;
 import com.pond.build.mapper.CabinetQuotationDetailMapper;
 import com.pond.build.model.*;
 import com.pond.build.service.CabinetService;
+import com.pond.build.utils.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static org.apache.commons.lang3.StringUtils.endsWithAny;
 
 @Service
 @Transactional
@@ -31,6 +40,12 @@ public class CabinetServiceImpl implements CabinetService {
 
     @Autowired
     private CabinetQuotationDetailMapper cabinetQuotationDetailMapper;
+
+
+    @Autowired
+    private AttachmentInformationMapper attachmentInformationMapper;
+
+
 
     @Override
     public ResponseResult getAllQuotation(Integer page, Integer pageSize, String searchText) {
@@ -88,5 +103,80 @@ public class CabinetServiceImpl implements CabinetService {
         List<CabinetQuotationDetail> cabinetQuotationDetails = cabinetQuotationDetailMapper.selectList(queryWrapper);
 
         return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功",cabinetQuotationDetails);
+    }
+
+    @Override
+    public ResponseResult attachDataByQuotationId(String quotationId) {
+        List<Map<String, Object>> list = attachmentInformationMapper.attachDataByQuotationId(quotationId);
+
+        String[] suffixes = {"pdf", "gif", "txt", "png", "jpg", ".bmp"};
+        list.stream().forEach(n -> {
+            try {
+                if(n.get("url")!= null && !n.get("url").toString().isBlank()){
+                    String[] split = n.get("url").toString().split("\\.");
+                    String type = split[split.length - 1];
+
+                    URL url = new URL(n.get("url").toString());
+                    String filename = Paths.get(url.getPath()).getFileName().toString();
+                    n.put("name", filename);
+                    n.put("status", "finished");
+
+//                    if(endsWithAny(type, suffixes)){
+//                        n.put("url", CommonUtil.fileUrlEncoderChance(n.get("url").toString()));
+//                    }else{
+//                        n.put("url",null);
+//                    }
+                    n.put("url",null);
+                }
+            } catch (MalformedURLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        // 假设这里需要返回处理后的列表
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功",list);
+    }
+
+    @Override
+    public ResponseResult updateQuotationById(String quotationId, CabinetQuotation cabinetQuotation) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        User userInfo = loginUser.getUser();
+
+        cabinetQuotation.setUpdateBy(userInfo.getUserId().toString());
+        cabinetQuotation.setUpdateTime(new Date());
+
+        cabinetMapper.updateById(cabinetQuotation);
+
+        //删除之前的子表
+        UpdateWrapper<CabinetQuotationDetail> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("quotation_id",quotationId);
+        updateWrapper.set("del_flag","1");
+        cabinetQuotationDetailMapper.update(null,updateWrapper);
+
+        //创建新的子表
+        List<CabinetQuotationDetail> cabinetQuotationDetails = cabinetQuotation.getCabinetQuotationDetails();
+        for (CabinetQuotationDetail cabinetQuotationDetail : cabinetQuotationDetails) {
+            cabinetQuotationDetail.setDetailId(null);
+            cabinetQuotationDetail.setQuotationId(Integer.valueOf(cabinetQuotation.getQuotationId()));
+            cabinetQuotationDetail.setCreateBy(userInfo.getUserId().toString());
+            cabinetQuotationDetail.setCreateTime(new Date());
+            cabinetQuotationDetailMapper.insert(cabinetQuotationDetail);
+        }
+
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
+    }
+
+    @Override
+    public ResponseResult removeQuotationAttachs(HashMap<String, Object> map) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        User userInfo = loginUser.getUser();
+
+        List<String> ids = (List<String>) map.get("ids");
+        if(!CollectionUtils.isEmpty(ids)){
+            Integer effectNum = attachmentInformationMapper.deleteAttachByIds(ids, userInfo.getUserId(), new Date());
+        }
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
     }
 }

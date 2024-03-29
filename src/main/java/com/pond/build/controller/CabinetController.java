@@ -33,9 +33,30 @@ public class CabinetController {
 
 
     @GetMapping("/cabinet/{quotationId}/all-detail-by-quotationId")
-    @PreAuthorize("hasRole('CIVILIAN')")
-    public ResponseResult detailDataByQuotationId(@PathVariable String quotationId){
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult detailDataByQuotationId(@PathVariable("quotationId") String quotationId){
         return cabinetService.detailDataByQuotationId(quotationId);
+    }
+
+
+    @GetMapping("/cabinet/{quotationId}/all-attach-by-quotationId")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult attachDataByQuotationId(@PathVariable("quotationId") String quotationId){
+        return cabinetService.attachDataByQuotationId(quotationId);
+    }
+
+
+    @PutMapping("cabinet/remove-quotation-attach")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult removeQuotationAttachs(@RequestBody HashMap<String,Object> map){
+        return cabinetService.removeQuotationAttachs(map);
+    }
+
+
+    @PutMapping("cabinet/{quotationId}/update-quotation")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult updateQuotationById(@PathVariable("quotationId") String quotationId, @RequestBody CabinetQuotation cabinetQuotation){
+        return cabinetService.updateQuotationById(quotationId,cabinetQuotation);
     }
 
 }
