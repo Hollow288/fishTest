@@ -11,7 +11,7 @@
  Target Server Version : 80035
  File Encoding         : 65001
 
- Date: 25/03/2024 18:06:10
+ Date: 29/03/2024 18:07:26
 */
 
 SET NAMES utf8mb4;
@@ -30,13 +30,34 @@ CREATE TABLE `attachment_information`  (
                                            `update_by` bigint NULL DEFAULT NULL COMMENT '更新人',
                                            `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
                                            `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '是否删除（0未删除 1已删除）',
-                                           `attach_url` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '附件路径',
+                                           `attach_url` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '附件路径',
                                            PRIMARY KEY (`attach_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of attachment_information
 -- ----------------------------
+INSERT INTO `attachment_information` VALUES (1, 'cabinet_quotation', '43', 1, '2024-03-28 13:55:07', NULL, NULL, '0', 'http://127.0.0.1:9000/fishtest-cabinet-quotation/2024-03-28/新建 文本文档 (2)_1711605306557.txt');
+INSERT INTO `attachment_information` VALUES (2, 'cabinet_quotation', '43', 1, '2024-03-28 13:55:07', NULL, NULL, '0', 'http://127.0.0.1:9000/fishtest-cabinet-quotation/2024-03-28/新建 文本文档_1711605306621.txt');
+INSERT INTO `attachment_information` VALUES (3, 'cabinet_quotation', '44', 1, '2024-03-28 13:58:44', NULL, NULL, '0', 'http://127.0.0.1:9000/fishtest-cabinet-quotation/2024-03-28/1_1711605524007.jpg');
+INSERT INTO `attachment_information` VALUES (4, 'cabinet_quotation', '44', 1, '2024-03-28 13:58:44', NULL, NULL, '0', 'http://127.0.0.1:9000/fishtest-cabinet-quotation/2024-03-28/1 - 副本_1711605524011.jpg');
+INSERT INTO `attachment_information` VALUES (5, 'cabinet_quotation', '48', 1, '2024-03-28 17:33:23', NULL, NULL, '0', 'http://127.0.0.1:9000/fishtest-cabinet-quotation/2024-03-28/fishdb_1711618403295.sql');
+INSERT INTO `attachment_information` VALUES (6, 'cabinet_quotation', '49', 1, '2024-03-28 17:35:17', NULL, NULL, '0', 'http://127.0.0.1:9000/fishtest-cabinet-quotation/2024-03-28/2bb7db4d-ae4e-4687-abab-2d84f0cd9c6e1_1711618517008.gif');
+INSERT INTO `attachment_information` VALUES (7, 'cabinet_quotation', '49', 1, '2024-03-28 17:35:17', 1, '2024-03-29 16:38:53', '1', 'http://127.0.0.1:9000/fishtest-cabinet-quotation/2024-03-28/hpditmu_20240328_1711618517017.zip');
+INSERT INTO `attachment_information` VALUES (8, 'cabinet_quotation', '49', 1, '2024-03-28 17:35:17', NULL, NULL, '0', 'http://127.0.0.1:9000/fishtest-cabinet-quotation/2024-03-28/新建 文本文档_1711618517026.txt');
+INSERT INTO `attachment_information` VALUES (9, 'cabinet_quotation', '49', 1, '2024-03-28 17:35:17', NULL, NULL, '0', 'http://127.0.0.1:9000/fishtest-cabinet-quotation/2024-03-28/三期问题反馈解决方案_质量安全部_1711618517088.pdf');
+INSERT INTO `attachment_information` VALUES (10, 'cabinet_quotation', '49', 1, '2024-03-28 17:35:17', 1, '2024-03-29 16:36:39', '1', 'http://127.0.0.1:9000/fishtest-cabinet-quotation/2024-03-28/三期问题反馈解决方案_数字化中心_1711618517118.docx');
+INSERT INTO `attachment_information` VALUES (11, 'cabinet_quotation', '49', 1, '2024-03-29 16:39:27', 1, '2024-03-29 17:33:12', '1', 'http://127.0.0.1:9000/fishtest-cabinet-quotation/2024-03-29/学习笔记_1711701566795.md');
+INSERT INTO `attachment_information` VALUES (12, 'cabinet_quotation', '49', 1, '2024-03-29 17:26:05', 1, '2024-03-29 17:33:12', '1', 'http://127.0.0.1:9000/fishtest-cabinet-quotation/2024-03-29/学习笔记_1711704364812.md');
+INSERT INTO `attachment_information` VALUES (13, 'cabinet_quotation', '49', 1, '2024-03-29 17:30:04', 1, '2024-03-29 17:33:12', '1', 'http://127.0.0.1:9000/fishtest-cabinet-quotation/2024-03-29/学习笔记_1711704604373.md');
+INSERT INTO `attachment_information` VALUES (14, 'cabinet_quotation', '49', 1, '2024-03-29 17:30:13', 1, '2024-03-29 17:33:12', '1', 'http://127.0.0.1:9000/fishtest-cabinet-quotation/2024-03-29/学习笔记_1711704612525.md');
+INSERT INTO `attachment_information` VALUES (15, 'cabinet_quotation', '49', 1, '2024-03-29 17:31:13', 1, '2024-03-29 17:33:12', '1', 'http://127.0.0.1:9000/fishtest-cabinet-quotation/2024-03-29/学习笔记_1711704673163.md');
+INSERT INTO `attachment_information` VALUES (16, 'cabinet_quotation', '49', 1, '2024-03-29 17:33:23', 1, '2024-03-29 17:34:14', '1', 'http://127.0.0.1:9000/fishtest-cabinet-quotation/2024-03-29/1 - 副本 - 副本_1711704802665.jpg');
+INSERT INTO `attachment_information` VALUES (17, 'cabinet_quotation', '49', 1, '2024-03-29 17:33:27', 1, '2024-03-29 17:34:14', '1', 'http://127.0.0.1:9000/fishtest-cabinet-quotation/2024-03-29/1 - 副本 - 副本_1711704807029.jpg');
+INSERT INTO `attachment_information` VALUES (18, 'cabinet_quotation', '49', 1, '2024-03-29 17:35:27', 1, '2024-03-29 17:36:32', '1', 'http://127.0.0.1:9000/fishtest-cabinet-quotation/2024-03-29/1_1711704927407.jpg');
+INSERT INTO `attachment_information` VALUES (19, 'cabinet_quotation', '49', 1, '2024-03-29 17:36:06', 1, '2024-03-29 17:36:32', '1', 'http://127.0.0.1:9000/fishtest-cabinet-quotation/2024-03-29/1_1711704966454.jpg');
+INSERT INTO `attachment_information` VALUES (20, 'cabinet_quotation', '49', 1, '2024-03-29 17:36:54', 1, '2024-03-29 17:44:09', '1', 'http://127.0.0.1:9000/fishtest-cabinet-quotation/2024-03-29/asec3_1711705014278.sql');
+INSERT INTO `attachment_information` VALUES (21, 'cabinet_quotation', '49', 1, '2024-03-29 17:44:39', NULL, NULL, '0', 'http://127.0.0.1:9000/fishtest-cabinet-quotation/2024-03-29/temp_1711705478837.sql');
 
 -- ----------------------------
 -- Table structure for cabinet_quotation
@@ -61,11 +82,60 @@ CREATE TABLE `cabinet_quotation`  (
                                       `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
                                       `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '是否删除（0未删除 1已删除）',
                                       PRIMARY KEY (`quotation_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 50 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cabinet_quotation
 -- ----------------------------
+INSERT INTO `cabinet_quotation` VALUES (1, '小明', '地址', '123', NULL, NULL, NULL, '2024-03-03 00:00:00', 22.2100, 122.1000, NULL, 144.3100, 1, NULL, NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (2, '测试', '测试地址', '123456789', '测试产品', '测试颜色', '测试柜体', '2024-03-10 00:00:00', 2822.1100, 40605.0000, NULL, 43427.1100, 1, '2024-03-28 11:03:48', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (3, '测试', '测试地址', '123456789', '测试产品', '测试颜色', '测试柜体', '2024-03-10 00:00:00', 2822.1100, 40605.0000, NULL, 43427.1100, 1, '2024-03-28 11:05:44', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (4, '9', NULL, '9', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 11:10:26', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (5, '99', NULL, '99', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 11:13:08', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (6, '99', NULL, '99', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 11:13:14', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (7, '99', NULL, '99', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 11:13:21', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (8, '8', NULL, '8', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 11:13:51', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (9, '7', NULL, '7', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 11:15:20', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (10, '7', NULL, '7', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 11:15:34', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (11, '6', NULL, '6', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 11:16:22', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (12, '66', NULL, '66', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 11:17:45', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (13, '66', NULL, '66', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 11:18:06', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (14, '66', NULL, '66', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 11:21:13', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (15, '66', NULL, '66', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 11:22:52', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (16, '55', NULL, '55', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 11:24:41', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (17, '55', NULL, '55', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 11:24:49', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (18, '55', NULL, '55', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 11:25:20', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (19, '3333', NULL, '3333', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 11:32:34', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (20, '3333', NULL, '3333', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 11:32:52', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (21, '2222', NULL, '2222', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 11:34:36', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (22, '11', NULL, '111', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 11:36:45', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (23, '1', NULL, '1', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 11:41:44', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (24, '1', NULL, '1', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 11:42:04', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (25, '3', NULL, '3', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 11:43:22', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (26, '8', NULL, '8', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 11:47:52', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (27, '8', NULL, '8', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 11:48:19', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (28, '8', NULL, '8', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 11:49:13', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (29, '8', NULL, '8', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 11:50:05', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (30, '8', NULL, '8', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 11:50:48', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (31, '8', NULL, '8', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 11:51:09', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (32, '86', NULL, '86', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 12:01:51', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (33, '1', NULL, '1', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 13:31:42', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (34, '1', NULL, '1', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 13:33:15', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (35, '1', NULL, '1', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 13:33:58', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (36, '1', NULL, '1', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 13:35:43', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (37, '1', NULL, '1', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 13:36:23', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (38, '1', NULL, '1', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 13:36:54', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (39, '22', NULL, '22', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 13:39:28', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (40, '1', NULL, '1', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 13:48:20', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (41, '2', NULL, '2', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 13:50:38', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (42, '1', NULL, '1', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 13:51:12', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (43, '6666', NULL, '66666', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 13:55:04', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (44, '6666', NULL, '66666', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 13:58:40', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (45, 'pp', NULL, 'pp', NULL, NULL, NULL, NULL, 40.9300, 0.0000, NULL, 40.9300, 1, '2024-03-28 14:34:12', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (46, '66', '66', '6666', '66', '666', '666', '2024-03-28 14:50:39', 1.0000, 0.0000, NULL, 1.0000, 1, '2024-03-28 14:43:37', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (47, '11', '22', '66', '33', '55', '44', '2024-03-31 08:00:00', 1.0000, 0.0000, NULL, 1.0000, 1, '2024-03-28 14:54:34', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (48, '99', NULL, '99', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 17:33:21', NULL, NULL, '0');
+INSERT INTO `cabinet_quotation` VALUES (49, 'test1', '1', 'test1', '1', '1', '1', '2024-03-02 08:00:00', 1.0000, 9.0000, NULL, 10.0000, 1, '2024-03-28 08:00:00', 1, '2024-03-29 17:44:43', '0');
 
 -- ----------------------------
 -- Table structure for cabinet_quotation_detail
@@ -88,11 +158,85 @@ CREATE TABLE `cabinet_quotation_detail`  (
                                              `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '是否删除（0未删除 1已删除）',
                                              `detail_type` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '子表种类（0橱柜类 1厨具五金类）',
                                              PRIMARY KEY (`detail_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 75 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cabinet_quotation_detail
 -- ----------------------------
+INSERT INTO `cabinet_quotation_detail` VALUES (1, 1, '1', '规格1', 1.1100, 6.0100, 1.0000, 6.6700, '11', 1, NULL, NULL, NULL, '0', '0');
+INSERT INTO `cabinet_quotation_detail` VALUES (2, 1, '2', '规格12', 2.2200, 7.0000, 1.0000, 15.5400, '', 1, NULL, NULL, NULL, '0', '0');
+INSERT INTO `cabinet_quotation_detail` VALUES (3, 1, '3', '规格13', 3.3300, 8.0000, 1.0000, 26.6400, '11', 1, NULL, NULL, NULL, '0', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (4, 1, '4', '规格14', 4.4400, 9.0000, 1.0000, 39.9600, '', 1, NULL, NULL, NULL, '0', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (5, 1, '5', '规格15', 5.5500, 10.0000, 1.0000, 55.5000, '', 1, NULL, NULL, NULL, '0', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (6, 2, '测试1', '测试11', 1.1000, 100.1000, 1.0000, 110.1100, '测试备注1', 1, '2024-03-28 11:03:48', NULL, NULL, '0', '0');
+INSERT INTO `cabinet_quotation_detail` VALUES (7, 2, '测试2', '测试22', 2.0000, 1356.0000, 1.0000, 2712.0000, '测试备注2', 1, '2024-03-28 11:03:48', NULL, NULL, '0', '0');
+INSERT INTO `cabinet_quotation_detail` VALUES (8, 2, '测试3', '测试33', 3.0000, 203.0000, 1.0000, 609.0000, '测试备注3', 1, '2024-03-28 11:03:48', NULL, NULL, '0', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (9, 2, '测试4', '测试44', 4.0000, 9999.0000, 1.0000, 39996.0000, '测试备注4', 1, '2024-03-28 11:03:48', NULL, NULL, '0', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (10, 3, '测试1', '测试11', 1.1000, 100.1000, 1.0000, 110.1100, '测试备注1', 1, '2024-03-28 11:05:44', NULL, NULL, '0', '0');
+INSERT INTO `cabinet_quotation_detail` VALUES (11, 3, '测试2', '测试22', 2.0000, 1356.0000, 1.0000, 2712.0000, '测试备注2', 1, '2024-03-28 11:05:44', NULL, NULL, '0', '0');
+INSERT INTO `cabinet_quotation_detail` VALUES (12, 3, '测试3', '测试33', 3.0000, 203.0000, 1.0000, 609.0000, '测试备注3', 1, '2024-03-28 11:05:44', NULL, NULL, '0', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (13, 3, '测试4', '测试44', 4.0000, 9999.0000, 1.0000, 39996.0000, '测试备注4', 1, '2024-03-28 11:05:44', NULL, NULL, '0', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (14, 45, '', '', 10.1100, 3.6800, 1.1000, 40.9300, '', 1, '2024-03-28 14:34:12', NULL, NULL, '0', '0');
+INSERT INTO `cabinet_quotation_detail` VALUES (15, 46, '1', '', 1.0000, 1.0000, 1.0000, 1.0000, '', 1, '2024-03-28 14:43:37', NULL, NULL, '0', '0');
+INSERT INTO `cabinet_quotation_detail` VALUES (16, 46, '1', '', 0.0000, 0.0000, 1.0000, 0.0000, '', 1, '2024-03-28 14:43:37', NULL, NULL, '0', '0');
+INSERT INTO `cabinet_quotation_detail` VALUES (17, 46, '1', '', 0.0000, 0.0000, 1.0000, 0.0000, '', 1, '2024-03-28 14:43:37', NULL, NULL, '0', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (18, 46, '1', '', 0.0000, 0.0000, 1.0000, 0.0000, '', 1, '2024-03-28 14:43:37', NULL, NULL, '0', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (19, 47, '1', '', 1.0000, 1.0000, 1.0000, 1.0000, '', 1, '2024-03-28 14:54:34', NULL, NULL, '0', '0');
+INSERT INTO `cabinet_quotation_detail` VALUES (20, 47, '2', '', 0.0000, 0.0000, 1.0000, 0.0000, '', 1, '2024-03-28 14:54:34', NULL, NULL, '0', '0');
+INSERT INTO `cabinet_quotation_detail` VALUES (21, 47, '3', '', 0.0000, 0.0000, 1.0000, 0.0000, '', 1, '2024-03-28 14:54:34', NULL, NULL, '0', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (22, 47, '45', '', 0.0000, 0.0000, 1.0000, 0.0000, '', 1, '2024-03-28 14:54:34', NULL, NULL, '0', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (23, 47, '6', '', 0.0000, 0.0000, 1.0000, 0.0000, '', 1, '2024-03-28 14:54:34', NULL, NULL, '0', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (24, 49, '1', '1', 1.0000, 1.0000, 1.0000, 1.0000, '1', 1, '2024-03-29 17:26:05', NULL, NULL, '1', '0');
+INSERT INTO `cabinet_quotation_detail` VALUES (25, 49, '1', '1', 1.0000, 1.0000, 1.0000, 1.0000, '1', 1, '2024-03-29 17:26:05', NULL, NULL, '1', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (26, 49, '2', '2', 2.0000, 2.0000, 2.0000, 8.0000, '2', 1, '2024-03-29 17:26:05', NULL, NULL, '1', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (27, 49, '1', '1', 1.0000, 1.0000, 1.0000, 1.0000, '1', 1, '2024-03-29 17:30:04', NULL, NULL, '1', '0');
+INSERT INTO `cabinet_quotation_detail` VALUES (28, 49, '1', '1', 1.0000, 1.0000, 1.0000, 1.0000, '1', 1, '2024-03-29 17:30:04', NULL, NULL, '1', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (29, 49, '2', '2', 2.0000, 2.0000, 2.0000, 8.0000, '3', 1, '2024-03-29 17:30:04', NULL, NULL, '1', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (30, 49, '1', '1', 1.0000, 1.0000, 1.0000, 1.0000, '1', 1, '2024-03-29 17:30:12', NULL, NULL, '1', '0');
+INSERT INTO `cabinet_quotation_detail` VALUES (31, 49, '1', '1', 1.0000, 1.0000, 1.0000, 1.0000, '1', 1, '2024-03-29 17:30:12', NULL, NULL, '1', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (32, 49, '2', '2', 2.0000, 2.0000, 2.0000, 8.0000, '....', 1, '2024-03-29 17:30:12', NULL, NULL, '1', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (33, 49, '1', '1', 1.0000, 1.0000, 1.0000, 1.0000, '1', 1, '2024-03-29 17:31:12', NULL, NULL, '1', '0');
+INSERT INTO `cabinet_quotation_detail` VALUES (34, 49, '1', '1', 1.0000, 1.0000, 1.0000, 1.0000, '1', 1, '2024-03-29 17:31:12', NULL, NULL, '1', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (35, 49, '2', '2', 2.0000, 2.0000, 2.0000, 8.0000, '....', 1, '2024-03-29 17:31:12', NULL, NULL, '1', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (36, 49, '1', '1', 1.0000, 1.0000, 1.0000, 1.0000, '1', 1, '2024-03-29 17:32:58', NULL, NULL, '1', '0');
+INSERT INTO `cabinet_quotation_detail` VALUES (37, 49, '1', '1', 1.0000, 1.0000, 1.0000, 1.0000, '1', 1, '2024-03-29 17:32:58', NULL, NULL, '1', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (38, 49, '2', '2', 2.0000, 2.0000, 2.0000, 8.0000, '....', 1, '2024-03-29 17:32:58', NULL, NULL, '1', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (39, 49, '1', '1', 1.0000, 1.0000, 1.0000, 1.0000, '1', 1, '2024-03-29 17:33:12', NULL, NULL, '1', '0');
+INSERT INTO `cabinet_quotation_detail` VALUES (40, 49, '1', '1', 1.0000, 1.0000, 1.0000, 1.0000, '1', 1, '2024-03-29 17:33:12', NULL, NULL, '1', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (41, 49, '2', '2', 2.0000, 2.0000, 2.0000, 8.0000, '....', 1, '2024-03-29 17:33:12', NULL, NULL, '1', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (42, 49, '1', '1', 1.0000, 1.0000, 1.0000, 1.0000, '1', 1, '2024-03-29 17:33:23', NULL, NULL, '1', '0');
+INSERT INTO `cabinet_quotation_detail` VALUES (43, 49, '1', '1', 1.0000, 1.0000, 1.0000, 1.0000, '1', 1, '2024-03-29 17:33:23', NULL, NULL, '1', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (44, 49, '2', '2', 2.0000, 2.0000, 2.0000, 8.0000, '....', 1, '2024-03-29 17:33:23', NULL, NULL, '1', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (45, 49, '1', '1', 1.0000, 1.0000, 1.0000, 1.0000, '1', 1, '2024-03-29 17:33:27', NULL, NULL, '1', '0');
+INSERT INTO `cabinet_quotation_detail` VALUES (46, 49, '1', '1', 1.0000, 1.0000, 1.0000, 1.0000, '1', 1, '2024-03-29 17:33:27', NULL, NULL, '1', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (47, 49, '2', '2', 2.0000, 2.0000, 2.0000, 8.0000, '....', 1, '2024-03-29 17:33:27', NULL, NULL, '1', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (48, 49, '1', '1', 1.0000, 1.0000, 1.0000, 1.0000, '1', 1, '2024-03-29 17:34:14', NULL, NULL, '1', '0');
+INSERT INTO `cabinet_quotation_detail` VALUES (49, 49, '1', '1', 1.0000, 1.0000, 1.0000, 1.0000, '1', 1, '2024-03-29 17:34:14', NULL, NULL, '1', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (50, 49, '2', '2', 2.0000, 2.0000, 2.0000, 8.0000, '....', 1, '2024-03-29 17:34:14', NULL, NULL, '1', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (51, 49, '1', '1', 1.0000, 1.0000, 1.0000, 1.0000, '1', 1, '2024-03-29 17:35:03', NULL, NULL, '1', '0');
+INSERT INTO `cabinet_quotation_detail` VALUES (52, 49, '1', '1', 1.0000, 1.0000, 1.0000, 1.0000, '1', 1, '2024-03-29 17:35:03', NULL, NULL, '1', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (53, 49, '2', '2', 2.0000, 2.0000, 2.0000, 8.0000, '....', 1, '2024-03-29 17:35:03', NULL, NULL, '1', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (54, 49, '1', '1', 1.0000, 1.0000, 1.0000, 1.0000, '1', 1, '2024-03-29 17:35:39', NULL, NULL, '1', '0');
+INSERT INTO `cabinet_quotation_detail` VALUES (55, 49, '1', '1', 1.0000, 1.0000, 1.0000, 1.0000, '1', 1, '2024-03-29 17:35:39', NULL, NULL, '1', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (56, 49, '2', '2', 2.0000, 2.0000, 2.0000, 8.0000, '....', 1, '2024-03-29 17:35:39', NULL, NULL, '1', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (57, 49, '1', '1', 1.0000, 1.0000, 1.0000, 1.0000, '1', 1, '2024-03-29 17:36:32', NULL, NULL, '1', '0');
+INSERT INTO `cabinet_quotation_detail` VALUES (58, 49, '1', '1', 1.0000, 1.0000, 1.0000, 1.0000, '1', 1, '2024-03-29 17:36:32', NULL, NULL, '1', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (59, 49, '2', '2', 2.0000, 2.0000, 2.0000, 8.0000, '....', 1, '2024-03-29 17:36:32', NULL, NULL, '1', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (60, 49, '1', '1', 1.0000, 1.0000, 1.0000, 1.0000, '1', 1, '2024-03-29 17:36:47', NULL, NULL, '1', '0');
+INSERT INTO `cabinet_quotation_detail` VALUES (61, 49, '1', '1', 1.0000, 1.0000, 1.0000, 1.0000, '1', 1, '2024-03-29 17:36:47', NULL, NULL, '1', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (62, 49, '2', '2', 2.0000, 2.0000, 2.0000, 8.0000, '....', 1, '2024-03-29 17:36:47', NULL, NULL, '1', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (63, 49, '1', '1', 1.0000, 1.0000, 1.0000, 1.0000, '1', 1, '2024-03-29 17:44:09', NULL, NULL, '1', '0');
+INSERT INTO `cabinet_quotation_detail` VALUES (64, 49, '1', '1', 1.0000, 1.0000, 1.0000, 1.0000, '1', 1, '2024-03-29 17:44:09', NULL, NULL, '1', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (65, 49, '2', '2', 2.0000, 2.0000, 2.0000, 8.0000, '....', 1, '2024-03-29 17:44:09', NULL, NULL, '1', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (66, 49, '1', '1', 1.0000, 1.0000, 1.0000, 1.0000, '1', 1, '2024-03-29 17:44:19', NULL, NULL, '1', '0');
+INSERT INTO `cabinet_quotation_detail` VALUES (67, 49, '1', '1', 1.0000, 1.0000, 1.0000, 1.0000, '1', 1, '2024-03-29 17:44:19', NULL, NULL, '1', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (68, 49, '2', '2', 2.0000, 2.0000, 2.0000, 8.0000, '....', 1, '2024-03-29 17:44:19', NULL, NULL, '1', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (69, 49, '1', '1', 1.0000, 1.0000, 1.0000, 1.0000, '1', 1, '2024-03-29 17:44:37', NULL, NULL, '1', '0');
+INSERT INTO `cabinet_quotation_detail` VALUES (70, 49, '1', '1', 1.0000, 1.0000, 1.0000, 1.0000, '1', 1, '2024-03-29 17:44:37', NULL, NULL, '1', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (71, 49, '2', '2', 2.0000, 2.0000, 2.0000, 8.0000, '....', 1, '2024-03-29 17:44:37', NULL, NULL, '1', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (72, 49, '1', '1', 1.0000, 1.0000, 1.0000, 1.0000, '1', 1, '2024-03-29 17:44:43', NULL, NULL, '0', '0');
+INSERT INTO `cabinet_quotation_detail` VALUES (73, 49, '1', '1', 1.0000, 1.0000, 1.0000, 1.0000, '1', 1, '2024-03-29 17:44:43', NULL, NULL, '0', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (74, 49, '2', '2', 2.0000, 2.0000, 2.0000, 8.0000, '....', 1, '2024-03-29 17:44:43', NULL, NULL, '0', '1');
 
 -- ----------------------------
 -- Table structure for notice_management
@@ -111,7 +255,7 @@ CREATE TABLE `notice_management`  (
                                       `release_date` datetime NULL DEFAULT NULL COMMENT '发布日期',
                                       `release_by` bigint NULL DEFAULT NULL COMMENT '发布人id',
                                       PRIMARY KEY (`notice_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of notice_management
@@ -340,7 +484,7 @@ CREATE TABLE `sys_user`  (
                              `email` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '邮箱',
                              `phone_number` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '手机号',
                              `gender` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '用户性别（0女，1男，2未知)',
-                             `avatar_Url` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '头像',
+                             `avatar_Url` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '头像',
                              `user_type` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '1' COMMENT '用户类型（O管理员，1普通用户)',
                              `create_by` bigint NULL DEFAULT NULL COMMENT '创建人的用户id',
                              `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
@@ -360,8 +504,8 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 'admin', '管理员张三8', '$2a$10$fsZXpWU9r7WR5ca7s7SNT.vxzarjEtJyqpdSb15gI3.n0qkhBIYUG', '0', '5713392748@qq.com', '13577777778', '1', 'http://127.0.0.1:9000/fishtest-avatar/2024-03-06/icon_1709713499655.svg', '0', NULL, NULL, 3, '2024-03-08 16:27:19', 0, '张三88', '2024-01-15 08:00:00', NULL, NULL, NULL, '长秋秋', '11111122233344');
-INSERT INTO `sys_user` VALUES (2, '2', '普通人李四', '$2a$10$fsZXpWU9r7WR5ca7s7SNT.vxzarjEtJyqpdSb15gI3.n0qkhBIYUG', '0', '233@gmail.com', '13577777777', '1', NULL, '1', NULL, '2024-01-08 16:05:42', 3, '2024-03-11 09:05:37', 0, '李四', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_user` VALUES (1, 'admin', '管理员张三8', '$2a$10$fsZXpWU9r7WR5ca7s7SNT.vxzarjEtJyqpdSb15gI3.n0qkhBIYUG', '0', '5713392748@qq.com', '13577777778', '1', 'http://127.0.0.1:9000/fishtest-avatar/2024-03-28/icon_1711597293747.svg', '0', NULL, NULL, 1, '2024-03-28 11:41:34', 0, '张三88', '2024-01-15 08:00:00', NULL, NULL, NULL, '长秋秋', '11111122233344');
+INSERT INTO `sys_user` VALUES (2, '2', '普通人李四', '$2a$10$fsZXpWU9r7WR5ca7s7SNT.vxzarjEtJyqpdSb15gI3.n0qkhBIYUG', '0', '233@gmail.com', '13577777777', '1', NULL, '1', NULL, '2024-01-08 16:05:42', 1, '2024-03-28 11:39:48', 0, '李四', NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_user` VALUES (3, '3', '普通人张四', '$2a$10$DC8H1hZ5lnCdMu7glYqJ8u6nW1ECQ.gfyTGtPHuDX0twyxj7xPVuO', '1', NULL, '13577777777', '0', NULL, '1', NULL, '2024-01-08 16:05:42', 3, '2024-02-02 10:54:52', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_user` VALUES (4, '4', '普通人张五', '$2a$10$SFmzm8FYtoilOCrpYBQfEeWOC0NRH7rkYhJnPe3swsvYZZ2xD0bjC', '1', NULL, NULL, '0', NULL, '1', NULL, '2024-01-08 16:05:42', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_user` VALUES (5, '5', '普通人张六', '$2a$10$SFmzm8FYtoilOCrpYBQfEeWOC0NRH7rkYhJnPe3swsvYZZ2xD0bjC', '0', 'qqq@qq.com', '', '1', NULL, '1', NULL, '2024-01-08 16:05:42', 8, '2024-01-27 13:22:03', 0, 'Hollow', '2024-01-27 08:00:00', NULL, NULL, NULL, 'zhong', '111');
