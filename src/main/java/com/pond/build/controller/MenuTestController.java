@@ -6,6 +6,8 @@ import com.pond.build.mapper.MenuMapper;
 import com.pond.build.mapper.SseMapper;
 import com.pond.build.model.Response.NoticeResponse;
 import com.pond.build.service.CommonService;
+import com.pond.build.service.ExportService;
+import com.pond.build.service.impl.ExportServiceImpl;
 import com.pond.build.utils.MinioUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -48,21 +50,26 @@ public class MenuTestController {
     private CommonMapper commonMapper;
 
 
+    @Autowired
+    private ExportService exportService;
+
+
     @GetMapping("/test1")
     public void fishTest(){
 //        List<Map<String, Object>> maps = menuMapper.selectMenuAndChildren();
 //        List<NoticeResponse> noticeResponses = sseMapper.getAllNeedPendingNotice();
 //        List<Map<String, Object>> allRouterAndChildren = commonMapper.getAllRouterAndChildren();
-        List<String> menuIds = commonMapper.getAllMenuIdByUserId("1");
+//        List<String> menuIds = commonMapper.getAllMenuIdByUserId("1");
+//
+//        List<String> strings = commonMapper.selectMenuParentId(menuIds);
+//
+//        List<String> mergedList = Stream.concat(menuIds.stream(), strings.stream())
+//                .distinct() // 去重
+//                .filter(id -> !id.equals("0")) // 过滤掉值为"0"的元素
+//                .collect(Collectors.toList());
+        exportService.exportQuotation("1");
 
-        List<String> strings = commonMapper.selectMenuParentId(menuIds);
-
-        List<String> mergedList = Stream.concat(menuIds.stream(), strings.stream())
-                .distinct() // 去重
-                .filter(id -> !id.equals("0")) // 过滤掉值为"0"的元素
-                .collect(Collectors.toList());
-
-        System.out.println(menuIds);
+//        System.out.println(menuIds);
     }
 
 //    @PreAuthorize
