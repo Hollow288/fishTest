@@ -74,7 +74,13 @@
     </resultMap>
 
 
-
+    <update id="deleteQuotationById">
+        update cabinet_quotation set update_by = #{userId}, update_time = #{date},del_flag = '1'
+        where quotation_id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
 
 </mapper>
 

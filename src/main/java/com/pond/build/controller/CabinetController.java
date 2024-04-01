@@ -59,4 +59,11 @@ public class CabinetController {
         return cabinetService.updateQuotationById(quotationId,cabinetQuotation);
     }
 
+
+    @PatchMapping("/cabinet/delete-quotations")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult deleteQuotationByIds(@RequestBody HashMap<String,Object> quotationIds){
+        return cabinetService.deleteQuotationByIds(quotationIds);
+    }
+
 }

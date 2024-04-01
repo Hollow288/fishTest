@@ -17,4 +17,6 @@ public interface CabinetService {
     ResponseResult updateQuotationById(String quotationId, CabinetQuotation cabinetQuotation);
 
     ResponseResult removeQuotationAttachs(HashMap<String, Object> map);
+
+    ResponseResult deleteQuotationByIds(HashMap<String, Object> quotationIds);
 }

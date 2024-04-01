@@ -179,4 +179,18 @@ public class CabinetServiceImpl implements CabinetService {
         }
         return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
     }
+
+    @Override
+    public ResponseResult deleteQuotationByIds(HashMap<String, Object> quotationIds) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        User userInfo = loginUser.getUser();
+
+        List<String> ids = (List<String>)quotationIds.get("ids");
+
+        cabinetMapper.deleteQuotationById(ids,userInfo.getUserId().toString(),new Date());
+
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
+
+    }
 }
