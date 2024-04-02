@@ -18,8 +18,14 @@ public class ExportController {
     @GetMapping("export/{id}/quotation")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<byte[]> exportQuotation(@PathVariable("id") String quotationId){
-
         return  exportService.exportQuotation(quotationId);
+    }
+
+
+    @GetMapping("export/{id}/quotation-pdf")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<byte[]> exportQuotationPdf(@PathVariable("id") String quotationId){
+        return  exportService.exportQuotationPdf(quotationId);
     }
 
 
