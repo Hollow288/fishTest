@@ -35,4 +35,12 @@ public class CommonController {
     public ResponseResult getAllMenuChildren(){
         return commonService.getAllMenuChildren();
     }
+
+    @GetMapping("/common/portal-portfolio")
+    @PreAuthorize("permitAll")
+    public ResponseResult getAllPortalPortfolio(
+            @RequestParam(value = "type") String type,@RequestParam(value = "page") Integer page,
+                                                @RequestParam(value = "pageSize") Integer pageSize){
+        return commonService.getAllPortalPortfolio(type,page,pageSize);
+    }
 }

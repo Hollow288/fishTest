@@ -10,4 +10,6 @@ public interface CommonService {
     ResponseResult getAllRouterAndChildren();
 
     ResponseResult getAllMenuChildren();
+
+    ResponseResult getAllPortalPortfolio(String type,Integer page,Integer pageSize);
 }

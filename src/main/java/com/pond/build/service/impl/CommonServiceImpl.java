@@ -19,6 +19,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -109,6 +110,39 @@ public class CommonServiceImpl implements CommonService {
                 .collect(Collectors.toList());
 
         return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功",filteredMenuAndChildren);
+    }
+
+    @Override
+    public ResponseResult getAllPortalPortfolio(String type,Integer page, Integer pageSize) {
+
+
+        List<Object> objects = new ArrayList<>();
+        HashMap<String, Object> imgUrlMap = new HashMap<>();
+        imgUrlMap.put("thumbnailUrl","https://img0.baidu.com/it/u=1730710238,1350681003&fm=253&fmt=auto&app=138&f=JPEG?w=480&h=296");
+        imgUrlMap.put("completeUrl","https://img0.baidu.com/it/u=2397564216,1250084532&fm=253&fmt=auto&app=138&f=PNG?w=500&h=500");
+        HashMap<String, Object> imgUrlMap1 = new HashMap<>();
+        imgUrlMap1.put("thumbnailUrl","https://img0.baidu.com/it/u=1730710238,1350681003&fm=253&fmt=auto&app=138&f=JPEG?w=480&h=296");
+        imgUrlMap1.put("completeUrl","https://img0.baidu.com/it/u=2397564216,1250084532&fm=253&fmt=auto&app=138&f=PNG?w=500&h=500");
+        HashMap<String, Object> imgUrlMap2 = new HashMap<>();
+        imgUrlMap2.put("thumbnailUrl","https://img0.baidu.com/it/u=1730710238,1350681003&fm=253&fmt=auto&app=138&f=JPEG?w=480&h=296");
+        imgUrlMap2.put("completeUrl","https://img0.baidu.com/it/u=2397564216,1250084532&fm=253&fmt=auto&app=138&f=PNG?w=500&h=500");
+        HashMap<String, Object> imgUrlMap3 = new HashMap<>();
+        imgUrlMap3.put("thumbnailUrl","https://img0.baidu.com/it/u=1730710238,1350681003&fm=253&fmt=auto&app=138&f=JPEG?w=480&h=296");
+        imgUrlMap3.put("completeUrl","https://img0.baidu.com/it/u=2397564216,1250084532&fm=253&fmt=auto&app=138&f=PNG?w=500&h=500");
+        HashMap<String, Object> imgUrlMap4 = new HashMap<>();
+        imgUrlMap4.put("thumbnailUrl","https://img0.baidu.com/it/u=1730710238,1350681003&fm=253&fmt=auto&app=138&f=JPEG?w=480&h=296");
+        imgUrlMap4.put("completeUrl","https://img0.baidu.com/it/u=2397564216,1250084532&fm=253&fmt=auto&app=138&f=PNG?w=500&h=500");
+        objects.add(imgUrlMap);
+        HashMap<String, Object> imgUrlMap5 = new HashMap<>();
+        imgUrlMap5.put("thumbnailUrl","https://img0.baidu.com/it/u=1730710238,1350681003&fm=253&fmt=auto&app=138&f=JPEG?w=480&h=296");
+        imgUrlMap5.put("completeUrl","https://img0.baidu.com/it/u=2397564216,1250084532&fm=253&fmt=auto&app=138&f=PNG?w=500&h=500");
+        objects.add(imgUrlMap);
+        objects.add(imgUrlMap1);
+        objects.add(imgUrlMap2);
+        objects.add(imgUrlMap3);
+        objects.add(imgUrlMap4);
+        objects.add(imgUrlMap5);
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功",objects);
     }
 
 }
