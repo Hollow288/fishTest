@@ -9,6 +9,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 public class CabinetController {
@@ -66,4 +68,16 @@ public class CabinetController {
         return cabinetService.deleteQuotationByIds(quotationIds);
     }
 
+    @GetMapping("/cabinet/port-folio-type")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult getPortFolioType(){
+        return cabinetService.getPortFolioType();
+    }
+
+
+    @PutMapping("cabinet/port-folio-type")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult editPortFolioType(@RequestBody Map<String,Object> typeMap){
+        return cabinetService.editPortFolioType(typeMap);
+    }
 }

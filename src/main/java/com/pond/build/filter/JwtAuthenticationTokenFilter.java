@@ -48,6 +48,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                 requestURI.equals(contextPath + "/user/refresh") && "POST".equalsIgnoreCase(request.getMethod())||
                 requestURI.equals(contextPath + "/common/router-children")||
                 requestURI.equals(contextPath + "/common/portal-portfolio")||
+                requestURI.equals(contextPath + "/common/portal-type")||
                 requestURI.startsWith(contextPath + "/fishTest") ||
                 requestURI.startsWith(contextPath + "/sse")){
             //放行

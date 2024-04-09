@@ -3,6 +3,7 @@ package com.pond.build.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.pond.build.enums.HttpStatusCode;
 import com.pond.build.mapper.CommonMapper;
+import com.pond.build.mapper.SelectTypeMapper;
 import com.pond.build.model.LoginUser;
 import com.pond.build.model.Response.MenuResponse;
 import com.pond.build.model.ResponseResult;
@@ -34,6 +35,9 @@ public class CommonServiceImpl implements CommonService {
 
     @Autowired
     private CommonMapper commonMapper;
+
+    @Autowired
+    private SelectTypeMapper selectTypeMapper;
 
     @Override
     public ResponseResult getAllItems(String fieldName){
@@ -143,6 +147,14 @@ public class CommonServiceImpl implements CommonService {
         objects.add(imgUrlMap4);
         objects.add(imgUrlMap5);
         return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功",objects);
+    }
+
+    @Override
+    public ResponseResult getAllPortalType() {
+
+        List<Map<String, Object>> portFolioWebType = selectTypeMapper.getPortFolioWebType();
+
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功",portFolioWebType);
     }
 
 }

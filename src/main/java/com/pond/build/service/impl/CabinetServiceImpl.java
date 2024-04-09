@@ -1,6 +1,7 @@
 package com.pond.build.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -9,6 +10,7 @@ import com.pond.build.enums.HttpStatusCode;
 import com.pond.build.mapper.AttachmentInformationMapper;
 import com.pond.build.mapper.CabinetMapper;
 import com.pond.build.mapper.CabinetQuotationDetailMapper;
+import com.pond.build.mapper.SelectTypeMapper;
 import com.pond.build.model.*;
 import com.pond.build.service.CabinetService;
 import com.pond.build.utils.CommonUtil;
@@ -27,6 +29,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static org.apache.commons.lang3.StringUtils.endsWithAny;
 
@@ -44,6 +47,10 @@ public class CabinetServiceImpl implements CabinetService {
 
     @Autowired
     private AttachmentInformationMapper attachmentInformationMapper;
+
+
+    @Autowired
+    private SelectTypeMapper selectTypeMapper;
 
 
 
@@ -192,5 +199,44 @@ public class CabinetServiceImpl implements CabinetService {
 
         return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
 
+    }
+
+    @Override
+    public ResponseResult getPortFolioType() {
+        List<Map<String, Object>> portFolioType = selectTypeMapper.getPortFolioType();
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功",portFolioType);
+    }
+
+    @Override
+    public ResponseResult editPortFolioType(Map<String, Object> typeMap) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        User userInfo = loginUser.getUser();
+
+        // 获取之前的
+        QueryWrapper<SelectType> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("select_code","PortFolioType");
+        queryWrapper.eq("del_flag","0");
+        List<SelectType> selectTypes = selectTypeMapper.selectList(queryWrapper);
+        List<String> beforeTypeIds = selectTypes.stream().map(SelectType::getTypeId).toList();
+        // 返回的
+        List<Map<String,String>> typeList = (List<Map<String, String>>) typeMap.get("formData");
+        // 需要删除的Ids
+        List<String> willDeleteTypeIds = beforeTypeIds.stream()
+                .filter(typeId -> typeList.stream().noneMatch(map -> map.containsKey("typeId") && String.valueOf(map.get("typeId")).equals(typeId)))
+                .collect(Collectors.toList());
+        if(!CollectionUtils.isEmpty(willDeleteTypeIds)){
+            selectTypeMapper.deleteByTypeIds(willDeleteTypeIds,userInfo.getUserId().toString(),new Date());
+        }
+        // 需要添加的
+        List<Map<String, String>> willAddTypeIds = typeList.stream()
+                .filter(map -> !map.containsKey("typeId"))
+                .collect(Collectors.toList());
+
+        if(!CollectionUtils.isEmpty(willAddTypeIds)){
+            selectTypeMapper.addType(willAddTypeIds,userInfo.getUserId().toString(),new Date(),"PortFolioType");
+        }
+
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
     }
 }

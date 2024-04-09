@@ -4,6 +4,8 @@ import com.pond.build.model.CabinetQuotation;
 import com.pond.build.model.ResponseResult;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public interface CabinetService {
     ResponseResult getAllQuotation(Integer page, Integer pageSize,String searchText);
@@ -19,4 +21,8 @@ public interface CabinetService {
     ResponseResult removeQuotationAttachs(HashMap<String, Object> map);
 
     ResponseResult deleteQuotationByIds(HashMap<String, Object> quotationIds);
+
+    ResponseResult getPortFolioType();
+
+    ResponseResult editPortFolioType(Map<String, Object> typeMap);
 }

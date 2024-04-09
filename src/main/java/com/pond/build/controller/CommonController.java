@@ -43,4 +43,10 @@ public class CommonController {
                                                 @RequestParam(value = "pageSize") Integer pageSize){
         return commonService.getAllPortalPortfolio(type,page,pageSize);
     }
+
+    @GetMapping("/common/portal-type")
+    @PreAuthorize("permitAll")
+    public ResponseResult getAllPortalType(){
+        return commonService.getAllPortalType();
+    }
 }
