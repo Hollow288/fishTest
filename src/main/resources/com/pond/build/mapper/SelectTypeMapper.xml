@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pond.build.mapper.SelectTypeMapper">
+
+    <resultMap type="com.pond.build.model.SelectType" id="SelectTypeMap">
+        <result property="typeId" column="type_id" jdbcType="INTEGER"/>
+        <result property="typeCode" column="type_code" jdbcType="VARCHAR"/>
+        <result property="typeName" column="type_name" jdbcType="VARCHAR"/>
+        <result property="selectCode" column="select_code" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="INTEGER"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getPortFolioType" resultType="java.util.Map">
+        select type_id as typeId, type_code as 'value', type_name as label from select_type where del_flag='0' and select_code= 'PortFolioType'
+    </select>
+
+    <select id="getPortFolioWebType" resultType="java.util.Map">
+        select type_code as 'key', type_name as 'value' from select_type where del_flag='0' and select_code= 'PortFolioType'
+    </select>
+
+
+    <update id="deleteByTypeIds">
+        update select_type set update_by = #{userId}, update_time = #{date},del_flag = '1'
+        where type_id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <insert id="addType">
+        INSERT INTO select_type (type_code, type_name, create_by, create_time, select_code)
+        VALUES
+        <foreach collection="willAddTypeMaps" item="typeMap" separator=",">
+            (#{typeMap.value}, #{typeMap.label}, #{userId}, #{date}, #{portFolioType})
+        </foreach>
+    </insert>
+
+</mapper>
+
