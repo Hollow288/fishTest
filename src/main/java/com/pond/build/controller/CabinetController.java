@@ -80,4 +80,25 @@ public class CabinetController {
     public ResponseResult editPortFolioType(@RequestBody Map<String,Object> typeMap){
         return cabinetService.editPortFolioType(typeMap);
     }
+
+
+    @PostMapping("/cabinet/port-folio")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult addPortfolio(@RequestBody Map<String,Object> typeMap){
+        return cabinetService.addPortfolio(typeMap);
+    }
+
+
+    @PostMapping("/cabinet/portfolio-web")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult listPortfolioWeb(@RequestBody Map<String,Object> queryParams){
+        return cabinetService.listPortfolioWeb(queryParams);
+    }
+
+
+    @PatchMapping("/cabinet/delete-portfolio-web")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult deletePortfolioWebByIds(@RequestBody HashMap<String,Object> folioIds){
+        return cabinetService.deletePortfolioWebByIds(folioIds);
+    }
 }

@@ -7,10 +7,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pond.build.enums.HttpStatusCode;
-import com.pond.build.mapper.AttachmentInformationMapper;
-import com.pond.build.mapper.CabinetMapper;
-import com.pond.build.mapper.CabinetQuotationDetailMapper;
-import com.pond.build.mapper.SelectTypeMapper;
+import com.pond.build.mapper.*;
 import com.pond.build.model.*;
 import com.pond.build.service.CabinetService;
 import com.pond.build.utils.CommonUtil;
@@ -31,8 +28,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.apache.commons.lang3.StringUtils.endsWithAny;
-
 @Service
 @Transactional
 public class CabinetServiceImpl implements CabinetService {
@@ -51,6 +46,14 @@ public class CabinetServiceImpl implements CabinetService {
 
     @Autowired
     private SelectTypeMapper selectTypeMapper;
+
+
+    @Autowired
+    private PortFolioMapper portFolioMapper;
+
+
+    @Autowired
+    private PortFolioTypeMapper portFolioTypeMapper;
 
 
 
@@ -194,9 +197,9 @@ public class CabinetServiceImpl implements CabinetService {
         User userInfo = loginUser.getUser();
 
         List<String> ids = (List<String>)quotationIds.get("ids");
-
-        cabinetMapper.deleteQuotationById(ids,userInfo.getUserId().toString(),new Date());
-
+        if(!CollectionUtils.isEmpty(ids)){
+            cabinetMapper.deleteQuotationById(ids,userInfo.getUserId().toString(),new Date());
+        }
         return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
 
     }
@@ -235,6 +238,68 @@ public class CabinetServiceImpl implements CabinetService {
 
         if(!CollectionUtils.isEmpty(willAddTypeIds)){
             selectTypeMapper.addType(willAddTypeIds,userInfo.getUserId().toString(),new Date(),"PortFolioType");
+        }
+
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
+    }
+
+    @Override
+    public ResponseResult addPortfolio(Map<String, Object> typeMap) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        User userInfo = loginUser.getUser();
+
+        PortFolio portFolio = new PortFolio();
+        portFolio.setCreateBy(userInfo.getUserId().toString());
+        portFolio.setCreateTime(new Date());
+
+        portFolioMapper.insert(portFolio);
+
+        if(typeMap.containsKey("typeIds")){
+            List<String> typeList = (List<String>) typeMap.get("typeIds");
+            if(!CollectionUtils.isEmpty(typeList)){
+                for (String typeId : typeList) {
+                    PortFolioType portFolioType = new PortFolioType();
+                    portFolioType.setFolioId(portFolio.getFolioId());
+                    portFolioType.setTypeId(typeId);
+                    portFolioTypeMapper.insert(portFolioType);
+                }
+            }
+        }
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功",portFolio.getFolioId());
+    }
+
+    @Override
+    public ResponseResult listPortfolioWeb(Map<String, Object> queryParams) {
+        int page = (int) queryParams.get("page");
+        int pageSize = (int) queryParams.get("pageSize");
+        List<String> searchList = (List<String>) queryParams.get("searchText");
+
+        int offset = (page - 1) * pageSize;
+        int limit = pageSize;
+
+        List<PortFolio> portFolioList = portFolioMapper.getPortFolioByPage(offset,limit,searchList);
+
+        Integer portFolioByPageCount = portFolioMapper.getPortFolioByPageCount(searchList);
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("data",portFolioList);
+        resultMap.put("page",page);
+        resultMap.put("pageSize",pageSize);
+        resultMap.put("total",portFolioByPageCount);
+
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功",resultMap);
+    }
+
+    @Override
+    public ResponseResult deletePortfolioWebByIds(HashMap<String, Object> folioIds) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        User userInfo = loginUser.getUser();
+
+        List<String> ids = (List<String>)folioIds.get("ids");
+        if(!CollectionUtils.isEmpty(ids)){
+            cabinetMapper.deletePortfolioWebById(ids,userInfo.getUserId().toString(),new Date());
         }
 
         return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");

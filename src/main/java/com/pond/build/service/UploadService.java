@@ -10,4 +10,8 @@ public interface UploadService {
     ResponseResult uploadAvatar(MultipartFile file);
 
     ResponseResult uploadQuotation(MultipartFile[] files, String quotationId);
+
+    ResponseResult uploadPortFolioThumbnailFile(MultipartFile[] files, String folioId);
+
+    ResponseResult uploadPortFolioPanoramaFile(MultipartFile[] files, String folioId);
 }

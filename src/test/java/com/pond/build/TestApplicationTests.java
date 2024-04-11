@@ -769,4 +769,179 @@ class TestApplicationTests {
         }
     }
 
+
+
+    @Test
+    public void importZJZ(){
+        String basicSql = "INSERT INTO dbo.hr_emp_cert (ENABLED_FLAG, cert_no, cert_type_code, cert_type_name, ROW_GUID, ATTRIBUTE4, employee_name, status_code, status_name, use_status_code, use_status_name, position, sign_date, vali_date) VALUES (N'Y', N'12', N'2', N'3', N'4', N'6', N'', N'', N'10', N'11', N'12', N'13', N'2024-04-16 10:13:51.000', N'2024-04-11 10:13:56.000')";
+
+        try {
+            DataFormatter dataFormatter = new DataFormatter();
+
+            FileWriter file = new FileWriter("C:\\Users\\11\\Desktop\\ZJZ.sql");
+
+            FileInputStream fileInputStream = new FileInputStream("C:\\Users\\11\\Desktop\\副本c7d4375a463ecadec47af8d63e3960be_1_8.xlsx");
+//            sheets对象
+            XSSFWorkbook sheets = new XSSFWorkbook(fileInputStream);
+            //总共的工作表数量
+//            int numberOfSheets = sheets.getNumberOfSheets();
+            //第一个sheet
+            XSSFSheet sheet = sheets.getSheetAt(0);
+            //总共的行数
+            int physicalNumberOfRows = sheet.getPhysicalNumberOfRows();
+
+            for (int i = 1; i < physicalNumberOfRows; i++) {
+                XSSFRow row = sheet.getRow(i);
+
+                //证照姓名
+                String employeeName = String.valueOf(row.getCell(0));
+                //证件号码
+                String certNo = String.valueOf(row.getCell(1));
+                //证件类型name  cert_type_name
+                String certTypeName = String.valueOf(row.getCell(2));
+                //证件类型name  cert_type_code
+                String certTypeCode = "";
+                if(certTypeName.equals("因公通行证")){
+                    certTypeCode = "YinGongTongXingZheng";
+                }else{
+                    certTypeCode = "GongWuCommonPermit";
+                }
+                //签发日期sign_date
+                String signDate = String.valueOf(row.getCell(4));
+                //有效日期vali_date
+                String valiDate = String.valueOf(row.getCell(5));
+                //库存状态name status_name
+                String statusName = String.valueOf(row.getCell(6));
+                //库存状态code status_code
+                String statusCode = "";
+                if(statusName.equals("借出")){
+                    statusCode = "Lend";
+                }else{
+                    statusCode = "TheLibrary";
+                }
+                //使用状态name  use_status_name
+                String useStatusName = String.valueOf(row.getCell(7));
+                //使用状态code  use_status_code
+                String useStatusCode = "";
+                if(useStatusName.equals("无效")){
+                    useStatusCode = "NoAcail";
+                }else{
+                    useStatusCode = "Effective";
+                }
+                //存储位置 position
+                String position = String.valueOf(row.getCell(8));
+
+                StringBuffer stringBuffer = this.pxZjz(employeeName,certNo,certTypeCode,certTypeName,signDate,valiDate,statusCode,statusName,useStatusCode,useStatusName,position);
+
+                file.write(stringBuffer.toString());
+                file.write("\r\n");
+                file.write("\r\n");
+                file.write("go");
+                file.write("\r\n");
+                file.write("\r\n");
+
+            }
+            file.write("update hec\n" +
+                    "set\n" +
+                    "    hec.DEPT_ID = fe.DEPT_ID,\n" +
+                    "    hec.DEPT_CODE = fd.DEPT_CODE,\n" +
+                    "    hec.DEPT_NAME = fd.DEPT_NAME,\n" +
+                    "    hec.EMPLOYEE_ID = fe.EMPLOYEE_ID,\n" +
+                    "    hec.EMPLOYEE_NUMBER = fe.EMPLOYEE_NUMBER\n" +
+                    "from hr_emp_cert hec\n" +
+                    "            inner join FBP_EMPLOYEES fe on hec.EMPLOYEE_NAME = fe.EMPLOYEE_NAME\n" +
+                    "              inner join FBP_DEPT fd on fe.DEPT_ID = fd.DEPT_ID\n" +
+                    "where fe.ENABLED_FLAG = 'Y' and hec.ATTRIBUTE4 = '2024-04-11导入'");
+
+            file.write("\r\n");
+            file.write("\r\n");
+            file.write("go");
+            file.write("\r\n");
+            file.write("\r\n");
+            file.write("INSERT INTO dbo.hr_emp_cert (ENABLED_FLAG, cert_no, cert_type_code, cert_type_name, ROW_GUID, ATTRIBUTE4, employee_name, status_code, status_name, use_status_code, use_status_name, position, sign_date, vali_date, employee_id, employee_number, dept_id, dept_code, dept_name) VALUES (N'Y', N'', N'GongWuCommonPermit', N'公务普通护照', N'7c6496ad-1982-4236-a7ac-21a91ffdaffd', N'2024-04-11导入', N'李毅', N'Lend', N'借出', N'Effective', N'有效', N'A254', N'2023-02-28', N'2028-02-28',N'101',N'LIYI0417',N'174',N'200186',N'部门领导')\n" +
+                    "\n" +
+                    "go\n" +
+                    "\n" +
+                    "INSERT INTO dbo.hr_emp_cert (ENABLED_FLAG, cert_no, cert_type_code, cert_type_name, ROW_GUID, ATTRIBUTE4, employee_name, status_code, status_name, use_status_code, use_status_name, position, sign_date, vali_date, employee_id, employee_number, dept_id, dept_code, dept_name) VALUES (N'Y', N'', N'GongWuCommonPermit', N'公务普通护照', N'47ed4311-a5a2-45d5-81ac-39e2d560364c', N'2024-04-11导入', N'唐松涛', N'TheLibrary', N'在库', N'Effective', N'有效', N'A263', N'2021-05-21', N'2026-05-21',N'2084',N'TANGSONGTAO0515',N'30',N'200127',N'规划与投资咨询部')\n" +
+                    "\n" +
+                    "go\n" +
+                    "\n" +
+                    "INSERT INTO dbo.hr_emp_cert (ENABLED_FLAG, cert_no, cert_type_code, cert_type_name, ROW_GUID, ATTRIBUTE4, employee_name, status_code, status_name, use_status_code, use_status_name, position, sign_date, vali_date, employee_id, employee_number, dept_id, dept_code, dept_name) VALUES (N'Y', N'', N'YinGongTongXingZheng', N'因公通行证', N'5b97e7ed-272c-4e23-8343-ccdee4cea2cc', N'2024-04-11导入', N'李娜', N'Lend', N'借出', N'Effective', N'有效', N'B33', N'2022-09-16', N'2027-09-16',N'2395',N'LINA0814',N'168',N'200106',N'基础设施运营维护事业部')\n" +
+                    "\n" +
+                    "go\n" +
+                    "\n" +
+                    "INSERT INTO dbo.hr_emp_cert (ENABLED_FLAG, cert_no, cert_type_code, cert_type_name, ROW_GUID, ATTRIBUTE4, employee_name, status_code, status_name, use_status_code, use_status_name, position, sign_date, vali_date, employee_id, employee_number, dept_id, dept_code, dept_name) VALUES (N'Y', N'', N'YinGongTongXingZheng', N'因公通行证', N'eec80e2f-8feb-4a78-853b-d9596eadac1a', N'2024-04-11导入', N'刘高', N'TheLibrary', N'在库', N'Effective', N'有效', N'B121', N'2023-06-28', N'2028-06-28',N'3030',N'liugao0819',N'311',N'400063',N'长大桥研究中心')\n" +
+                    "\n" +
+                    "go");
+            file.write("\r\n");
+
+            file.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    private StringBuffer pxZjz(String employeeName, String certNo, String certTypeCode, String certTypeName, String signDate, String valiDate, String statusCode, String statusName, String useStatusCode, String useStatusName, String position) {
+        StringBuffer temSb = new StringBuffer();
+        //insert
+        temSb.append("INSERT INTO dbo.hr_emp_cert (ENABLED_FLAG, cert_no, cert_type_code, cert_type_name, ROW_GUID, ATTRIBUTE4, employee_name, status_code, status_name, use_status_code, use_status_name, position, sign_date, vali_date) VALUES (N'Y', N'");
+        //cert_no
+        temSb.append(certNo);
+        //拼接
+        temSb.append("', N'");
+        //cert_type_code
+        temSb.append(certTypeCode);
+        //拼接
+        temSb.append("', N'");
+        //cert_type_name
+        temSb.append(certTypeName);
+        //拼接
+        temSb.append("', N'");
+        //ROW_GUID
+        temSb.append(UUID.randomUUID().toString());
+        //拼接
+        temSb.append("', N'");
+        //ATTRIBUTE4
+        temSb.append("2024-04-11导入");
+        //拼接
+        temSb.append("', N'");
+        //employee_name
+        temSb.append(employeeName);
+        //拼接
+        temSb.append("', N'");
+        //status_code
+        temSb.append(statusCode);
+        //拼接
+        temSb.append("', N'");
+        //status_name
+        temSb.append(statusName);
+        //拼接
+        temSb.append("', N'");
+        //use_status_code
+        temSb.append(useStatusCode);
+        //拼接
+        temSb.append("', N'");
+        //use_status_name
+        temSb.append(useStatusName);
+        //拼接
+        temSb.append("', N'");
+        //position
+        temSb.append(position);
+        //拼接
+        temSb.append("', N'");
+        //sign_date
+        temSb.append(signDate);
+        //拼接
+        temSb.append("', N'");
+        //vali_date
+        temSb.append(valiDate);
+        //拼接
+        temSb.append("')");
+
+        return temSb;
+
+    }
+
+
 }

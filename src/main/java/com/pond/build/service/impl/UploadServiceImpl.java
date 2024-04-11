@@ -1,14 +1,13 @@
 package com.pond.build.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.pond.build.enums.HttpStatusCode;
 import com.pond.build.mapper.AttachmentInformationMapper;
 import com.pond.build.mapper.CabinetMapper;
+import com.pond.build.mapper.PortFolioMapper;
 import com.pond.build.mapper.UsersMapper;
-import com.pond.build.model.AttachmentInformation;
-import com.pond.build.model.LoginUser;
-import com.pond.build.model.ResponseResult;
-import com.pond.build.model.User;
+import com.pond.build.model.*;
 import com.pond.build.service.UploadService;
 import com.pond.build.utils.MinioUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +43,9 @@ public class UploadServiceImpl  implements UploadService {
 
     @Autowired
     private AttachmentInformationMapper attachmentInformationMapper;
+
+    @Autowired
+    private PortFolioMapper portFolioMapper;
 
     @Override
     public ResponseResult uploadAvatar(MultipartFile file) {
@@ -100,6 +102,56 @@ public class UploadServiceImpl  implements UploadService {
             attachmentInformationMapper.insert(attachmentInformation);
         }
 
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
+    }
+
+    @Override
+    public ResponseResult uploadPortFolioThumbnailFile(MultipartFile[] files, String folioId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        User userInfo = loginUser.getUser();
+
+        String bucketName = "fishtest-cabinet-portfolio-web";
+        String filePath = "/"+ LocalDate.now() + "/";
+
+        minioUtil.existBucket(bucketName);
+        //上传文件到Minio
+        List<String> uploadNames = minioUtil.upload(files, bucketName, filePath);
+
+        List<String> resultNames = uploadNames.stream().map(m -> address + "/" + bucketName + filePath + m).toList();
+        for (String resultName : resultNames) {
+            UpdateWrapper<PortFolio> portFolioUpdateWrapper = new UpdateWrapper<>();
+            portFolioUpdateWrapper.eq("Folio_id",folioId);
+            portFolioUpdateWrapper.set("update_by",userInfo.getUserId().toString());
+            portFolioUpdateWrapper.set("update_time",new Date());
+            portFolioUpdateWrapper.set("Thumbnail_Url",resultName);
+            portFolioMapper.update(null,portFolioUpdateWrapper);
+        }
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
+    }
+
+    @Override
+    public ResponseResult uploadPortFolioPanoramaFile(MultipartFile[] files, String folioId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        User userInfo = loginUser.getUser();
+
+        String bucketName = "fishtest-cabinet-portfolio-web";
+        String filePath = "/"+ LocalDate.now() + "/";
+
+        minioUtil.existBucket(bucketName);
+        //上传文件到Minio
+        List<String> uploadNames = minioUtil.upload(files, bucketName, filePath);
+
+        List<String> resultNames = uploadNames.stream().map(m -> address + "/" + bucketName + filePath + m).toList();
+        for (String resultName : resultNames) {
+            UpdateWrapper<PortFolio> portFolioUpdateWrapper = new UpdateWrapper<>();
+            portFolioUpdateWrapper.eq("Folio_id",folioId);
+            portFolioUpdateWrapper.set("update_by",userInfo.getUserId().toString());
+            portFolioUpdateWrapper.set("update_time",new Date());
+            portFolioUpdateWrapper.set("Panorama_Url",resultName);
+            portFolioMapper.update(null,portFolioUpdateWrapper);
+        }
         return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
     }
 

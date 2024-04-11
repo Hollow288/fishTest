@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pond.build.mapper.PortFolioMapper">
+
+    <resultMap type="com.pond.build.model.PortFolio" id="PortFolioMap">
+        <result property="folioId" column="Folio_id" jdbcType="INTEGER"/>
+        <result property="thumbnailUrl" column="Thumbnail_Url" jdbcType="VARCHAR"/>
+        <result property="panoramaUrl" column="Panorama_Url" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <collection property="photoTypes" ofType="java.lang.String" column="Folio_id"
+                    select="com.pond.build.mapper.PortFolioMapper.findTypeNameById">
+        </collection>
+    </resultMap>
+
+    <select id="findTypeNameById" resultType="java.lang.String">
+        select st.type_name from port_folio_type pft left join select_type st on  st.type_id = pft.type_id where pft.Folio_id = #{folioId} and st.del_flag = '0'
+    </select>
+
+
+    <select id="getPortFolioByPage" resultMap="PortFolioMap">
+        select distinct pf.Folio_id, pf.Thumbnail_Url, pf.Panorama_Url, pf.create_time from port_folio pf
+        left join port_folio_type pft on pf.Folio_id = pft.Folio_id
+        left join select_type st on st.select_code = 'PortFolioType' and st.del_flag='0' and st.type_id = pft.type_id
+        where pf.del_flag='0'
+        <if test="searchList != null and searchList.size() > 0">
+            and st.type_code in
+            <foreach collection="searchList" item="typeCode" open="(" separator="," close=")">
+                #{typeCode}
+            </foreach>
+        </if>
+        ORDER BY pf.Folio_id
+        <!-- 分页条件 -->
+        LIMIT #{offset}, #{limit}
+    </select>
+
+
+    <select id="getPortFolioByPageCount" resultType="java.lang.Integer">
+        select count(distinct pf.Folio_id) from port_folio pf
+        left join port_folio_type pft on pf.Folio_id = pft.Folio_id
+        left join select_type st on st.select_code = 'PortFolioType' and st.del_flag='0' and st.type_id = pft.type_id
+        where pf.del_flag='0'
+        <if test="searchList != null and searchList.size() > 0">
+            and st.type_code in
+            <foreach collection="searchList" item="typeCode" open="(" separator="," close=")">
+                #{typeCode}
+            </foreach>
+        </if>
+    </select>
+
+</mapper>
+

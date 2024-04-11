@@ -25,4 +25,10 @@ public interface CabinetService {
     ResponseResult getPortFolioType();
 
     ResponseResult editPortFolioType(Map<String, Object> typeMap);
+
+    ResponseResult addPortfolio(Map<String, Object> typeMap);
+
+    ResponseResult listPortfolioWeb(Map<String, Object> queryParams);
+
+    ResponseResult deletePortfolioWebByIds(HashMap<String, Object> folioIds);
 }

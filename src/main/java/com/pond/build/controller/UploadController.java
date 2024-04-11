@@ -34,4 +34,19 @@ public class UploadController {
         return uploadService.uploadQuotation(files,quotationId);
     }
 
+
+    @PostMapping("/upload/{folioId}/portfolio-thumbnail")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult uploadPortFolioThumbnailFile(@RequestParam(value = "file") MultipartFile[] files,
+                                          @PathVariable("folioId") String folioId) {
+        return uploadService.uploadPortFolioThumbnailFile(files,folioId);
+    }
+
+    @PostMapping("/upload/{folioId}/portfolio-panorama")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult uploadPortFolioPanoramaFile(@RequestParam(value = "file") MultipartFile[] files,
+                                                       @PathVariable("folioId") String folioId) {
+        return uploadService.uploadPortFolioPanoramaFile(files,folioId);
+    }
+
 }

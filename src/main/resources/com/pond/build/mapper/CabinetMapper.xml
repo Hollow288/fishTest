@@ -82,5 +82,14 @@
         </foreach>
     </update>
 
+
+    <update id="deletePortfolioWebById">
+        update port_folio set update_by = #{userId}, update_time = #{date},del_flag = '1'
+        where Folio_id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
 </mapper>
 
