@@ -1,8 +1,10 @@
 package com.pond.build.service.impl;
 
+import cn.hutool.core.lang.hash.Hash;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.pond.build.enums.HttpStatusCode;
 import com.pond.build.mapper.CommonMapper;
+import com.pond.build.mapper.PortFolioMapper;
 import com.pond.build.mapper.SelectTypeMapper;
 import com.pond.build.model.LoginUser;
 import com.pond.build.model.Response.MenuResponse;
@@ -38,6 +40,9 @@ public class CommonServiceImpl implements CommonService {
 
     @Autowired
     private SelectTypeMapper selectTypeMapper;
+
+    @Autowired
+    private PortFolioMapper portFolioMapper;
 
     @Override
     public ResponseResult getAllItems(String fieldName){
@@ -118,35 +123,16 @@ public class CommonServiceImpl implements CommonService {
 
     @Override
     public ResponseResult getAllPortalPortfolio(String type,Integer page, Integer pageSize) {
+        int offset = (page - 1) * pageSize;
+        int limit = pageSize;
 
+        List<Map<String, Object>> portFolioByPageWeb = portFolioMapper.getPortFolioByPageWeb(offset, limit, type);
+        Integer portFolioByPageWebCount = portFolioMapper.getPortFolioByPageWebCount(type);
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("data",portFolioByPageWeb);
+        resultMap.put("total",portFolioByPageWebCount);
 
-        List<Object> objects = new ArrayList<>();
-        HashMap<String, Object> imgUrlMap = new HashMap<>();
-        imgUrlMap.put("thumbnailUrl","https://img0.baidu.com/it/u=1730710238,1350681003&fm=253&fmt=auto&app=138&f=JPEG?w=480&h=296");
-        imgUrlMap.put("completeUrl","https://img0.baidu.com/it/u=2397564216,1250084532&fm=253&fmt=auto&app=138&f=PNG?w=500&h=500");
-        HashMap<String, Object> imgUrlMap1 = new HashMap<>();
-        imgUrlMap1.put("thumbnailUrl","https://img0.baidu.com/it/u=1730710238,1350681003&fm=253&fmt=auto&app=138&f=JPEG?w=480&h=296");
-        imgUrlMap1.put("completeUrl","https://img0.baidu.com/it/u=2397564216,1250084532&fm=253&fmt=auto&app=138&f=PNG?w=500&h=500");
-        HashMap<String, Object> imgUrlMap2 = new HashMap<>();
-        imgUrlMap2.put("thumbnailUrl","https://img0.baidu.com/it/u=1730710238,1350681003&fm=253&fmt=auto&app=138&f=JPEG?w=480&h=296");
-        imgUrlMap2.put("completeUrl","https://img0.baidu.com/it/u=2397564216,1250084532&fm=253&fmt=auto&app=138&f=PNG?w=500&h=500");
-        HashMap<String, Object> imgUrlMap3 = new HashMap<>();
-        imgUrlMap3.put("thumbnailUrl","https://img0.baidu.com/it/u=1730710238,1350681003&fm=253&fmt=auto&app=138&f=JPEG?w=480&h=296");
-        imgUrlMap3.put("completeUrl","https://img0.baidu.com/it/u=2397564216,1250084532&fm=253&fmt=auto&app=138&f=PNG?w=500&h=500");
-        HashMap<String, Object> imgUrlMap4 = new HashMap<>();
-        imgUrlMap4.put("thumbnailUrl","https://img0.baidu.com/it/u=1730710238,1350681003&fm=253&fmt=auto&app=138&f=JPEG?w=480&h=296");
-        imgUrlMap4.put("completeUrl","https://img0.baidu.com/it/u=2397564216,1250084532&fm=253&fmt=auto&app=138&f=PNG?w=500&h=500");
-        objects.add(imgUrlMap);
-        HashMap<String, Object> imgUrlMap5 = new HashMap<>();
-        imgUrlMap5.put("thumbnailUrl","https://img0.baidu.com/it/u=1730710238,1350681003&fm=253&fmt=auto&app=138&f=JPEG?w=480&h=296");
-        imgUrlMap5.put("completeUrl","https://img0.baidu.com/it/u=2397564216,1250084532&fm=253&fmt=auto&app=138&f=PNG?w=500&h=500");
-        objects.add(imgUrlMap);
-        objects.add(imgUrlMap1);
-        objects.add(imgUrlMap2);
-        objects.add(imgUrlMap3);
-        objects.add(imgUrlMap4);
-        objects.add(imgUrlMap5);
-        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功",objects);
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功",resultMap);
     }
 
     @Override

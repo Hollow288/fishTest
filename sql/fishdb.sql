@@ -11,7 +11,7 @@
  Target Server Version : 80035
  File Encoding         : 65001
 
- Date: 03/04/2024 17:41:04
+ Date: 12/04/2024 15:32:32
 */
 
 SET NAMES utf8mb4;
@@ -300,6 +300,162 @@ INSERT INTO `pending_notification` VALUES (11, 4, '0', 3, '0');
 INSERT INTO `pending_notification` VALUES (12, 4, '0', 1, '0');
 
 -- ----------------------------
+-- Table structure for port_folio
+-- ----------------------------
+DROP TABLE IF EXISTS `port_folio`;
+CREATE TABLE `port_folio`  (
+                               `Folio_id` bigint NOT NULL AUTO_INCREMENT COMMENT '案例ID',
+                               `Thumbnail_Url` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '缩略图Url',
+                               `Panorama_Url` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '全景图Url',
+                               `create_by` bigint NULL DEFAULT NULL COMMENT '创建人',
+                               `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+                               `update_by` bigint NULL DEFAULT NULL COMMENT '更新人',
+                               `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                               `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '是否删除（0未删除 1已删除）',
+                               PRIMARY KEY (`Folio_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 35 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of port_folio
+-- ----------------------------
+INSERT INTO `port_folio` VALUES (1, 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-11/企业微信截图_20240410113653_1712815068435.png', 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-11/企业微信截图_20240411135731_1712815068728.png', 1, '2024-04-11 13:57:48', 1, '2024-04-12 13:34:29', '1');
+INSERT INTO `port_folio` VALUES (2, 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-11/企业微信截图_20240411145700_1712818643948.png', 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-11/企业微信截图_20240411145705_1712818644028.png', 1, '2024-04-11 14:57:24', 1, '2024-04-12 13:34:29', '1');
+INSERT INTO `port_folio` VALUES (3, 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-11/企业微信截图_20240410113653_1712828895692.png', NULL, 1, '2024-04-11 17:48:15', 1, '2024-04-12 13:34:29', '1');
+INSERT INTO `port_folio` VALUES (4, 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-11/企业微信截图_20240410113653_1712828977138.png', NULL, 1, '2024-04-11 17:49:37', 1, '2024-04-12 13:34:29', '1');
+INSERT INTO `port_folio` VALUES (5, 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-11/企业微信截图_20240410113653_1712829007003.png', NULL, 1, '2024-04-11 17:50:07', 1, '2024-04-12 13:34:29', '1');
+INSERT INTO `port_folio` VALUES (6, 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-11/企业微信截图_20240410113653_1712829104308.png', NULL, 1, '2024-04-11 17:51:44', 1, '2024-04-12 13:34:29', '1');
+INSERT INTO `port_folio` VALUES (7, 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-11/企业微信截图_20240410113653_1712829167424.png', NULL, 1, '2024-04-11 17:52:47', 1, '2024-04-12 13:34:29', '1');
+INSERT INTO `port_folio` VALUES (8, 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-11/企业微信截图_20240410113653_1712829178144.png', NULL, 1, '2024-04-11 17:52:56', 1, '2024-04-12 13:34:29', '1');
+INSERT INTO `port_folio` VALUES (9, 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-11/企业微信截图_20240410113653_1712829218622.png', NULL, 1, '2024-04-11 17:53:28', 1, '2024-04-12 13:34:29', '1');
+INSERT INTO `port_folio` VALUES (10, 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-11/企业微信截图_20240410113653_1712829246970.png', NULL, 1, '2024-04-11 17:54:00', 1, '2024-04-12 13:34:29', '1');
+INSERT INTO `port_folio` VALUES (11, 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-11/企业微信截图_20240410113653_1712829306863.png', NULL, 1, '2024-04-11 17:55:07', 1, '2024-04-12 13:34:32', '1');
+INSERT INTO `port_folio` VALUES (12, 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-11/企业微信截图_20240410113653_1712829347272.png', NULL, 1, '2024-04-11 17:55:47', 1, '2024-04-12 13:34:32', '1');
+INSERT INTO `port_folio` VALUES (13, 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-11/企业微信截图_20240410113653_1712829378461.png', NULL, 1, '2024-04-11 17:56:18', 1, '2024-04-12 13:34:32', '1');
+INSERT INTO `port_folio` VALUES (14, 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-11/企业微信截图_20240410113653_1712829479395.png', NULL, 1, '2024-04-11 17:57:59', 1, '2024-04-12 13:34:32', '1');
+INSERT INTO `port_folio` VALUES (15, 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-11/企业微信截图_20240410113653_1712829502990.png', NULL, 1, '2024-04-11 17:58:23', 1, '2024-04-12 13:34:32', '1');
+INSERT INTO `port_folio` VALUES (16, 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-11/企业微信截图_20240410113653_1712829622511.png', NULL, 1, '2024-04-11 18:00:22', 1, '2024-04-12 13:34:32', '1');
+INSERT INTO `port_folio` VALUES (17, 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-11/企业微信截图_20240410113653_1712829650917.png', 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-11/企业微信截图_20240410113653_1712829653356.png', 1, '2024-04-11 18:00:51', 1, '2024-04-12 13:34:32', '1');
+INSERT INTO `port_folio` VALUES (18, 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-11/企业微信截图_20240410113653_1712830099469.png', NULL, 1, '2024-04-11 18:08:19', 1, '2024-04-12 13:34:32', '1');
+INSERT INTO `port_folio` VALUES (19, 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-12/企业微信截图_20240410113653_1712884095176.png', 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-12/企业微信截图_20240411174723_1712884095267.png', 1, '2024-04-12 09:08:15', 1, '2024-04-12 13:34:32', '1');
+INSERT INTO `port_folio` VALUES (20, 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-12/blob1712893475612', NULL, 1, '2024-04-12 11:44:36', 1, '2024-04-12 13:34:32', '1');
+INSERT INTO `port_folio` VALUES (21, 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-12/blob1712893546722', NULL, 1, '2024-04-12 11:45:47', 1, '2024-04-12 13:34:35', '1');
+INSERT INTO `port_folio` VALUES (22, NULL, NULL, 1, '2024-04-12 11:47:16', 1, '2024-04-12 13:34:35', '1');
+INSERT INTO `port_folio` VALUES (23, 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-12/blob1712899925789', NULL, 1, '2024-04-12 13:32:06', 1, '2024-04-12 13:34:35', '1');
+INSERT INTO `port_folio` VALUES (24, 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-12/blob1712903140647', 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-12/企业微信截图_20240411174723_1712903140807.png', 1, '2024-04-12 14:25:40', 1, '2024-04-12 14:25:41', '0');
+INSERT INTO `port_folio` VALUES (25, 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-12/blob1712903702407', 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-12/07akioni_1712903702447.jpeg', 1, '2024-04-12 14:35:02', 1, '2024-04-12 14:35:02', '0');
+INSERT INTO `port_folio` VALUES (26, 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-12/blob1712903720686', 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-12/企业微信截图_20240412094508_1712903720710.png', 1, '2024-04-12 14:35:21', 1, '2024-04-12 14:35:21', '0');
+INSERT INTO `port_folio` VALUES (27, NULL, NULL, 1, '2024-04-12 14:40:21', NULL, NULL, '0');
+INSERT INTO `port_folio` VALUES (28, 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-12/blob1712904561392', 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-12/07akioni_1712904561427.jpeg', 1, '2024-04-12 14:49:21', 1, '2024-04-12 14:49:21', '0');
+INSERT INTO `port_folio` VALUES (29, 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-12/blob1712904711952', 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-12/img0_1920x1200_1712904712016.jpg', 1, '2024-04-12 14:51:52', 1, '2024-04-12 14:51:52', '0');
+INSERT INTO `port_folio` VALUES (30, 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-12/blob1712904722453', 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-12/img19_1920x1200_1712904722505.jpg', 1, '2024-04-12 14:52:02', 1, '2024-04-12 14:52:03', '0');
+INSERT INTO `port_folio` VALUES (31, 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-12/blob1712904741096', 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-12/TouchKeyboardThemeLight003_1712904741119.jpg', 1, '2024-04-12 14:52:21', 1, '2024-04-12 14:52:21', '0');
+INSERT INTO `port_folio` VALUES (32, 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-12/blob1712904753604', 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-12/TouchKeyboardThemeLight002_1712904753631.jpg', 1, '2024-04-12 14:52:34', 1, '2024-04-12 14:52:34', '0');
+INSERT INTO `port_folio` VALUES (33, 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-12/blob1712904764773', 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-12/TouchKeyboardThemeLight000_1712904764802.jpg', 1, '2024-04-12 14:52:45', 1, '2024-04-12 14:52:45', '0');
+INSERT INTO `port_folio` VALUES (34, 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-12/blob1712904807827', 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-12/img50_1712904807850.jpg', 1, '2024-04-12 14:53:28', 1, '2024-04-12 14:53:28', '0');
+
+-- ----------------------------
+-- Table structure for port_folio_type
+-- ----------------------------
+DROP TABLE IF EXISTS `port_folio_type`;
+CREATE TABLE `port_folio_type`  (
+                                    `type_id` bigint NOT NULL COMMENT '种类ID',
+                                    `Folio_id` bigint NOT NULL COMMENT '案例ID',
+                                    PRIMARY KEY (`type_id`, `Folio_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of port_folio_type
+-- ----------------------------
+INSERT INTO `port_folio_type` VALUES (1, 1);
+INSERT INTO `port_folio_type` VALUES (1, 2);
+INSERT INTO `port_folio_type` VALUES (1, 3);
+INSERT INTO `port_folio_type` VALUES (1, 4);
+INSERT INTO `port_folio_type` VALUES (1, 5);
+INSERT INTO `port_folio_type` VALUES (1, 6);
+INSERT INTO `port_folio_type` VALUES (1, 7);
+INSERT INTO `port_folio_type` VALUES (1, 8);
+INSERT INTO `port_folio_type` VALUES (1, 9);
+INSERT INTO `port_folio_type` VALUES (1, 10);
+INSERT INTO `port_folio_type` VALUES (1, 11);
+INSERT INTO `port_folio_type` VALUES (1, 12);
+INSERT INTO `port_folio_type` VALUES (1, 13);
+INSERT INTO `port_folio_type` VALUES (1, 14);
+INSERT INTO `port_folio_type` VALUES (1, 15);
+INSERT INTO `port_folio_type` VALUES (1, 16);
+INSERT INTO `port_folio_type` VALUES (1, 17);
+INSERT INTO `port_folio_type` VALUES (1, 18);
+INSERT INTO `port_folio_type` VALUES (1, 19);
+INSERT INTO `port_folio_type` VALUES (1, 20);
+INSERT INTO `port_folio_type` VALUES (1, 21);
+INSERT INTO `port_folio_type` VALUES (1, 22);
+INSERT INTO `port_folio_type` VALUES (1, 23);
+INSERT INTO `port_folio_type` VALUES (1, 24);
+INSERT INTO `port_folio_type` VALUES (1, 26);
+INSERT INTO `port_folio_type` VALUES (1, 27);
+INSERT INTO `port_folio_type` VALUES (1, 28);
+INSERT INTO `port_folio_type` VALUES (1, 29);
+INSERT INTO `port_folio_type` VALUES (1, 30);
+INSERT INTO `port_folio_type` VALUES (1, 31);
+INSERT INTO `port_folio_type` VALUES (1, 32);
+INSERT INTO `port_folio_type` VALUES (1, 33);
+INSERT INTO `port_folio_type` VALUES (1, 34);
+INSERT INTO `port_folio_type` VALUES (2, 1);
+INSERT INTO `port_folio_type` VALUES (2, 3);
+INSERT INTO `port_folio_type` VALUES (2, 4);
+INSERT INTO `port_folio_type` VALUES (2, 5);
+INSERT INTO `port_folio_type` VALUES (2, 6);
+INSERT INTO `port_folio_type` VALUES (2, 7);
+INSERT INTO `port_folio_type` VALUES (2, 8);
+INSERT INTO `port_folio_type` VALUES (2, 9);
+INSERT INTO `port_folio_type` VALUES (2, 10);
+INSERT INTO `port_folio_type` VALUES (2, 11);
+INSERT INTO `port_folio_type` VALUES (2, 12);
+INSERT INTO `port_folio_type` VALUES (2, 13);
+INSERT INTO `port_folio_type` VALUES (2, 14);
+INSERT INTO `port_folio_type` VALUES (2, 15);
+INSERT INTO `port_folio_type` VALUES (2, 16);
+INSERT INTO `port_folio_type` VALUES (2, 17);
+INSERT INTO `port_folio_type` VALUES (2, 18);
+INSERT INTO `port_folio_type` VALUES (2, 19);
+INSERT INTO `port_folio_type` VALUES (2, 20);
+INSERT INTO `port_folio_type` VALUES (2, 21);
+INSERT INTO `port_folio_type` VALUES (2, 22);
+INSERT INTO `port_folio_type` VALUES (2, 23);
+INSERT INTO `port_folio_type` VALUES (2, 25);
+INSERT INTO `port_folio_type` VALUES (2, 26);
+INSERT INTO `port_folio_type` VALUES (2, 27);
+INSERT INTO `port_folio_type` VALUES (2, 28);
+INSERT INTO `port_folio_type` VALUES (2, 29);
+INSERT INTO `port_folio_type` VALUES (2, 30);
+INSERT INTO `port_folio_type` VALUES (2, 31);
+INSERT INTO `port_folio_type` VALUES (2, 32);
+INSERT INTO `port_folio_type` VALUES (2, 33);
+INSERT INTO `port_folio_type` VALUES (2, 34);
+
+-- ----------------------------
+-- Table structure for select_type
+-- ----------------------------
+DROP TABLE IF EXISTS `select_type`;
+CREATE TABLE `select_type`  (
+                                `type_id` bigint NOT NULL AUTO_INCREMENT COMMENT '种类ID',
+                                `type_code` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '种类编码',
+                                `type_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '种类名称',
+                                `select_code` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '种类名称',
+                                `create_by` bigint NULL DEFAULT NULL COMMENT '创建人',
+                                `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+                                `update_by` bigint NULL DEFAULT NULL COMMENT '更新人',
+                                `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                                `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '是否删除（0未删除 1已删除）',
+                                PRIMARY KEY (`type_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of select_type
+-- ----------------------------
+INSERT INTO `select_type` VALUES (1, 'ztcg-code', 'ztcg', 'PortFolioType', NULL, NULL, 1, '2024-04-09 16:09:01', '0');
+INSERT INTO `select_type` VALUES (2, 'kqcg-code', 'kqcg', 'PortFolioType', NULL, NULL, 1, '2024-04-09 16:06:21', '0');
+
+-- ----------------------------
 -- Table structure for student
 -- ----------------------------
 DROP TABLE IF EXISTS `student`;
@@ -371,7 +527,7 @@ CREATE TABLE `sys_menu`  (
                              `menu_parent_id` bigint NULL DEFAULT 0 COMMENT '菜单父id',
                              `is_Leaf` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
                              PRIMARY KEY (`menu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 35 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 36 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_menu
@@ -409,7 +565,8 @@ INSERT INTO `sys_menu` VALUES (30, 'login', 'MENU.Login', NULL, NULL, '/login', 
 INSERT INTO `sys_menu` VALUES (31, 'signup', 'MENU.Signup', NULL, NULL, '/signup', '/src/views/Auth/Signup', '1', '0', NULL, '#', 1, '2024-03-14 16:43:16', NULL, NULL, '0', '（仅路由）', '1', '1', 29, 29, '0');
 INSERT INTO `sys_menu` VALUES (32, 'auth-redirect', 'TEMP.AuthRedirect.Authorizing', NULL, NULL, '/auth-redirect', '/src/views/Auth/AuthRedirect', '1', '0', NULL, '#', 1, '2024-03-14 16:44:04', NULL, NULL, '0', '（仅路由）授权重定向页面', '1', '1', 0, 0, '0');
 INSERT INTO `sys_menu` VALUES (33, 'cabinet-related', NULL, 'MENU.CabinetRelated', 10, NULL, NULL, '0', '0', NULL, '~icons/mdi/file-cabinet', 1, '2024-03-25 09:44:31', 1, '2024-03-25 10:26:48', '0', '（菜单）橱柜相关', '0', '0', 1, 0, '1');
-INSERT INTO `sys_menu` VALUES (34, 'Quotation', 'MENU.Quotation', 'MENU.Quotation', NULL, '/cabinet-related/quotaion', '/src/views/CabinetRelated/Quotation', '0', '0', NULL, '~icons/mdi/file-document-outline', 1, '2024-03-25 10:37:49', NULL, NULL, '0', '（菜单）报价单', '0', '0', 1, 33, '0');
+INSERT INTO `sys_menu` VALUES (34, 'Quotation', 'MENU.Quotation', 'MENU.Quotation', 1, '/cabinet-related/quotaion', '/src/views/CabinetRelated/Quotation', '0', '0', NULL, '~icons/mdi/file-document-outline', 1, '2024-03-25 10:37:49', 1, '2024-04-09 10:17:44', '0', '（菜单）报价单', '0', '0', 1, 33, '0');
+INSERT INTO `sys_menu` VALUES (35, 'portfolio-web', 'MENU.PortfolioWeb', 'MENU.PortfolioWeb', 5, '/cabinet-related/portfolio-web', '/src/views/CabinetRelated/PortfolioWeb', '0', '0', NULL, '~icons/mdi/image-auto-adjust', 1, '2024-04-09 10:17:29', 1, '2024-04-09 10:18:11', '0', '（菜单）工程案例', '0', '0', 1, 33, '0');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -474,6 +631,7 @@ INSERT INTO `sys_role_menu` VALUES (1, 24);
 INSERT INTO `sys_role_menu` VALUES (1, 25);
 INSERT INTO `sys_role_menu` VALUES (1, 33);
 INSERT INTO `sys_role_menu` VALUES (1, 34);
+INSERT INTO `sys_role_menu` VALUES (1, 35);
 INSERT INTO `sys_role_menu` VALUES (2, 2);
 
 -- ----------------------------
