@@ -1,6 +1,7 @@
 package com.pond.build.service;
 
 import com.pond.build.model.CabinetQuotation;
+import com.pond.build.model.NewsInformation;
 import com.pond.build.model.ResponseResult;
 
 import java.util.HashMap;
@@ -31,4 +32,8 @@ public interface CabinetService {
     ResponseResult listPortfolioWeb(Map<String, Object> queryParams);
 
     ResponseResult deletePortfolioWebByIds(HashMap<String, Object> folioIds);
+
+    ResponseResult addNewsInformation(NewsInformation newsInformation);
+
+    ResponseResult listNewsInformation(Integer page, Integer pageSize, String searchText);
 }

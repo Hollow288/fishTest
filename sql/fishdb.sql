@@ -11,7 +11,7 @@
  Target Server Version : 80035
  File Encoding         : 65001
 
- Date: 12/04/2024 15:32:32
+ Date: 15/04/2024 18:03:52
 */
 
 SET NAMES utf8mb4;
@@ -242,6 +242,36 @@ INSERT INTO `cabinet_quotation_detail` VALUES (75, 2, '测试1', '测试11', 1.1
 INSERT INTO `cabinet_quotation_detail` VALUES (76, 2, '测试2', '测试22', 2.0000, 1356.0000, 1.0000, 2712.0000, '测试备注2', 1, '2024-04-01 10:16:13', NULL, NULL, '0', '0');
 INSERT INTO `cabinet_quotation_detail` VALUES (77, 2, '测试3', '测试33', 3.0000, 203.0000, 1.0000, 609.0000, '测试备注3', 1, '2024-04-01 10:16:13', NULL, NULL, '0', '1');
 INSERT INTO `cabinet_quotation_detail` VALUES (78, 2, '测试4', '测试44', 4.0000, 9999.0000, 1.0000, 39996.0000, '测试备注4', 1, '2024-04-01 10:16:13', NULL, NULL, '0', '1');
+
+-- ----------------------------
+-- Table structure for news_information
+-- ----------------------------
+DROP TABLE IF EXISTS `news_information`;
+CREATE TABLE `news_information`  (
+                                     `News_id` bigint NOT NULL AUTO_INCREMENT COMMENT '案例ID',
+                                     `News_title` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '标题',
+                                     `News_date` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '新闻日期',
+                                     `News_introduction` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '新闻简介',
+                                     `News_cover` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '新闻封面',
+                                     `create_by` bigint NULL DEFAULT NULL COMMENT '创建人',
+                                     `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+                                     `update_by` bigint NULL DEFAULT NULL COMMENT '更新人',
+                                     `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                                     `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '是否删除（0未删除 1已删除）',
+                                     `News_text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '新闻正文',
+                                     PRIMARY KEY (`News_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of news_information
+-- ----------------------------
+INSERT INTO `news_information` VALUES (1, '这是一个新闻标题', '2024-04-15', '这是一连串的新闻简介', 'http://127.0.0.1:9000/fishtest-cabinet-news-information/2024-04-15/企业微信截图_20240415150308_1713164876645.png', 1, '2024-04-15 15:07:56', 1, '2024-04-15 15:07:57', '0', '<p>这是正文这是正文这是正文这是正文这是正文这是正文这是正文这是正文这是正文这是正文这是正文这是正文这是正文这是正文这是正文这是正文这是正文这是正文这是正文</p><p>第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文</p><p style=\"text-indent: 2em;\">换行缩进的正文</p><p>这是<strong>加粗</strong>的English</p>');
+INSERT INTO `news_information` VALUES (2, '新闻标题新闻标题新闻标题新闻标', NULL, '新闻简介新闻简介新闻简介新闻简介新闻简介新闻简介新闻简介新闻', 'http://127.0.0.1:9000/fishtest-cabinet-news-information/2024-04-15/企业微信截图_20240415150308_1713166573910.png', 1, '2024-04-15 15:36:14', 1, '2024-04-15 15:36:14', '0', '<p>正文</p>');
+INSERT INTO `news_information` VALUES (3, '1', '2024-04-03', '2', NULL, 1, '2024-04-15 17:35:03', NULL, NULL, '0', '<p>3</p>');
+INSERT INTO `news_information` VALUES (4, '1', '2024-04-03', '2', 'http://127.0.0.1:9000/fishtest-cabinet-news-information/2024-04-15/企业微信截图_20240415150308_1713173710793.png', 1, '2024-04-15 17:35:11', 1, '2024-04-15 17:35:11', '0', '<p>3</p>');
+INSERT INTO `news_information` VALUES (5, '111', '2024-04-03', '2111', 'http://127.0.0.1:9000/fishtest-cabinet-news-information/2024-04-15/企业微信截图_20240415150308_1713173743063.png', 1, '2024-04-15 17:35:43', 1, '2024-04-15 17:35:43', '0', '<p>31111</p>');
+INSERT INTO `news_information` VALUES (6, '111', '2024-04-03', '2111', 'http://127.0.0.1:9000/fishtest-cabinet-news-information/2024-04-15/企业微信截图_20240415150308_1713173764572.png', 1, '2024-04-15 17:36:05', 1, '2024-04-15 17:36:05', '0', '<p>31111</p>');
+INSERT INTO `news_information` VALUES (7, '111', '2024-04-03', '2111', 'http://127.0.0.1:9000/fishtest-cabinet-news-information/2024-04-15/企业微信截图_20240415150308_1713173771772.png', 1, '2024-04-15 17:36:12', 1, '2024-04-15 17:36:12', '0', '<p>31111</p>');
 
 -- ----------------------------
 -- Table structure for notice_management
@@ -527,7 +557,7 @@ CREATE TABLE `sys_menu`  (
                              `menu_parent_id` bigint NULL DEFAULT 0 COMMENT '菜单父id',
                              `is_Leaf` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
                              PRIMARY KEY (`menu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 36 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 37 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_menu
@@ -567,6 +597,7 @@ INSERT INTO `sys_menu` VALUES (32, 'auth-redirect', 'TEMP.AuthRedirect.Authorizi
 INSERT INTO `sys_menu` VALUES (33, 'cabinet-related', NULL, 'MENU.CabinetRelated', 10, NULL, NULL, '0', '0', NULL, '~icons/mdi/file-cabinet', 1, '2024-03-25 09:44:31', 1, '2024-03-25 10:26:48', '0', '（菜单）橱柜相关', '0', '0', 1, 0, '1');
 INSERT INTO `sys_menu` VALUES (34, 'Quotation', 'MENU.Quotation', 'MENU.Quotation', 1, '/cabinet-related/quotaion', '/src/views/CabinetRelated/Quotation', '0', '0', NULL, '~icons/mdi/file-document-outline', 1, '2024-03-25 10:37:49', 1, '2024-04-09 10:17:44', '0', '（菜单）报价单', '0', '0', 1, 33, '0');
 INSERT INTO `sys_menu` VALUES (35, 'portfolio-web', 'MENU.PortfolioWeb', 'MENU.PortfolioWeb', 5, '/cabinet-related/portfolio-web', '/src/views/CabinetRelated/PortfolioWeb', '0', '0', NULL, '~icons/mdi/image-auto-adjust', 1, '2024-04-09 10:17:29', 1, '2024-04-09 10:18:11', '0', '（菜单）工程案例', '0', '0', 1, 33, '0');
+INSERT INTO `sys_menu` VALUES (36, 'news-information', 'MENU.NewsInformation', 'MENU.NewsInformation', 10, '/cabinet-related/news-information', '/src/views/CabinetRelated/NewsInformation', '0', '0', NULL, '~icons/mdi/newspaper-variant-outline', 1, '2024-04-15 09:51:30', 1, '2024-04-15 09:51:39', '0', '（菜单）新闻资讯', '0', '0', 1, 33, '0');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -632,6 +663,7 @@ INSERT INTO `sys_role_menu` VALUES (1, 25);
 INSERT INTO `sys_role_menu` VALUES (1, 33);
 INSERT INTO `sys_role_menu` VALUES (1, 34);
 INSERT INTO `sys_role_menu` VALUES (1, 35);
+INSERT INTO `sys_role_menu` VALUES (1, 36);
 INSERT INTO `sys_role_menu` VALUES (2, 2);
 
 -- ----------------------------

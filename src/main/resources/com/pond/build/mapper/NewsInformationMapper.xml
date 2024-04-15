@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pond.build.mapper.NewsInformationMapper">
+
+
+
+    <select id="getAllNewsInformationPage" resultType="java.util.Map">
+        select News_id as newsId,News_title as newsTitle,News_introduction as newsIntroduction,News_cover as newsCover
+        from news_information where del_flag = '0' ORDER BY News_id DESC
+        <!-- 分页条件 -->
+        LIMIT #{offset}, #{limit}
+    </select>
+
+
+    <select id="getAllNewsInformationCount" resultType="java.lang.Integer">
+        select count(News_id)
+        from news_information where del_flag = '0'
+    </select>
+
+
+    <select id="getNewsInformationById" resultType="java.util.Map">
+        select News_title as newsTitle,News_date as newsDate,News_cover as newsCover,News_text as newsText
+        from news_information where del_flag = '0' and News_id = #{newsId}
+    </select>
+
+
+
+</mapper>

@@ -2,6 +2,7 @@ package com.pond.build.controller;
 
 
 import com.pond.build.model.CabinetQuotation;
+import com.pond.build.model.NewsInformation;
 import com.pond.build.model.ResponseResult;
 import com.pond.build.service.CabinetService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,5 +101,21 @@ public class CabinetController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseResult deletePortfolioWebByIds(@RequestBody HashMap<String,Object> folioIds){
         return cabinetService.deletePortfolioWebByIds(folioIds);
+    }
+
+
+    @PostMapping("/cabinet/news-information")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult addNewsInformation(@RequestBody NewsInformation newsInformation){
+        return cabinetService.addNewsInformation(newsInformation);
+    }
+
+
+    @GetMapping("/cabinet/news-information-list")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult listNewsInformation(@RequestParam(value = "page") Integer page,
+                                           @RequestParam(value = "pageSize") Integer pageSize,
+                                           @RequestParam(value = "searchText", defaultValue = "") String searchText){
+        return cabinetService.listNewsInformation(page,pageSize,searchText);
     }
 }

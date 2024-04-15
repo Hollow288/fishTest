@@ -32,30 +32,26 @@ import java.util.stream.Collectors;
 @Transactional
 public class CabinetServiceImpl implements CabinetService {
 
-
     @Autowired
     private CabinetMapper cabinetMapper;
 
     @Autowired
     private CabinetQuotationDetailMapper cabinetQuotationDetailMapper;
 
-
     @Autowired
     private AttachmentInformationMapper attachmentInformationMapper;
-
 
     @Autowired
     private SelectTypeMapper selectTypeMapper;
 
-
     @Autowired
     private PortFolioMapper portFolioMapper;
-
 
     @Autowired
     private PortFolioTypeMapper portFolioTypeMapper;
 
-
+    @Autowired
+    private NewsInformationMapper newsInformationMapper;
 
     @Override
     public ResponseResult getAllQuotation(Integer page, Integer pageSize, String searchText) {
@@ -303,5 +299,40 @@ public class CabinetServiceImpl implements CabinetService {
         }
 
         return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
+    }
+
+    @Override
+    public ResponseResult addNewsInformation(NewsInformation newsInformation) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        User userInfo = loginUser.getUser();
+        newsInformation.setCreateBy(userInfo.getUserId().toString());
+        newsInformation.setCreateTime(new Date());
+        newsInformationMapper.insert(newsInformation);
+
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功",newsInformation.getNewsId());
+    }
+
+    @Override
+    public ResponseResult listNewsInformation(Integer page, Integer pageSize, String searchText) {
+
+        Page<NewsInformation> pages = new Page<>(page, pageSize);
+
+        LambdaQueryWrapper<NewsInformation> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(NewsInformation::getDelFlag, "0");
+
+        if(!searchText.isBlank()){
+            lambdaQueryWrapper.and(wrapper -> wrapper.like(NewsInformation::getNewsTitle, searchText));
+        }
+
+        IPage<NewsInformation> newsInformationPage = newsInformationMapper.selectPage(pages, lambdaQueryWrapper);
+        List<NewsInformation> newsInformationPages = newsInformationPage.getRecords();
+        long total = newsInformationPage.getTotal();
+
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("data",newsInformationPages);
+        resultMap.put("total",total);
+
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"获取成功",resultMap);
     }
 }

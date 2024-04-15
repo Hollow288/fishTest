@@ -49,4 +49,18 @@ public class CommonController {
     public ResponseResult getAllPortalType(){
         return commonService.getAllPortalType();
     }
+
+    @GetMapping("/common/news-information-list")
+    @PreAuthorize("permitAll")
+    public ResponseResult getAllNewsInformationPage(@RequestParam(value = "page") Integer page,
+                                           @RequestParam(value = "pageSize") Integer pageSize){
+        return commonService.getAllNewsInformationPage(page,pageSize);
+    }
+
+
+    @GetMapping("/common/news-information")
+    @PreAuthorize("permitAll")
+    public ResponseResult getNewsInformationById(@RequestParam(value = "newsId") Integer newsId){
+        return commonService.getNewsInformationById(newsId);
+    }
 }

@@ -14,4 +14,8 @@ public interface CommonService {
     ResponseResult getAllPortalPortfolio(String type,Integer page,Integer pageSize);
 
     ResponseResult getAllPortalType();
+
+    ResponseResult getAllNewsInformationPage(Integer page, Integer pageSize);
+
+    ResponseResult getNewsInformationById(Integer newsId);
 }

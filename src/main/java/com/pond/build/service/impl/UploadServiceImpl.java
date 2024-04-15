@@ -3,10 +3,7 @@ package com.pond.build.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.pond.build.enums.HttpStatusCode;
-import com.pond.build.mapper.AttachmentInformationMapper;
-import com.pond.build.mapper.CabinetMapper;
-import com.pond.build.mapper.PortFolioMapper;
-import com.pond.build.mapper.UsersMapper;
+import com.pond.build.mapper.*;
 import com.pond.build.model.*;
 import com.pond.build.service.UploadService;
 import com.pond.build.utils.MinioUtil;
@@ -46,6 +43,9 @@ public class UploadServiceImpl  implements UploadService {
 
     @Autowired
     private PortFolioMapper portFolioMapper;
+
+    @Autowired
+    private NewsInformationMapper newsInformationMapper;
 
     @Override
     public ResponseResult uploadAvatar(MultipartFile file) {
@@ -151,6 +151,31 @@ public class UploadServiceImpl  implements UploadService {
             portFolioUpdateWrapper.set("update_time",new Date());
             portFolioUpdateWrapper.set("Panorama_Url",resultName);
             portFolioMapper.update(null,portFolioUpdateWrapper);
+        }
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
+    }
+
+    @Override
+    public ResponseResult uploadNewsInformationFile(MultipartFile[] files, String newsId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        User userInfo = loginUser.getUser();
+
+        String bucketName = "fishtest-cabinet-news-information";
+        String filePath = "/"+ LocalDate.now() + "/";
+
+        minioUtil.existBucket(bucketName);
+        //上传文件到Minio
+        List<String> uploadNames = minioUtil.upload(files, bucketName, filePath);
+
+        List<String> resultNames = uploadNames.stream().map(m -> address + "/" + bucketName + filePath + m).toList();
+        for (String resultName : resultNames) {
+            UpdateWrapper<NewsInformation> portFolioUpdateWrapper = new UpdateWrapper<>();
+            portFolioUpdateWrapper.eq("News_id",newsId);
+            portFolioUpdateWrapper.set("update_by",userInfo.getUserId().toString());
+            portFolioUpdateWrapper.set("update_time",new Date());
+            portFolioUpdateWrapper.set("News_cover",resultName);
+            newsInformationMapper.update(null,portFolioUpdateWrapper);
         }
         return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
     }

@@ -49,4 +49,12 @@ public class UploadController {
         return uploadService.uploadPortFolioPanoramaFile(files,folioId);
     }
 
+
+    @PostMapping("/upload/{newsId}/news-information")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult uploadNewsInformationFile(@RequestParam(value = "file") MultipartFile[] files,
+                                                      @PathVariable("newsId") String newsId) {
+        return uploadService.uploadNewsInformationFile(files,newsId);
+    }
+
 }

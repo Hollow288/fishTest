@@ -1,9 +1,8 @@
 package com.pond.build.service.impl;
 
-import cn.hutool.core.lang.hash.Hash;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.pond.build.enums.HttpStatusCode;
 import com.pond.build.mapper.CommonMapper;
+import com.pond.build.mapper.NewsInformationMapper;
 import com.pond.build.mapper.PortFolioMapper;
 import com.pond.build.mapper.SelectTypeMapper;
 import com.pond.build.model.LoginUser;
@@ -16,13 +15,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
-import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +41,9 @@ public class CommonServiceImpl implements CommonService {
 
     @Autowired
     private PortFolioMapper portFolioMapper;
+
+    @Autowired
+    private NewsInformationMapper newsInformationMapper;
 
     @Override
     public ResponseResult getAllItems(String fieldName){
@@ -141,6 +142,27 @@ public class CommonServiceImpl implements CommonService {
         List<Map<String, Object>> portFolioWebType = selectTypeMapper.getPortFolioWebType();
 
         return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功",portFolioWebType);
+    }
+
+    @Override
+    public ResponseResult getAllNewsInformationPage(Integer page, Integer pageSize) {
+        int offset = (page - 1) * pageSize;
+        int limit = pageSize;
+
+        List<Map<String, Object>> allNewsInformationPage = newsInformationMapper.getAllNewsInformationPage(offset, limit);
+        Integer allNewsInformationCount = newsInformationMapper.getAllNewsInformationCount();
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("data",allNewsInformationPage);
+        resultMap.put("total",allNewsInformationCount);
+
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功",resultMap);
+    }
+
+    @Override
+    public ResponseResult getNewsInformationById(Integer newsId) {
+
+        List<Map<String, Object>> resultMap = newsInformationMapper.getNewsInformationById(newsId);
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功",resultMap);
     }
 
 }
