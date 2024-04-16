@@ -11,7 +11,7 @@
  Target Server Version : 80035
  File Encoding         : 65001
 
- Date: 15/04/2024 18:03:52
+ Date: 16/04/2024 17:44:57
 */
 
 SET NAMES utf8mb4;
@@ -244,6 +244,36 @@ INSERT INTO `cabinet_quotation_detail` VALUES (77, 2, '测试3', '测试33', 3.0
 INSERT INTO `cabinet_quotation_detail` VALUES (78, 2, '测试4', '测试44', 4.0000, 9999.0000, 1.0000, 39996.0000, '测试备注4', 1, '2024-04-01 10:16:13', NULL, NULL, '0', '1');
 
 -- ----------------------------
+-- Table structure for message_board
+-- ----------------------------
+DROP TABLE IF EXISTS `message_board`;
+CREATE TABLE `message_board`  (
+                                  `Message_ID` bigint NOT NULL AUTO_INCREMENT COMMENT '留言ID',
+                                  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '姓名',
+                                  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '邮箱',
+                                  `phone` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '电话',
+                                  `message` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '留言',
+                                  PRIMARY KEY (`Message_ID`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of message_board
+-- ----------------------------
+INSERT INTO `message_board` VALUES (1, '张三', '571339274@qq.com', '13588888888', '这是一条测试留言，我希望你能成功');
+INSERT INTO `message_board` VALUES (2, '1', '', '2', '3');
+INSERT INTO `message_board` VALUES (3, '2', '', '3', '4');
+INSERT INTO `message_board` VALUES (4, '1', '', '2', '3');
+INSERT INTO `message_board` VALUES (5, '1', '', '1', '1');
+INSERT INTO `message_board` VALUES (6, '1', '', '1', '1');
+INSERT INTO `message_board` VALUES (7, '1', '', '1', '1');
+INSERT INTO `message_board` VALUES (8, '1', '', '1', '1');
+INSERT INTO `message_board` VALUES (9, '1', '1', '1', '1');
+INSERT INTO `message_board` VALUES (10, '1', '1', '1', '1');
+INSERT INTO `message_board` VALUES (11, '1', '', '1', '1');
+INSERT INTO `message_board` VALUES (12, '1', '', '1', '1');
+INSERT INTO `message_board` VALUES (13, '1', '', '1', '1');
+
+-- ----------------------------
 -- Table structure for news_information
 -- ----------------------------
 DROP TABLE IF EXISTS `news_information`;
@@ -265,12 +295,12 @@ CREATE TABLE `news_information`  (
 -- ----------------------------
 -- Records of news_information
 -- ----------------------------
-INSERT INTO `news_information` VALUES (1, '这是一个新闻标题', '2024-04-15', '这是一连串的新闻简介', 'http://127.0.0.1:9000/fishtest-cabinet-news-information/2024-04-15/企业微信截图_20240415150308_1713164876645.png', 1, '2024-04-15 15:07:56', 1, '2024-04-15 15:07:57', '0', '<p>这是正文这是正文这是正文这是正文这是正文这是正文这是正文这是正文这是正文这是正文这是正文这是正文这是正文这是正文这是正文这是正文这是正文这是正文这是正文</p><p>第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文</p><p style=\"text-indent: 2em;\">换行缩进的正文</p><p>这是<strong>加粗</strong>的English</p>');
-INSERT INTO `news_information` VALUES (2, '新闻标题新闻标题新闻标题新闻标', NULL, '新闻简介新闻简介新闻简介新闻简介新闻简介新闻简介新闻简介新闻', 'http://127.0.0.1:9000/fishtest-cabinet-news-information/2024-04-15/企业微信截图_20240415150308_1713166573910.png', 1, '2024-04-15 15:36:14', 1, '2024-04-15 15:36:14', '0', '<p>正文</p>');
-INSERT INTO `news_information` VALUES (3, '1', '2024-04-03', '2', NULL, 1, '2024-04-15 17:35:03', NULL, NULL, '0', '<p>3</p>');
-INSERT INTO `news_information` VALUES (4, '1', '2024-04-03', '2', 'http://127.0.0.1:9000/fishtest-cabinet-news-information/2024-04-15/企业微信截图_20240415150308_1713173710793.png', 1, '2024-04-15 17:35:11', 1, '2024-04-15 17:35:11', '0', '<p>3</p>');
-INSERT INTO `news_information` VALUES (5, '111', '2024-04-03', '2111', 'http://127.0.0.1:9000/fishtest-cabinet-news-information/2024-04-15/企业微信截图_20240415150308_1713173743063.png', 1, '2024-04-15 17:35:43', 1, '2024-04-15 17:35:43', '0', '<p>31111</p>');
-INSERT INTO `news_information` VALUES (6, '111', '2024-04-03', '2111', 'http://127.0.0.1:9000/fishtest-cabinet-news-information/2024-04-15/企业微信截图_20240415150308_1713173764572.png', 1, '2024-04-15 17:36:05', 1, '2024-04-15 17:36:05', '0', '<p>31111</p>');
+INSERT INTO `news_information` VALUES (1, '这是一个新闻标题1', '2024-04-15', '这是一连串的新闻简介1', 'http://127.0.0.1:9000/fishtest-cabinet-news-information/2024-04-16/img32_1713233858764.jpg', 1, '2024-04-15 15:07:56', 1, '2024-04-16 10:17:39', '0', '<p>这是正文这是正文这是正文这是正文这是正文这是正文这是正文这是正文这是正文这是正文这是正文这是正文这是正文这是正文这是正文这是正文这是正文这是正文这是正文</p><p>第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文第二行的正文</p><p style=\"text-indent: 2em;\">换行缩进的正文</p><p>这是<strong>加粗</strong>的EnglishAnd Edit</p>');
+INSERT INTO `news_information` VALUES (2, '新闻标题新闻标题新闻标题新闻标', '2024-04-14', '新闻简介新闻简介新闻简介新闻简介新闻简介新闻简介新闻简介新闻', 'http://127.0.0.1:9000/fishtest-cabinet-news-information/2024-04-16/img33_1713233874225.jpg', 1, '2024-04-15 15:36:14', 1, '2024-04-16 10:34:09', '0', '<p>正文</p>');
+INSERT INTO `news_information` VALUES (3, '1', '2024-04-03', '2', 'http://127.0.0.1:9000/fishtest-cabinet-news-information/2024-04-16/2bb7db4d-ae4e-4687-abab-2d84f0cd9c6e1_1711937775876_1713232926043.gif', 1, '2024-04-15 17:35:03', 1, '2024-04-16 10:08:39', '1', '<p>3</p>');
+INSERT INTO `news_information` VALUES (4, '1', '2024-04-03', '2', 'http://127.0.0.1:9000/fishtest-cabinet-news-information/2024-04-15/企业微信截图_20240415150308_1713173710793.png', 1, '2024-04-15 17:35:11', 1, '2024-04-16 10:08:39', '1', '<p>3</p>');
+INSERT INTO `news_information` VALUES (5, '111', '2024-04-03', '2111', 'http://127.0.0.1:9000/fishtest-cabinet-news-information/2024-04-16/img34_1713233886215.jpg', 1, '2024-04-15 17:35:43', 1, '2024-04-16 10:18:06', '0', '<p>31111</p>');
+INSERT INTO `news_information` VALUES (6, '111', '2024-04-03', '2111', 'http://127.0.0.1:9000/fishtest-cabinet-news-information/2024-04-16/img35_1713233904241.jpg', 1, '2024-04-15 17:36:05', 1, '2024-04-16 10:18:24', '0', '<p>31111</p>');
 INSERT INTO `news_information` VALUES (7, '111', '2024-04-03', '2111', 'http://127.0.0.1:9000/fishtest-cabinet-news-information/2024-04-15/企业微信截图_20240415150308_1713173771772.png', 1, '2024-04-15 17:36:12', 1, '2024-04-15 17:36:12', '0', '<p>31111</p>');
 
 -- ----------------------------
