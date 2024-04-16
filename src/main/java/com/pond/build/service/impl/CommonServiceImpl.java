@@ -1,11 +1,9 @@
 package com.pond.build.service.impl;
 
 import com.pond.build.enums.HttpStatusCode;
-import com.pond.build.mapper.CommonMapper;
-import com.pond.build.mapper.NewsInformationMapper;
-import com.pond.build.mapper.PortFolioMapper;
-import com.pond.build.mapper.SelectTypeMapper;
+import com.pond.build.mapper.*;
 import com.pond.build.model.LoginUser;
+import com.pond.build.model.MessageBoard;
 import com.pond.build.model.Response.MenuResponse;
 import com.pond.build.model.ResponseResult;
 import com.pond.build.model.User;
@@ -45,6 +43,9 @@ public class CommonServiceImpl implements CommonService {
 
     @Autowired
     private NewsInformationMapper newsInformationMapper;
+
+    @Autowired
+    private MessageBoardMapper messageBoardMapper;
 
     @Override
     public ResponseResult getAllItems(String fieldName){
@@ -167,11 +168,18 @@ public class CommonServiceImpl implements CommonService {
     }
 
     @Override
-    public ResponseResult addMessageBoard(Map<String, Object> map, HttpServletRequest request) {
+    public ResponseResult addMessageBoard(MessageBoard messageBoard, HttpServletRequest request) {
 
-        String ip = getIpAddr(request);
-        System.out.println(ip);
-        return null;
+//        String ip = getIpAddr(request);
+//        System.out.println(ip);
+
+        try {
+            messageBoard.setMessageId(null);
+            messageBoardMapper.insert(messageBoard);
+            return new ResponseResult(HttpStatusCode.OK.getCode(),"我们已经收到您的留言！");
+        } catch (Exception e) {
+            return new ResponseResult(HttpStatusCode.OK.getCode(),"服务器繁忙,请稍后重试！");
+        }
     }
 
 

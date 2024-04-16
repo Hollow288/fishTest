@@ -1,5 +1,6 @@
 package com.pond.build.controller;
 
+import com.pond.build.model.MessageBoard;
 import com.pond.build.model.ResponseResult;
 import com.pond.build.service.CommonService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -68,7 +69,7 @@ public class CommonController {
 
     @PostMapping("/common/message-board")
     @PreAuthorize("permitAll")
-    public ResponseResult addMessageBoard(@RequestBody Map<String,Object> map, HttpServletRequest request){
-        return commonService.addMessageBoard(map,request);
+    public ResponseResult addMessageBoard(@RequestBody MessageBoard messageBoard, HttpServletRequest request){
+        return commonService.addMessageBoard(messageBoard,request);
     }
 }

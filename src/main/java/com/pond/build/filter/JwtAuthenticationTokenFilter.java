@@ -51,6 +51,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                 requestURI.equals(contextPath + "/common/portal-type")||
                 requestURI.equals(contextPath + "/common/news-information-list")||
                 requestURI.equals(contextPath + "/common/news-information")||
+                requestURI.equals(contextPath + "/common/message-board")||
                 requestURI.startsWith(contextPath + "/fishTest") ||
                 requestURI.startsWith(contextPath + "/sse")){
             //放行

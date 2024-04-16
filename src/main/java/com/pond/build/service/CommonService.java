@@ -1,5 +1,6 @@
 package com.pond.build.service;
 
+import com.pond.build.model.MessageBoard;
 import com.pond.build.model.ResponseResult;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -22,5 +23,5 @@ public interface CommonService {
 
     ResponseResult getNewsInformationById(Integer newsId);
 
-    ResponseResult addMessageBoard(Map<String, Object> map, HttpServletRequest request);
+    ResponseResult addMessageBoard(MessageBoard messageBoard, HttpServletRequest request);
 }
