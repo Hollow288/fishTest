@@ -2,12 +2,13 @@ package com.pond.build.controller;
 
 import com.pond.build.model.ResponseResult;
 import com.pond.build.service.CommonService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.http.HttpRequest;
+import java.util.Map;
 
 
 @RestController
@@ -62,5 +63,12 @@ public class CommonController {
     @PreAuthorize("permitAll")
     public ResponseResult getNewsInformationById(@RequestParam(value = "newsId") Integer newsId){
         return commonService.getNewsInformationById(newsId);
+    }
+
+
+    @PostMapping("/common/message-board")
+    @PreAuthorize("permitAll")
+    public ResponseResult addMessageBoard(@RequestBody Map<String,Object> map, HttpServletRequest request){
+        return commonService.addMessageBoard(map,request);
     }
 }

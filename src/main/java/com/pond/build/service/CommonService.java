@@ -1,6 +1,9 @@
 package com.pond.build.service;
 
 import com.pond.build.model.ResponseResult;
+import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.Map;
 
 public interface CommonService {
     ResponseResult getAllItems(String fieldName);
@@ -18,4 +21,6 @@ public interface CommonService {
     ResponseResult getAllNewsInformationPage(Integer page, Integer pageSize);
 
     ResponseResult getNewsInformationById(Integer newsId);
+
+    ResponseResult addMessageBoard(Map<String, Object> map, HttpServletRequest request);
 }

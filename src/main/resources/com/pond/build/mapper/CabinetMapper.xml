@@ -91,5 +91,14 @@
         </foreach>
     </update>
 
+
+    <update id="deleteNewsInformationById">
+        update news_information set update_by = #{userId}, update_time = #{date},del_flag = '1'
+        where News_id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
 </mapper>
 

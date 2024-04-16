@@ -118,4 +118,18 @@ public class CabinetController {
                                            @RequestParam(value = "searchText", defaultValue = "") String searchText){
         return cabinetService.listNewsInformation(page,pageSize,searchText);
     }
+
+
+
+    @PutMapping("/cabinet/news-information")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult editNewsInformation(@RequestBody NewsInformation newsInformation){
+        return cabinetService.editNewsInformation(newsInformation);
+    }
+
+    @PatchMapping("/cabinet/delete-news-information")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult deleteNewsInformation(@RequestBody HashMap<String,Object> newsIds){
+        return cabinetService.deleteNewsInformation(newsIds);
+    }
 }

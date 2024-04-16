@@ -36,4 +36,8 @@ public interface CabinetService {
     ResponseResult addNewsInformation(NewsInformation newsInformation);
 
     ResponseResult listNewsInformation(Integer page, Integer pageSize, String searchText);
+
+    ResponseResult editNewsInformation(NewsInformation newsInformation);
+
+    ResponseResult deleteNewsInformation(HashMap<String, Object> newsIds);
 }

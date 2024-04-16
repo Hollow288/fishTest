@@ -335,4 +335,29 @@ public class CabinetServiceImpl implements CabinetService {
 
         return new ResponseResult(HttpStatusCode.OK.getCode(),"获取成功",resultMap);
     }
+
+    @Override
+    public ResponseResult editNewsInformation(NewsInformation newsInformation) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        User userInfo = loginUser.getUser();
+        newsInformation.setUpdateBy(userInfo.getUserId().toString());
+        newsInformation.setUpdateTime(new Date());
+        newsInformationMapper.updateById(newsInformation);
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"获取成功");
+    }
+
+    @Override
+    public ResponseResult deleteNewsInformation(HashMap<String, Object> newsIds) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        User userInfo = loginUser.getUser();
+
+        List<String> ids = (List<String>)newsIds.get("ids");
+        if(!CollectionUtils.isEmpty(ids)){
+            cabinetMapper.deleteNewsInformationById(ids,userInfo.getUserId().toString(),new Date());
+        }
+
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
+    }
 }
