@@ -20,6 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -175,6 +176,7 @@ public class CommonServiceImpl implements CommonService {
 
         try {
             messageBoard.setMessageId(null);
+            messageBoard.setMessageDate(new Date());
             messageBoardMapper.insert(messageBoard);
             return new ResponseResult(HttpStatusCode.OK.getCode(),"我们已经收到您的留言！");
         } catch (Exception e) {

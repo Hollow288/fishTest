@@ -40,4 +40,8 @@ public interface CabinetService {
     ResponseResult editNewsInformation(NewsInformation newsInformation);
 
     ResponseResult deleteNewsInformation(HashMap<String, Object> newsIds);
+
+    ResponseResult messageBoardList(Integer page, Integer pageSize);
+
+    ResponseResult deleteMessageBoard(HashMap<String, Object> messageIds);
 }

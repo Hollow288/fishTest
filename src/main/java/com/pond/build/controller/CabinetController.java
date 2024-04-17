@@ -132,4 +132,19 @@ public class CabinetController {
     public ResponseResult deleteNewsInformation(@RequestBody HashMap<String,Object> newsIds){
         return cabinetService.deleteNewsInformation(newsIds);
     }
+
+
+    @GetMapping("/cabinet/message-board-list")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult messageBoardList(@RequestParam(value = "page") Integer page,
+                                              @RequestParam(value = "pageSize") Integer pageSize){
+        return cabinetService.messageBoardList(page,pageSize);
+    }
+
+
+    @PatchMapping("/cabinet/delete-message-board")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult deleteMessageBoard(@RequestBody HashMap<String,Object> messageIds){
+        return cabinetService.deleteMessageBoard(messageIds);
+    }
 }

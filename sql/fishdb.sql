@@ -11,7 +11,7 @@
  Target Server Version : 80035
  File Encoding         : 65001
 
- Date: 16/04/2024 17:44:57
+ Date: 17/04/2024 11:52:47
 */
 
 SET NAMES utf8mb4;
@@ -253,25 +253,15 @@ CREATE TABLE `message_board`  (
                                   `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '邮箱',
                                   `phone` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '电话',
                                   `message` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '留言',
+                                  `message_date` datetime NULL DEFAULT NULL COMMENT '留言日期',
                                   PRIMARY KEY (`Message_ID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of message_board
 -- ----------------------------
-INSERT INTO `message_board` VALUES (1, '张三', '571339274@qq.com', '13588888888', '这是一条测试留言，我希望你能成功');
-INSERT INTO `message_board` VALUES (2, '1', '', '2', '3');
-INSERT INTO `message_board` VALUES (3, '2', '', '3', '4');
-INSERT INTO `message_board` VALUES (4, '1', '', '2', '3');
-INSERT INTO `message_board` VALUES (5, '1', '', '1', '1');
-INSERT INTO `message_board` VALUES (6, '1', '', '1', '1');
-INSERT INTO `message_board` VALUES (7, '1', '', '1', '1');
-INSERT INTO `message_board` VALUES (8, '1', '', '1', '1');
-INSERT INTO `message_board` VALUES (9, '1', '1', '1', '1');
-INSERT INTO `message_board` VALUES (10, '1', '1', '1', '1');
-INSERT INTO `message_board` VALUES (11, '1', '', '1', '1');
-INSERT INTO `message_board` VALUES (12, '1', '', '1', '1');
-INSERT INTO `message_board` VALUES (13, '1', '', '1', '1');
+INSERT INTO `message_board` VALUES (1, '张三', '571339274@qq.com', '13588888888', '这是一条测试留言，我希望你能成功', NULL);
+INSERT INTO `message_board` VALUES (14, '姓名', '111@qq.com', '13577777777', '这是留言这是留言这是留言这是留言这是留言这是留言这是留言这是留言这是留言这是留言这是留言', '2024-04-17 09:59:56');
 
 -- ----------------------------
 -- Table structure for news_information
@@ -373,7 +363,7 @@ CREATE TABLE `port_folio`  (
                                `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
                                `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '是否删除（0未删除 1已删除）',
                                PRIMARY KEY (`Folio_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 35 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 36 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of port_folio
@@ -412,6 +402,7 @@ INSERT INTO `port_folio` VALUES (31, 'http://127.0.0.1:9000/fishtest-cabinet-por
 INSERT INTO `port_folio` VALUES (32, 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-12/blob1712904753604', 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-12/TouchKeyboardThemeLight002_1712904753631.jpg', 1, '2024-04-12 14:52:34', 1, '2024-04-12 14:52:34', '0');
 INSERT INTO `port_folio` VALUES (33, 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-12/blob1712904764773', 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-12/TouchKeyboardThemeLight000_1712904764802.jpg', 1, '2024-04-12 14:52:45', 1, '2024-04-12 14:52:45', '0');
 INSERT INTO `port_folio` VALUES (34, 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-12/blob1712904807827', 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-12/img50_1712904807850.jpg', 1, '2024-04-12 14:53:28', 1, '2024-04-12 14:53:28', '0');
+INSERT INTO `port_folio` VALUES (35, 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-16/blob1713261533376', 'http://127.0.0.1:9000/fishtest-cabinet-portfolio-web/2024-04-16/img35_1713261535527.jpg', 1, '2024-04-16 17:58:53', 1, '2024-04-16 17:58:56', '0');
 
 -- ----------------------------
 -- Table structure for port_folio_type
@@ -459,6 +450,7 @@ INSERT INTO `port_folio_type` VALUES (1, 31);
 INSERT INTO `port_folio_type` VALUES (1, 32);
 INSERT INTO `port_folio_type` VALUES (1, 33);
 INSERT INTO `port_folio_type` VALUES (1, 34);
+INSERT INTO `port_folio_type` VALUES (1, 35);
 INSERT INTO `port_folio_type` VALUES (2, 1);
 INSERT INTO `port_folio_type` VALUES (2, 3);
 INSERT INTO `port_folio_type` VALUES (2, 4);
@@ -491,6 +483,7 @@ INSERT INTO `port_folio_type` VALUES (2, 31);
 INSERT INTO `port_folio_type` VALUES (2, 32);
 INSERT INTO `port_folio_type` VALUES (2, 33);
 INSERT INTO `port_folio_type` VALUES (2, 34);
+INSERT INTO `port_folio_type` VALUES (2, 35);
 
 -- ----------------------------
 -- Table structure for select_type
@@ -587,7 +580,7 @@ CREATE TABLE `sys_menu`  (
                              `menu_parent_id` bigint NULL DEFAULT 0 COMMENT '菜单父id',
                              `is_Leaf` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
                              PRIMARY KEY (`menu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 37 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 38 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_menu
@@ -628,6 +621,7 @@ INSERT INTO `sys_menu` VALUES (33, 'cabinet-related', NULL, 'MENU.CabinetRelated
 INSERT INTO `sys_menu` VALUES (34, 'Quotation', 'MENU.Quotation', 'MENU.Quotation', 1, '/cabinet-related/quotaion', '/src/views/CabinetRelated/Quotation', '0', '0', NULL, '~icons/mdi/file-document-outline', 1, '2024-03-25 10:37:49', 1, '2024-04-09 10:17:44', '0', '（菜单）报价单', '0', '0', 1, 33, '0');
 INSERT INTO `sys_menu` VALUES (35, 'portfolio-web', 'MENU.PortfolioWeb', 'MENU.PortfolioWeb', 5, '/cabinet-related/portfolio-web', '/src/views/CabinetRelated/PortfolioWeb', '0', '0', NULL, '~icons/mdi/image-auto-adjust', 1, '2024-04-09 10:17:29', 1, '2024-04-09 10:18:11', '0', '（菜单）工程案例', '0', '0', 1, 33, '0');
 INSERT INTO `sys_menu` VALUES (36, 'news-information', 'MENU.NewsInformation', 'MENU.NewsInformation', 10, '/cabinet-related/news-information', '/src/views/CabinetRelated/NewsInformation', '0', '0', NULL, '~icons/mdi/newspaper-variant-outline', 1, '2024-04-15 09:51:30', 1, '2024-04-15 09:51:39', '0', '（菜单）新闻资讯', '0', '0', 1, 33, '0');
+INSERT INTO `sys_menu` VALUES (37, 'message-board', 'MENU.MessageBoard', 'MENU.MessageBoard', 15, '/cabinet-related/message-board', '/src/views/CabinetRelated/MessageBoard', '0', '0', NULL, '~icons/mdi/message-text-outline', 1, '2024-04-17 09:17:12', 1, '2024-04-17 09:17:38', '0', '（菜单）留言板', '0', '0', 1, 33, '0');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -694,6 +688,7 @@ INSERT INTO `sys_role_menu` VALUES (1, 33);
 INSERT INTO `sys_role_menu` VALUES (1, 34);
 INSERT INTO `sys_role_menu` VALUES (1, 35);
 INSERT INTO `sys_role_menu` VALUES (1, 36);
+INSERT INTO `sys_role_menu` VALUES (1, 37);
 INSERT INTO `sys_role_menu` VALUES (2, 2);
 
 -- ----------------------------

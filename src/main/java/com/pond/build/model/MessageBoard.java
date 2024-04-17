@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import java.util.Date;
 
 import java.io.Serializable;
 
@@ -38,6 +39,10 @@ public class MessageBoard implements Serializable {
      * 留言
      */
     private String message;
+    /**
+     * 留言日期
+     */
+    private Date messageDate;
 
 }
 

@@ -53,6 +53,9 @@ public class CabinetServiceImpl implements CabinetService {
     @Autowired
     private NewsInformationMapper newsInformationMapper;
 
+    @Autowired
+    private MessageBoardMapper messageBoardMapper;
+
     @Override
     public ResponseResult getAllQuotation(Integer page, Integer pageSize, String searchText) {
 
@@ -358,6 +361,34 @@ public class CabinetServiceImpl implements CabinetService {
             cabinetMapper.deleteNewsInformationById(ids,userInfo.getUserId().toString(),new Date());
         }
 
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
+    }
+
+    @Override
+    public ResponseResult messageBoardList(Integer page, Integer pageSize) {
+
+        Page<MessageBoard> pages = new Page<>(page, pageSize);
+
+        LambdaQueryWrapper<MessageBoard> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+
+
+        IPage<MessageBoard> messageBoardPage = messageBoardMapper.selectPage(pages, lambdaQueryWrapper);
+        List<MessageBoard> messageBoardPages = messageBoardPage.getRecords();
+        long total = messageBoardPage.getTotal();
+
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("data",messageBoardPages);
+        resultMap.put("total",total);
+
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"获取成功",resultMap);
+    }
+
+    @Override
+    public ResponseResult deleteMessageBoard(HashMap<String, Object> messageIds) {
+        List<String> ids = (List<String>)messageIds.get("ids");
+        if(!CollectionUtils.isEmpty(ids)){
+            messageBoardMapper.deleteMessageBoardById(ids);
+        }
         return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
     }
 }
