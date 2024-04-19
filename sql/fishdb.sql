@@ -11,7 +11,7 @@
  Target Server Version : 80035
  File Encoding         : 65001
 
- Date: 17/04/2024 11:52:47
+ Date: 19/04/2024 17:57:15
 */
 
 SET NAMES utf8mb4;
@@ -580,48 +580,49 @@ CREATE TABLE `sys_menu`  (
                              `menu_parent_id` bigint NULL DEFAULT 0 COMMENT '菜单父id',
                              `is_Leaf` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
                              PRIMARY KEY (`menu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 38 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 39 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_menu
 -- ----------------------------
 INSERT INTO `sys_menu` VALUES (1, 'base-layout', NULL, '', NULL, '/', '/src/layouts/BaseLayout', '1', '0', NULL, '#', NULL, NULL, 1, '2024-03-14 16:34:39', '0', '（仅路由）', '0', '0', 0, 0, '0');
-INSERT INTO `sys_menu` VALUES (2, 'navigation', 'MENU.Navigation', 'MENU.Navigation', 1, '/', '/src/views/Navigation', '0', '0', NULL, '~icons/mdi/compass-outline', NULL, NULL, 3, '2024-03-06 14:18:48', '0', '（菜单）站点导航', '0', '0', 1, 0, '0');
-INSERT INTO `sys_menu` VALUES (3, 'system-functions', '', 'MENU.SystemFunctions', 5, NULL, NULL, '0', '0', NULL, '~icons/mdi/function-variant', NULL, NULL, 1, '2024-03-25 10:25:06', '0', '（菜单）系统功能', '0', '0', 1, 0, '1');
-INSERT INTO `sys_menu` VALUES (4, 'user-management', 'MENU.UserManagement', 'MENU.UserManagement', 1, '/system-functions/user-management', '/src/views/SystemFunctions/UserManagement', '0', '0', NULL, '~icons/mdi/account-cog-outline', NULL, NULL, 1, '2024-03-14 13:59:38', '0', '（菜单）用户管理', '0', '0', 1, 3, '0');
-INSERT INTO `sys_menu` VALUES (5, 'menu-management', 'MENU.MenuManagement', 'MENU.MenuManagement', 2, '/system-functions/menu-management', '/src/views/SystemFunctions/MenuManagement', '0', '0', NULL, '~icons/mdi/account-cog-outline', NULL, NULL, 1, '2024-03-14 14:00:00', '0', '（菜单）菜单管理', '0', '0', 1, 3, '0');
+INSERT INTO `sys_menu` VALUES (2, 'navigation', 'MENU.Navigation', 'MENU.Navigation', 1, '/', '/src/views/Navigation', '0', '0', NULL, 'CompassOutline', NULL, NULL, 3, '2024-03-06 14:18:48', '0', '（菜单）站点导航', '0', '0', 1, 0, '0');
+INSERT INTO `sys_menu` VALUES (3, 'system-functions', '', 'MENU.SystemFunctions', 5, NULL, NULL, '0', '0', NULL, 'SettingsOutline', NULL, NULL, 1, '2024-04-18 14:19:10', '0', '（菜单）系统功能', '0', '0', 1, 0, '1');
+INSERT INTO `sys_menu` VALUES (4, 'user-management', 'MENU.UserManagement', 'MENU.UserManagement', 1, '/system-functions/user-management', '/src/views/SystemFunctions/UserManagement', '0', '0', NULL, 'PeopleOutline', NULL, NULL, 1, '2024-03-14 13:59:38', '0', '（菜单）用户管理', '0', '0', 1, 3, '0');
+INSERT INTO `sys_menu` VALUES (5, 'menu-management', 'MENU.MenuManagement', 'MENU.MenuManagement', 2, '/system-functions/menu-management', '/src/views/SystemFunctions/MenuManagement', '0', '0', NULL, 'Menu', NULL, NULL, 1, '2024-03-14 14:00:00', '0', '（菜单）菜单管理', '0', '0', 1, 3, '0');
 INSERT INTO `sys_menu` VALUES (6, 'test-keyName', NULL, NULL, 0, NULL, NULL, '0', '0', NULL, '#', 3, '2024-03-13 11:33:07', 1, '2024-03-14 15:12:58', '1', '测试', '0', '0', 1, 0, '0');
-INSERT INTO `sys_menu` VALUES (7, 'role-management', 'MENU.RoleManagement', 'MENU.RoleManagement', 3, '/system-functions/role-management', '/src/views/SystemFunctions/RoleManagement', '0', '0', NULL, '@vicons/ionicons5/PricetagOutline', 1, '2024-03-14 15:57:55', 1, '2024-03-14 16:14:43', '0', '（菜单）角色管理', '0', '0', 1, 3, '0');
-INSERT INTO `sys_menu` VALUES (8, 'notice-management', 'MENU.NoticeManagement', 'MENU.NoticeManagement', 4, '/system-functions/notice-management', '/src/views/SystemFunctions/NoticeManagement', '0', '0', NULL, '@vicons/ionicons5/ChatbubbleEllipsesOutline', 1, '2024-03-14 15:59:31', 1, '2024-03-14 16:14:51', '0', '（菜单）通知公告', '0', '0', 1, 3, '0');
-INSERT INTO `sys_menu` VALUES (9, 'system-tools', NULL, 'MENU.SystemTools', 15, NULL, NULL, '0', '0', NULL, '~icons/mdi/tools', 1, '2024-03-14 16:01:34', 1, '2024-03-25 10:24:10', '0', '（菜单）系统工具', '0', '0', 1, 0, '1');
-INSERT INTO `sys_menu` VALUES (10, 'qrcode', 'MENU.QRCode', 'MENU.QRCode', 1, '/system-tools/qrcode', '/src/views/SystemTools/QRCode', '0', '0', NULL, '~icons/ic/baseline-qrcode', 1, '2024-03-14 16:03:55', 1, '2024-03-14 16:12:29', '0', '（菜单）二维码', '0', '0', 1, 9, '0');
-INSERT INTO `sys_menu` VALUES (11, 'clipboard', 'MENU.Clipboard', 'MENU.Clipboard', 2, '/system-tools/clipboard', '/src/views/SystemTools/Clipboard', '0', '0', NULL, '~icons/ic/baseline-content-copy', 1, '2024-03-14 16:05:36', 1, '2024-03-14 16:08:16', '0', '（菜单）剪切板', '0', '0', 1, 9, '0');
-INSERT INTO `sys_menu` VALUES (12, 'print', 'MENU.Print', 'MENU.Print', 3, '/system-tools/print', '/src/views/SystemTools/Print', '0', '0', NULL, '~icons/ic/outline-local-printshop', 1, '2024-03-14 16:06:41', 1, '2024-03-14 16:08:20', '0', '（菜单）打印', '0', '0', 1, 9, '0');
-INSERT INTO `sys_menu` VALUES (13, 'websocket', 'MENU.WebSocket', 'MENU.WebSocket', 4, '/system-tools/websocket', '/src/views/SystemTools/WebSocket', '0', '0', NULL, '~icons/tabler/brand-socket-io', 1, '2024-03-14 16:07:53', 1, '2024-03-14 16:08:23', '0', '（菜单）WebSocket', '0', '0', 1, 9, '0');
-INSERT INTO `sys_menu` VALUES (14, 'code-templates', NULL, 'MENU.ListTemplates', 20, NULL, NULL, '0', '0', NULL, '~icons/solar/code-bold', 1, '2024-03-14 16:13:21', 1, '2024-03-25 10:25:55', '0', '（菜单）代码模板', '0', '0', 1, 0, '1');
-INSERT INTO `sys_menu` VALUES (15, 'list-templates', 'MENU.ListTemplates', 'MENU.ListTemplates', 1, '/code-templates/list-templates', '/src/views/CodeTemplates/ListTemplates', '0', '0', NULL, '~icons/ic/outline-list-alt', 1, '2024-03-14 16:14:30', 1, '2024-03-14 16:14:34', '0', '（菜单）列表模板', '0', '0', 1, 14, '0');
-INSERT INTO `sys_menu` VALUES (16, 'universal-components', NULL, 'MENU.UniversalComponents', 25, NULL, NULL, '0', '0', NULL, '~icons/ic/baseline-auto-awesome-mosaic', 1, '2024-03-14 16:16:13', 1, '2024-03-25 10:24:22', '0', '（菜单）通用组件', '0', '0', 1, 0, '1');
-INSERT INTO `sys_menu` VALUES (17, 'charts', 'MENU.Charts', 'MENU.Charts', 1, '/universal-components/charts', '/src/views/UniversalComponents/Charts', '0', '0', NULL, '~icons/ic/baseline-bar-chart', 1, '2024-03-14 16:17:28', 1, '2024-03-14 16:17:31', '0', '（菜单）图表', '0', '0', 1, 16, '0');
-INSERT INTO `sys_menu` VALUES (18, 'builtin-components', NULL, 'MENU.BuiltinComponents', 30, NULL, NULL, '0', '0', NULL, '~icons/mdi/puzzle', 1, '2024-03-14 16:18:15', 1, '2024-03-25 10:24:27', '0', '（菜单）内置组件', '0', '0', 1, 0, '1');
-INSERT INTO `sys_menu` VALUES (19, 'digital-animation', 'MENU.DigitalAnimation', 'MENU.DigitalAnimation', 1, '/builtin-components/digital-animation', '/src/views/BuiltinComponents/DigitalAnimation', '0', '0', NULL, '~icons/ic/baseline-hourglass-empty', 1, '2024-03-14 16:19:18', 1, '2024-03-14 16:20:29', '0', '（菜单）数字动画', '0', '0', 1, 18, '0');
-INSERT INTO `sys_menu` VALUES (20, 'timeline', 'MENU.Timeline', 'MENU.Timeline', 2, '/builtin-components/timeline', '/src/views/BuiltinComponents/Timeline', '0', '0', NULL, '~icons/ic/baseline-timeline', 1, '2024-03-14 16:20:19', 1, '2024-03-14 16:20:35', '0', '（菜单）时间线', '0', '0', 1, 18, '0');
-INSERT INTO `sys_menu` VALUES (21, 'error-pages', NULL, 'MENU.ERROR.PAGES', 35, NULL, NULL, '0', '0', NULL, '~icons/ic/baseline-error-outline', 1, '2024-03-14 16:21:19', 1, '2024-03-25 10:24:37', '0', '（菜单）错误界面', '0', '0', 1, 0, '1');
-INSERT INTO `sys_menu` VALUES (22, '403', '403', '403', 1, '/error-pages/403', '/src/pages/error-pages/403', '0', '0', NULL, '~icons/ic/baseline-do-not-disturb', 1, '2024-03-14 16:22:59', 1, '2024-03-14 16:25:30', '0', '（菜单）403', '0', '0', 1, 21, '0');
-INSERT INTO `sys_menu` VALUES (23, '404', '404', '404', 2, '/error-pages/404', '/src/pages/error-pages/404', '0', '0', NULL, '~icons/tabler/error-404', 1, '2024-03-14 16:24:02', 1, '2024-03-14 16:25:35', '0', '（菜单）404', '0', '0', 1, 21, '0');
-INSERT INTO `sys_menu` VALUES (24, '418', '418', '418', 3, '/error-pages/418', '/src/pages/error-pages/418', '0', '0', NULL, '~icons/icon-park-outline/tea-drink', 1, '2024-03-14 16:24:42', 1, '2024-03-14 16:25:40', '0', '（菜单）418', '0', '0', 1, 21, '0');
-INSERT INTO `sys_menu` VALUES (25, '500', '500', '500', 4, '/error-pages/500', '/src/pages/error-pages/500', '0', '0', NULL, '~icons/lucide/server-off', 1, '2024-03-14 16:25:23', 1, '2024-03-14 16:25:42', '0', '（菜单）500', '0', '0', 1, 21, '0');
-INSERT INTO `sys_menu` VALUES (26, 'user-info', 'MENU.UserInfo', NULL, NULL, '/user-info', '/src/views/User/UserInfo', '1', '0', NULL, '~icons/mdi/account-circle', 1, '2024-03-14 16:27:10', 1, '2024-03-14 16:27:26', '0', '（仅路由）', '0', '0', 1, 0, '0');
-INSERT INTO `sys_menu` VALUES (27, 'change-password', 'MENU.ChangePassword', NULL, NULL, '/change-password', '/src/views/User/ChangePassword', '1', '0', NULL, '~icons/mdi/key', 1, '2024-03-14 16:29:56', NULL, NULL, '0', '（仅路由）', '0', '0', 1, 0, '0');
-INSERT INTO `sys_menu` VALUES (28, 'pathMatch', '404', NULL, NULL, '/:pathMatch(.*)*', '/src/pages/error-pages/404', '1', '0', NULL, '~icons/tabler/error-404', 1, '2024-03-14 16:31:44', NULL, NULL, '0', '（仅路由）通配符路由', '0', '0', 1, 0, '0');
+INSERT INTO `sys_menu` VALUES (7, 'role-management', 'MENU.RoleManagement', 'MENU.RoleManagement', 3, '/system-functions/role-management', '/src/views/SystemFunctions/RoleManagement', '0', '0', NULL, 'IdCardOutline', 1, '2024-03-14 15:57:55', 1, '2024-04-18 14:22:01', '0', '（菜单）角色管理', '0', '0', 1, 3, '0');
+INSERT INTO `sys_menu` VALUES (8, 'notice-management', 'MENU.NoticeManagement', 'MENU.NoticeManagement', 4, '/system-functions/notice-management', '/src/views/SystemFunctions/NoticeManagement', '0', '0', NULL, 'ChatbubbleEllipsesOutline', 1, '2024-03-14 15:59:31', 1, '2024-03-14 16:14:51', '0', '（菜单）通知公告', '0', '0', 1, 3, '0');
+INSERT INTO `sys_menu` VALUES (9, 'system-tools', NULL, 'MENU.SystemTools', 15, NULL, NULL, '0', '0', NULL, 'ConstructOutline', 1, '2024-03-14 16:01:34', 1, '2024-03-25 10:24:10', '0', '（菜单）系统工具', '0', '0', 1, 0, '1');
+INSERT INTO `sys_menu` VALUES (10, 'qrcode', 'MENU.QRCode', 'MENU.QRCode', 1, '/system-tools/qrcode', '/src/views/SystemTools/QRCode', '0', '0', NULL, 'QrCodeOutline', 1, '2024-03-14 16:03:55', 1, '2024-03-14 16:12:29', '0', '（菜单）二维码', '0', '0', 1, 9, '0');
+INSERT INTO `sys_menu` VALUES (11, 'clipboard', 'MENU.Clipboard', 'MENU.Clipboard', 2, '/system-tools/clipboard', '/src/views/SystemTools/Clipboard', '0', '0', NULL, 'ClipboardOutline', 1, '2024-03-14 16:05:36', 1, '2024-03-14 16:08:16', '0', '（菜单）剪切板', '0', '0', 1, 9, '0');
+INSERT INTO `sys_menu` VALUES (12, 'print', 'MENU.Print', 'MENU.Print', 3, '/system-tools/print', '/src/views/SystemTools/Print', '0', '0', NULL, 'PrintOutline', 1, '2024-03-14 16:06:41', 1, '2024-03-14 16:08:20', '0', '（菜单）打印', '0', '0', 1, 9, '0');
+INSERT INTO `sys_menu` VALUES (13, 'websocket', 'MENU.WebSocket', 'MENU.WebSocket', 4, '/system-tools/websocket', '/src/views/SystemTools/WebSocket', '0', '0', NULL, 'LogoWebComponent', 1, '2024-03-14 16:07:53', 1, '2024-03-14 16:08:23', '0', '（菜单）WebSocket', '0', '0', 1, 9, '0');
+INSERT INTO `sys_menu` VALUES (14, 'code-templates', NULL, 'MENU.ListTemplates', 20, NULL, NULL, '0', '0', NULL, 'CodeSlash', 1, '2024-03-14 16:13:21', 1, '2024-03-25 10:25:55', '0', '（菜单）代码模板', '0', '0', 1, 0, '1');
+INSERT INTO `sys_menu` VALUES (15, 'list-templates', 'MENU.ListTemplates', 'MENU.ListTemplates', 1, '/code-templates/list-templates', '/src/views/CodeTemplates/ListTemplates', '0', '0', NULL, 'BarcodeSharp', 1, '2024-03-14 16:14:30', 1, '2024-03-14 16:14:34', '0', '（菜单）列表模板', '0', '0', 1, 14, '0');
+INSERT INTO `sys_menu` VALUES (16, 'universal-components', NULL, 'MENU.UniversalComponents', 25, NULL, NULL, '0', '0', NULL, 'Alert', 1, '2024-03-14 16:16:13', 1, '2024-03-25 10:24:22', '0', '（菜单）通用组件', '0', '0', 1, 0, '1');
+INSERT INTO `sys_menu` VALUES (17, 'charts', 'MENU.Charts', 'MENU.Charts', 1, '/universal-components/charts', '/src/views/UniversalComponents/Charts', '0', '0', NULL, 'PodiumOutline', 1, '2024-03-14 16:17:28', 1, '2024-03-14 16:17:31', '0', '（菜单）图表', '0', '0', 1, 16, '0');
+INSERT INTO `sys_menu` VALUES (18, 'builtin-components', NULL, 'MENU.BuiltinComponents', 30, NULL, NULL, '0', '0', NULL, 'PricetagOutline', 1, '2024-03-14 16:18:15', 1, '2024-03-25 10:24:27', '0', '（菜单）内置组件', '0', '0', 1, 0, '1');
+INSERT INTO `sys_menu` VALUES (19, 'digital-animation', 'MENU.DigitalAnimation', 'MENU.DigitalAnimation', 1, '/builtin-components/digital-animation', '/src/views/BuiltinComponents/DigitalAnimation', '0', '0', NULL, 'AlbumsOutline', 1, '2024-03-14 16:19:18', 1, '2024-03-14 16:20:29', '0', '（菜单）数字动画', '0', '0', 1, 18, '0');
+INSERT INTO `sys_menu` VALUES (20, 'timeline', 'MENU.Timeline', 'MENU.Timeline', 2, '/builtin-components/timeline', '/src/views/BuiltinComponents/Timeline', '0', '0', NULL, 'TimeOutline', 1, '2024-03-14 16:20:19', 1, '2024-03-14 16:20:35', '0', '（菜单）时间线', '0', '0', 1, 18, '0');
+INSERT INTO `sys_menu` VALUES (21, 'error-pages', NULL, 'MENU.ERROR.PAGES', 35, NULL, NULL, '0', '0', NULL, 'CloudOfflineOutline', 1, '2024-03-14 16:21:19', 1, '2024-03-25 10:24:37', '0', '（菜单）错误界面', '0', '0', 1, 0, '1');
+INSERT INTO `sys_menu` VALUES (22, '403', '403', '403', 1, '/error-pages/403', '/src/pages/error-pages/403', '0', '0', NULL, 'Ban', 1, '2024-03-14 16:22:59', 1, '2024-03-14 16:25:30', '0', '（菜单）403', '0', '0', 1, 21, '0');
+INSERT INTO `sys_menu` VALUES (23, '404', '404', '404', 2, '/error-pages/404', '/src/pages/error-pages/404', '0', '0', NULL, 'AlertCircleOutline', 1, '2024-03-14 16:24:02', 1, '2024-03-14 16:25:35', '0', '（菜单）404', '0', '0', 1, 21, '0');
+INSERT INTO `sys_menu` VALUES (24, '418', '418', '418', 3, '/error-pages/418', '/src/pages/error-pages/418', '0', '0', NULL, 'UnlinkOutline', 1, '2024-03-14 16:24:42', 1, '2024-03-14 16:25:40', '0', '（菜单）418', '0', '0', 1, 21, '0');
+INSERT INTO `sys_menu` VALUES (25, '500', '500', '500', 4, '/error-pages/500', '/src/pages/error-pages/500', '0', '0', NULL, 'UnlinkOutline', 1, '2024-03-14 16:25:23', 1, '2024-03-14 16:25:42', '0', '（菜单）500', '0', '0', 1, 21, '0');
+INSERT INTO `sys_menu` VALUES (26, 'user-info', 'MENU.UserInfo', NULL, NULL, '/user-info', '/src/views/User/UserInfo', '1', '0', NULL, 'PersonOutline', 1, '2024-03-14 16:27:10', 1, '2024-03-14 16:27:26', '0', '（仅路由）', '0', '0', 1, 0, '0');
+INSERT INTO `sys_menu` VALUES (27, 'change-password', 'MENU.ChangePassword', NULL, NULL, '/change-password', '/src/views/User/ChangePassword', '1', '0', NULL, 'KeyOutline', 1, '2024-03-14 16:29:56', NULL, NULL, '0', '（仅路由）', '0', '0', 1, 0, '0');
+INSERT INTO `sys_menu` VALUES (28, 'pathMatch', '404', NULL, NULL, '/:pathMatch(.*)*', '/src/pages/error-pages/404', '1', '0', NULL, 'Ban', 1, '2024-03-14 16:31:44', NULL, NULL, '0', '（仅路由）通配符路由', '0', '0', 1, 0, '0');
 INSERT INTO `sys_menu` VALUES (29, 'auth-layout', NULL, NULL, NULL, '/', '/src/layouts/AuthLayout', '1', '0', NULL, '#', 1, '2024-03-14 16:41:22', NULL, NULL, '0', '（仅路由）认证页面', '1', '1', 0, 0, '1');
 INSERT INTO `sys_menu` VALUES (30, 'login', 'MENU.Login', NULL, NULL, '/login', '/src/views/Auth/Login', '1', '0', NULL, '#', 1, '2024-03-14 16:42:24', NULL, NULL, '0', '（仅路由）', '1', '1', 29, 29, '0');
 INSERT INTO `sys_menu` VALUES (31, 'signup', 'MENU.Signup', NULL, NULL, '/signup', '/src/views/Auth/Signup', '1', '0', NULL, '#', 1, '2024-03-14 16:43:16', NULL, NULL, '0', '（仅路由）', '1', '1', 29, 29, '0');
 INSERT INTO `sys_menu` VALUES (32, 'auth-redirect', 'TEMP.AuthRedirect.Authorizing', NULL, NULL, '/auth-redirect', '/src/views/Auth/AuthRedirect', '1', '0', NULL, '#', 1, '2024-03-14 16:44:04', NULL, NULL, '0', '（仅路由）授权重定向页面', '1', '1', 0, 0, '0');
-INSERT INTO `sys_menu` VALUES (33, 'cabinet-related', NULL, 'MENU.CabinetRelated', 10, NULL, NULL, '0', '0', NULL, '~icons/mdi/file-cabinet', 1, '2024-03-25 09:44:31', 1, '2024-03-25 10:26:48', '0', '（菜单）橱柜相关', '0', '0', 1, 0, '1');
-INSERT INTO `sys_menu` VALUES (34, 'Quotation', 'MENU.Quotation', 'MENU.Quotation', 1, '/cabinet-related/quotaion', '/src/views/CabinetRelated/Quotation', '0', '0', NULL, '~icons/mdi/file-document-outline', 1, '2024-03-25 10:37:49', 1, '2024-04-09 10:17:44', '0', '（菜单）报价单', '0', '0', 1, 33, '0');
-INSERT INTO `sys_menu` VALUES (35, 'portfolio-web', 'MENU.PortfolioWeb', 'MENU.PortfolioWeb', 5, '/cabinet-related/portfolio-web', '/src/views/CabinetRelated/PortfolioWeb', '0', '0', NULL, '~icons/mdi/image-auto-adjust', 1, '2024-04-09 10:17:29', 1, '2024-04-09 10:18:11', '0', '（菜单）工程案例', '0', '0', 1, 33, '0');
-INSERT INTO `sys_menu` VALUES (36, 'news-information', 'MENU.NewsInformation', 'MENU.NewsInformation', 10, '/cabinet-related/news-information', '/src/views/CabinetRelated/NewsInformation', '0', '0', NULL, '~icons/mdi/newspaper-variant-outline', 1, '2024-04-15 09:51:30', 1, '2024-04-15 09:51:39', '0', '（菜单）新闻资讯', '0', '0', 1, 33, '0');
-INSERT INTO `sys_menu` VALUES (37, 'message-board', 'MENU.MessageBoard', 'MENU.MessageBoard', 15, '/cabinet-related/message-board', '/src/views/CabinetRelated/MessageBoard', '0', '0', NULL, '~icons/mdi/message-text-outline', 1, '2024-04-17 09:17:12', 1, '2024-04-17 09:17:38', '0', '（菜单）留言板', '0', '0', 1, 33, '0');
+INSERT INTO `sys_menu` VALUES (33, 'cabinet-related', NULL, 'MENU.CabinetRelated', 10, NULL, NULL, '0', '0', NULL, 'FileTrayStackedOutline', 1, '2024-03-25 09:44:31', 1, '2024-03-25 10:26:48', '0', '（菜单）橱柜相关', '0', '0', 1, 0, '1');
+INSERT INTO `sys_menu` VALUES (34, 'quotation', 'MENU.Quotation', 'MENU.Quotation', 1, '/cabinet-related/quotation', '/src/views/CabinetRelated/Quotation', '0', '0', NULL, 'ReaderOutline', 1, '2024-03-25 10:37:49', 1, '2024-04-18 14:02:44', '0', '（菜单）报价单', '0', '0', 1, 33, '0');
+INSERT INTO `sys_menu` VALUES (35, 'portfolio-web', 'MENU.PortfolioWeb', 'MENU.PortfolioWeb', 5, '/cabinet-related/portfolio-web', '/src/views/CabinetRelated/PortfolioWeb', '0', '0', NULL, 'ImagesOutline', 1, '2024-04-09 10:17:29', 1, '2024-04-18 14:22:56', '0', '（菜单）工程案例', '0', '0', 1, 33, '0');
+INSERT INTO `sys_menu` VALUES (36, 'news-information', 'MENU.NewsInformation', 'MENU.NewsInformation', 10, '/cabinet-related/news-information', '/src/views/CabinetRelated/NewsInformation', '0', '0', NULL, 'NewspaperOutline', 1, '2024-04-15 09:51:30', 1, '2024-04-15 09:51:39', '0', '（菜单）新闻资讯', '0', '0', 1, 33, '0');
+INSERT INTO `sys_menu` VALUES (37, 'message-board', 'MENU.MessageBoard', 'MENU.MessageBoard', 15, '/cabinet-related/message-board', '/src/views/CabinetRelated/MessageBoard', '0', '0', NULL, 'AtOutline', 1, '2024-04-17 09:17:12', 1, '2024-04-17 09:17:38', '0', '（菜单）留言板', '0', '0', 1, 33, '0');
+INSERT INTO `sys_menu` VALUES (38, 'work-arrangement', 'MENU.WorkArrangement', 'MENU.WorkArrangement', 20, '/cabinet-related/work-arrangement', '/src/views/CabinetRelated/WorkArrangement', '0', '0', NULL, 'CalendarNumberOutline', 1, '2024-04-18 15:49:27', 1, '2024-04-19 09:17:56', '0', '（菜单）工作安排', '0', '0', 1, 33, '0');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -689,6 +690,7 @@ INSERT INTO `sys_role_menu` VALUES (1, 34);
 INSERT INTO `sys_role_menu` VALUES (1, 35);
 INSERT INTO `sys_role_menu` VALUES (1, 36);
 INSERT INTO `sys_role_menu` VALUES (1, 37);
+INSERT INTO `sys_role_menu` VALUES (1, 38);
 INSERT INTO `sys_role_menu` VALUES (2, 2);
 
 -- ----------------------------
@@ -786,5 +788,28 @@ INSERT INTO `teacher` VALUES (2, 'tom');
 INSERT INTO `teacher` VALUES (3, '测试清空一级缓存');
 INSERT INTO `teacher` VALUES (4, '这是事务中加入的teacher');
 INSERT INTO `teacher` VALUES (5, '这是事务中加入的teacher');
+
+-- ----------------------------
+-- Table structure for work_arrangement
+-- ----------------------------
+DROP TABLE IF EXISTS `work_arrangement`;
+CREATE TABLE `work_arrangement`  (
+                                     `Work_id` bigint NOT NULL AUTO_INCREMENT COMMENT '代办ID',
+                                     `year` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '年',
+                                     `month` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '月',
+                                     `date` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '日',
+                                     `Agency_matters` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '代办事项',
+                                     `Arrange_People` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '工作人员',
+                                     `create_by` bigint NULL DEFAULT NULL COMMENT '创建人',
+                                     `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+                                     `update_by` bigint NULL DEFAULT NULL COMMENT '更新人',
+                                     `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                                     `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '是否删除（0未删除 1已删除）',
+                                     PRIMARY KEY (`Work_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of work_arrangement
+-- ----------------------------
 
 SET FOREIGN_KEY_CHECKS = 1;
