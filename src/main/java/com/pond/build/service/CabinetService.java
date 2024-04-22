@@ -44,4 +44,6 @@ public interface CabinetService {
     ResponseResult messageBoardList(Integer page, Integer pageSize);
 
     ResponseResult deleteMessageBoard(HashMap<String, Object> messageIds);
+
+    ResponseResult editOrganizationWork(Map<String, Object> args);
 }

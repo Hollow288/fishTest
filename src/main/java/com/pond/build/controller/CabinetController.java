@@ -147,4 +147,11 @@ public class CabinetController {
     public ResponseResult deleteMessageBoard(@RequestBody HashMap<String,Object> messageIds){
         return cabinetService.deleteMessageBoard(messageIds);
     }
+
+    @PostMapping("/cabinet/edit-organization-work")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult editOrganizationWork(@RequestBody Map<String,Object> args){
+        return cabinetService.editOrganizationWork(args);
+    }
+
 }

@@ -391,4 +391,11 @@ public class CabinetServiceImpl implements CabinetService {
         }
         return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
     }
+
+    @Override
+    public ResponseResult editOrganizationWork(Map<String, Object> args) {
+
+
+        return null;
+    }
 }
