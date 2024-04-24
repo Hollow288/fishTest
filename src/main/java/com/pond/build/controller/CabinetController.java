@@ -154,4 +154,20 @@ public class CabinetController {
         return cabinetService.editOrganizationWork(args);
     }
 
+    @GetMapping("/cabinet/info-schedule")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult getInfoByYearMonthDate(@RequestParam(value = "year") Integer year,
+                                              @RequestParam(value = "month") Integer month,
+                                              @RequestParam(value = "date") Integer date){
+        return cabinetService.getInfoByYearMonthDate(year,month,date);
+    }
+
+
+    @GetMapping("/cabinet/list-todos")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult listTodos(@RequestParam(value = "year") Integer year,
+                                                 @RequestParam(value = "month") Integer month){
+        return cabinetService.listTodos(year,month);
+    }
+
 }

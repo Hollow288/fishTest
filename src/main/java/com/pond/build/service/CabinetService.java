@@ -46,4 +46,8 @@ public interface CabinetService {
     ResponseResult deleteMessageBoard(HashMap<String, Object> messageIds);
 
     ResponseResult editOrganizationWork(Map<String, Object> args);
+
+    ResponseResult getInfoByYearMonthDate(Integer year, Integer month, Integer date);
+
+    ResponseResult listTodos(Integer year, Integer month);
 }

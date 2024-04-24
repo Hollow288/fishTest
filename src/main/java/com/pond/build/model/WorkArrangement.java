@@ -26,15 +26,15 @@ public class WorkArrangement implements Serializable {
 /**
      * 年
      */
-    private String year;
+    private Integer year;
 /**
      * 月
      */
-    private String month;
+    private Integer month;
 /**
      * 日
      */
-    private String date;
+    private Integer date;
 /**
      * 代办事项
      */

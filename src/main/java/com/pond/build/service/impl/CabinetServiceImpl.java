@@ -56,6 +56,9 @@ public class CabinetServiceImpl implements CabinetService {
     @Autowired
     private MessageBoardMapper messageBoardMapper;
 
+    @Autowired
+    private WorkArrangementMapper workArrangementMapper;
+
     @Override
     public ResponseResult getAllQuotation(Integer page, Integer pageSize, String searchText) {
 
@@ -394,8 +397,64 @@ public class CabinetServiceImpl implements CabinetService {
 
     @Override
     public ResponseResult editOrganizationWork(Map<String, Object> args) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        User userInfo = loginUser.getUser();
 
+        Map<String,Object> dateMap = (Map<String, Object>) args.get("date");
+        Integer year = (Integer) dateMap.get("year");
+        Integer month = (Integer) dateMap.get("month");
+        Integer date = (Integer) dateMap.get("date");
+        QueryWrapper<WorkArrangement> workArrangementQueryWrapper = new QueryWrapper<>();
+        workArrangementQueryWrapper.eq("year",year);
+        workArrangementQueryWrapper.eq("month",month);
+        workArrangementQueryWrapper.eq("date",date);
+        workArrangementMapper.delete(workArrangementQueryWrapper);
 
-        return null;
+        List<Map<String,Object>> dataMap =  (List<Map<String,Object>>)args.get("data");
+        for (Map<String, Object> data : dataMap) {
+            WorkArrangement workArrangement = new WorkArrangement();
+            workArrangement.setYear(year);
+            workArrangement.setMonth(month);
+            workArrangement.setDate(date);
+            workArrangement.setCreateBy(userInfo.getUserId().toString());
+            workArrangement.setCreateTime(new Date());
+            workArrangement.setAgencyMatters(data.get("agencyMatters").toString());
+            workArrangement.setArrangePeople(data.get("userIds").toString());
+            workArrangementMapper.insert(workArrangement);
+        }
+
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
+    }
+
+    @Override
+    public ResponseResult getInfoByYearMonthDate(Integer year, Integer month, Integer date) {
+        QueryWrapper<WorkArrangement> workArrangementQueryWrapper = new QueryWrapper<>();
+        workArrangementQueryWrapper.eq("del_flag","0");
+        workArrangementQueryWrapper.eq("year",year);
+        workArrangementQueryWrapper.eq("month",month);
+        workArrangementQueryWrapper.eq("date",date);
+        List<WorkArrangement> workArrangements = workArrangementMapper.selectList(workArrangementQueryWrapper);
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功",workArrangements);
+    }
+
+    @Override
+    public ResponseResult listTodos(Integer year, Integer month) {
+        QueryWrapper<WorkArrangement> workArrangementQueryWrapper = new QueryWrapper<>();
+
+        workArrangementQueryWrapper.and(wrapper -> {
+            wrapper.eq("year", year).eq("month", month).or();
+            if (month == 1) {
+                // 处理当前月份为1月的情况，需要查询上一年的12月份
+                wrapper.eq("year", year - 1).eq("month", 12).or();
+            } else {
+                // 查询当前年份的前一个月份和当前月份
+                wrapper.eq("year", year).eq("month", month - 1).or();
+            }
+            // 查询当前年份的当前月份和下一个月份
+            wrapper.eq("year", year).eq("month", month).or().eq("year", year).eq("month", month + 1);
+        });
+        List<WorkArrangement> workArrangements = workArrangementMapper.selectList(workArrangementQueryWrapper);
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功",workArrangements);
     }
 }
