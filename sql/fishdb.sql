@@ -11,7 +11,7 @@
  Target Server Version : 80035
  File Encoding         : 65001
 
- Date: 19/04/2024 17:57:15
+ Date: 26/04/2024 17:36:10
 */
 
 SET NAMES utf8mb4;
@@ -310,7 +310,7 @@ CREATE TABLE `notice_management`  (
                                       `release_date` datetime NULL DEFAULT NULL COMMENT '发布日期',
                                       `release_by` bigint NULL DEFAULT NULL COMMENT '发布人id',
                                       PRIMARY KEY (`notice_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of notice_management
@@ -319,6 +319,8 @@ INSERT INTO `notice_management` VALUES (1, '这是一条测试的骚扰通知·�
 INSERT INTO `notice_management` VALUES (2, '这是创建并发布的骚扰通知 ×2', 1, '2024-03-13 11:58:57', NULL, NULL, '0', NULL, NULL, '2024-03-13 11:58:57', 1);
 INSERT INTO `notice_management` VALUES (3, '单独发给管理员的骚扰通知😈', 1, '2024-03-14 13:49:06', 1, '2024-03-16 11:25:14', '1', NULL, NULL, '2024-03-14 13:49:06', 1);
 INSERT INTO `notice_management` VALUES (4, 'TEST1', 1, '2024-03-25 14:44:17', NULL, NULL, '0', NULL, NULL, NULL, NULL);
+INSERT INTO `notice_management` VALUES (6, '待办通知：444', NULL, NULL, NULL, NULL, '0', NULL, NULL, '2024-04-26 17:20:10', NULL);
+INSERT INTO `notice_management` VALUES (7, '待办通知：55555', NULL, NULL, NULL, NULL, '0', NULL, NULL, '2024-04-26 17:20:10', NULL);
 
 -- ----------------------------
 -- Table structure for pending_notification
@@ -331,7 +333,7 @@ CREATE TABLE `pending_notification`  (
                                          `user_id` bigint NULL DEFAULT NULL COMMENT '待处理人',
                                          `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '是否删除（0未删除 1已删除）',
                                          PRIMARY KEY (`pending_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of pending_notification
@@ -348,6 +350,13 @@ INSERT INTO `pending_notification` VALUES (9, 3, '1', 1, '1');
 INSERT INTO `pending_notification` VALUES (10, 4, '0', 2, '0');
 INSERT INTO `pending_notification` VALUES (11, 4, '0', 3, '0');
 INSERT INTO `pending_notification` VALUES (12, 4, '0', 1, '0');
+INSERT INTO `pending_notification` VALUES (13, 6, '0', 6, '0');
+INSERT INTO `pending_notification` VALUES (14, 6, '1', 1, '0');
+INSERT INTO `pending_notification` VALUES (15, 7, '1', 1, '0');
+INSERT INTO `pending_notification` VALUES (16, 7, '0', 6, '0');
+INSERT INTO `pending_notification` VALUES (17, 7, '0', 4, '0');
+INSERT INTO `pending_notification` VALUES (18, 7, '0', 2, '0');
+INSERT INTO `pending_notification` VALUES (19, 7, '0', 3, '0');
 
 -- ----------------------------
 -- Table structure for port_folio
@@ -795,9 +804,9 @@ INSERT INTO `teacher` VALUES (5, '这是事务中加入的teacher');
 DROP TABLE IF EXISTS `work_arrangement`;
 CREATE TABLE `work_arrangement`  (
                                      `Work_id` bigint NOT NULL AUTO_INCREMENT COMMENT '代办ID',
-                                     `year` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '年',
-                                     `month` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '月',
-                                     `date` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '日',
+                                     `year` int NULL DEFAULT NULL COMMENT '年',
+                                     `month` int NULL DEFAULT NULL COMMENT '月',
+                                     `date` int NULL DEFAULT NULL COMMENT '日',
                                      `Agency_matters` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '代办事项',
                                      `Arrange_People` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '工作人员',
                                      `create_by` bigint NULL DEFAULT NULL COMMENT '创建人',
@@ -806,10 +815,15 @@ CREATE TABLE `work_arrangement`  (
                                      `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
                                      `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '是否删除（0未删除 1已删除）',
                                      PRIMARY KEY (`Work_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of work_arrangement
 -- ----------------------------
+INSERT INTO `work_arrangement` VALUES (8, 2024, 4, 18, '11111', '2,4,6', 1, '2024-04-25 14:52:34', NULL, NULL, '0');
+INSERT INTO `work_arrangement` VALUES (9, 2024, 4, 18, '3334', '1', 1, '2024-04-25 14:52:34', NULL, NULL, '0');
+INSERT INTO `work_arrangement` VALUES (12, 2024, 7, 20, '868', '14', 1, '2024-04-25 15:01:13', NULL, NULL, '0');
+INSERT INTO `work_arrangement` VALUES (13, 2024, 4, 27, '444', '6,1', 1, '2024-04-26 17:18:24', NULL, NULL, '0');
+INSERT INTO `work_arrangement` VALUES (14, 2024, 4, 27, '55555', '1,6,4,2,3', 1, '2024-04-26 17:18:24', NULL, NULL, '0');
 
 SET FOREIGN_KEY_CHECKS = 1;
