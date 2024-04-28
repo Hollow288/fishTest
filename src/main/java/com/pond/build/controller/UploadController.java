@@ -57,4 +57,12 @@ public class UploadController {
         return uploadService.uploadNewsInformationFile(files,newsId);
     }
 
+
+    @PostMapping("/upload/{orderId}/order-status")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult uploadOrderStatusFile(@RequestParam(value = "file") MultipartFile[] files,
+                                                    @PathVariable("orderId") String orderId) {
+        return uploadService.uploadOrderStatusFile(files,orderId);
+    }
+
 }

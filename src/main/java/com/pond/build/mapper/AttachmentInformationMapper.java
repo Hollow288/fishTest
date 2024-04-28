@@ -16,5 +16,7 @@ public interface AttachmentInformationMapper  extends BaseMapper<AttachmentInfor
 
     List<Map<String,Object>> attachDataByQuotationId(@Param("quotationId")String quotationId);
 
+    List<Map<String,Object>> attachDataByOrderId(@Param("orderId")String orderId);
+
     Integer deleteAttachByIds(@Param("attachIds") List<String> ids, @Param("userId") Long userId, @Param("date") Date date);
 }

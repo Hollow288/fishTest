@@ -3,6 +3,7 @@ package com.pond.build.controller;
 
 import com.pond.build.model.CabinetQuotation;
 import com.pond.build.model.NewsInformation;
+import com.pond.build.model.OrderStatus;
 import com.pond.build.model.ResponseResult;
 import com.pond.build.service.CabinetService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -168,6 +169,49 @@ public class CabinetController {
     public ResponseResult listTodos(@RequestParam(value = "year") Integer year,
                                                  @RequestParam(value = "month") Integer month){
         return cabinetService.listTodos(year,month);
+    }
+
+
+    @PostMapping("/cabinet/auto-order-status")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult autoOrderStatus(@RequestBody Map<String,Object> quotationId){
+        return cabinetService.autoOrderStatus(quotationId);
+    }
+
+
+    @GetMapping("/cabinet/order-status")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult listOrderStatus(@RequestParam(value = "page") Integer page,
+                                          @RequestParam(value = "pageSize") Integer pageSize,
+                                          @RequestParam(value = "searchText", defaultValue = "") String searchText){
+        return cabinetService.listOrderStatus(page, pageSize,searchText);
+    }
+
+
+    @PostMapping("/cabinet/create-order-status")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult createOrderStatus(@RequestBody OrderStatus orderStatus){
+        return cabinetService.createOrderStatus(orderStatus);
+    }
+
+
+    @GetMapping("/cabinet/{orderId}/all-attach-by-orderId")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult attachDataByOrderId(@PathVariable("orderId") String orderId){
+        return cabinetService.attachDataByOrderId(orderId);
+    }
+
+    @PutMapping("cabinet/{orderId}/update-order-status")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult updateOrderStatusById(@PathVariable("orderId") String orderId, @RequestBody OrderStatus orderStatus){
+        return cabinetService.updateOrderStatusById(orderId,orderStatus);
+    }
+
+
+    @PutMapping("cabinet/remove-order-status-attach")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult removeOrderStatusAttachs(@RequestBody HashMap<String,Object> map){
+        return cabinetService.removeOrderStatusAttachs(map);
     }
 
 }

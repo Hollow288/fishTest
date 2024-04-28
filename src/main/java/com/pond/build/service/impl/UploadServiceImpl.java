@@ -180,4 +180,33 @@ public class UploadServiceImpl  implements UploadService {
         return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
     }
 
+    @Override
+    public ResponseResult uploadOrderStatusFile(MultipartFile[] files, String orderId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        User userInfo = loginUser.getUser();
+
+        String bucketName = "fishtest-cabinet-order-status";
+        String filePath = "/"+ LocalDate.now() + "/";
+
+        minioUtil.existBucket(bucketName);
+        //上传文件到Minio
+        List<String> uploadNames = minioUtil.upload(files, bucketName, filePath);
+
+        List<String> resultNames = uploadNames.stream().map(m -> address + "/" + bucketName + filePath + m).toList();
+
+
+        for (String resultName : resultNames) {
+            AttachmentInformation attachmentInformation = new AttachmentInformation();
+            attachmentInformation.setCreateBy(userInfo.getUserId().toString());
+            attachmentInformation.setCreateTime(new Date());
+            attachmentInformation.setOriTableId(orderId);
+            attachmentInformation.setOriTableName("order_status");
+            attachmentInformation.setAttachUrl(resultName);
+            attachmentInformationMapper.insert(attachmentInformation);
+        }
+
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
+    }
+
 }

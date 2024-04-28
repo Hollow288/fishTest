@@ -6,4 +6,6 @@ import org.springframework.http.ResponseEntity;
 
 public interface DownloadService {
     ResponseEntity<byte[]> downloadQuotation(String attachId);
+
+    ResponseEntity<byte[]> downloadOrderStatus(String attachId);
 }

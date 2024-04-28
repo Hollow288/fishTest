@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Paths;
@@ -58,6 +59,9 @@ public class CabinetServiceImpl implements CabinetService {
 
     @Autowired
     private WorkArrangementMapper workArrangementMapper;
+
+    @Autowired
+    private OrderStatusMapper orderStatusMapper;
 
     @Override
     public ResponseResult getAllQuotation(Integer page, Integer pageSize, String searchText) {
@@ -456,5 +460,131 @@ public class CabinetServiceImpl implements CabinetService {
         });
         List<WorkArrangement> workArrangements = workArrangementMapper.selectList(workArrangementQueryWrapper);
         return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功",workArrangements);
+    }
+
+    @Override
+    public ResponseResult autoOrderStatus(Map<String, Object> quotationId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        User userInfo = loginUser.getUser();
+
+        String id = (String) quotationId.get("id");
+        QueryWrapper<OrderStatus> orderStatusQueryWrapper = new QueryWrapper<>();
+        orderStatusQueryWrapper.eq("quotation_id",id);
+        orderStatusQueryWrapper.eq("del_flag","0");
+        List<OrderStatus> orderStatuses = orderStatusMapper.selectList(orderStatusQueryWrapper);
+        if (CollectionUtils.isEmpty(orderStatuses)){
+
+            QueryWrapper<CabinetQuotation> cabinetQuotationQueryWrapper = new QueryWrapper<>();
+            cabinetQuotationQueryWrapper.eq("quotation_id",id);
+            cabinetQuotationQueryWrapper.eq("del_flag","0");
+            CabinetQuotation cabinetQuotation = cabinetMapper.selectOne(cabinetQuotationQueryWrapper);
+
+            OrderStatus orderStatus = new OrderStatus();
+            orderStatus.setCreateBy(userInfo.getUserId().toString());
+            orderStatus.setCreateTime(new Date());
+            orderStatus.setQuotationId(Integer.valueOf(cabinetQuotation.getQuotationId()));
+            orderStatus.setCustomerName(cabinetQuotation.getCustomerName());
+            orderStatus.setAddress(cabinetQuotation.getAddress());
+            orderStatus.setTelephone(cabinetQuotation.getTelephone());
+            orderStatus.setProductName(cabinetQuotation.getProductName());
+            orderStatus.setAllTotalPrice(cabinetQuotation.getAllTotalPrice());
+            orderStatus.setPaidPrice(new BigDecimal(0));
+            orderStatus.setUnPaidPrice(cabinetQuotation.getAllTotalPrice());
+            orderStatusMapper.insert(orderStatus);
+            return new ResponseResult(HttpStatusCode.OK.getCode(),"生成成功");
+        }else{
+            return new ResponseResult(HttpStatusCode.OK.getCode(),"该报价单已经生成订单状态");
+        }
+
+
+    }
+
+    @Override
+    public ResponseResult listOrderStatus(Integer page, Integer pageSize, String searchText) {
+        Page<OrderStatus> pages = new Page<>(page, pageSize);
+
+        LambdaQueryWrapper<OrderStatus> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(OrderStatus::getDelFlag, "0");
+
+        if(!searchText.isBlank()){
+            lambdaQueryWrapper.and(wrapper -> wrapper.like(OrderStatus::getCustomerName, searchText)
+                    .or().like(OrderStatus::getAddress, searchText));
+        }
+        lambdaQueryWrapper.orderByDesc(OrderStatus::getUnPaidPrice);
+        IPage<OrderStatus> orderStatusPage = orderStatusMapper.selectPage(pages, lambdaQueryWrapper);
+        List<OrderStatus> orderStatusPages = orderStatusPage.getRecords();
+        long total = orderStatusPage.getTotal();
+
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("data",orderStatusPages);
+        resultMap.put("total",total);
+
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"获取成功",resultMap);
+    }
+
+    @Override
+    public ResponseResult createOrderStatus(OrderStatus orderStatus) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        User userInfo = loginUser.getUser();
+
+        orderStatus.setCreateBy(userInfo.getUserId().toString());
+        orderStatus.setCreateTime(new Date());
+
+        orderStatusMapper.insert(orderStatus);
+
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"获取成功",orderStatus.getOrderId());
+    }
+
+    @Override
+    public ResponseResult attachDataByOrderId(String orderId) {
+        List<Map<String, Object>> list = attachmentInformationMapper.attachDataByOrderId(orderId);
+
+        list.stream().forEach(n -> {
+            try {
+                if(n.get("url")!= null && !n.get("url").toString().isBlank()){
+
+                    URL url = new URL(n.get("url").toString());
+                    String filename = Paths.get(url.getPath()).getFileName().toString();
+                    n.put("name", filename);
+                    n.put("status", "finished");
+
+                    n.put("url",null);
+                }
+            } catch (MalformedURLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功",list);
+    }
+
+    @Override
+    public ResponseResult updateOrderStatusById(String orderId, OrderStatus orderStatus) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        User userInfo = loginUser.getUser();
+
+        orderStatus.setUpdateBy(userInfo.getUserId().toString());
+        orderStatus.setUpdateTime(new Date());
+
+        orderStatusMapper.updateById(orderStatus);
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
+    }
+
+    @Override
+    public ResponseResult removeOrderStatusAttachs(HashMap<String, Object> map) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        User userInfo = loginUser.getUser();
+
+        List<String> ids = (List<String>) map.get("ids");
+        if(!CollectionUtils.isEmpty(ids)){
+            Integer effectNum = attachmentInformationMapper.deleteAttachByIds(ids, userInfo.getUserId(), new Date());
+        }
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
     }
 }

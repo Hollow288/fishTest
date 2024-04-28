@@ -25,4 +25,12 @@ public class DownloadController {
     }
 
 
+    @GetMapping("download/{id}/order-status")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<byte[]> getDownloadOrderStatus(@PathVariable("id") String attachId){
+        return downloadService.downloadOrderStatus(attachId);
+    }
+
+
+
 }

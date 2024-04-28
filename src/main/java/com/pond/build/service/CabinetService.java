@@ -2,6 +2,7 @@ package com.pond.build.service;
 
 import com.pond.build.model.CabinetQuotation;
 import com.pond.build.model.NewsInformation;
+import com.pond.build.model.OrderStatus;
 import com.pond.build.model.ResponseResult;
 
 import java.util.HashMap;
@@ -50,4 +51,16 @@ public interface CabinetService {
     ResponseResult getInfoByYearMonthDate(Integer year, Integer month, Integer date);
 
     ResponseResult listTodos(Integer year, Integer month);
+
+    ResponseResult autoOrderStatus(Map<String, Object> quotationId);
+
+    ResponseResult listOrderStatus(Integer page, Integer pageSize, String searchText);
+
+    ResponseResult createOrderStatus(OrderStatus orderStatus);
+
+    ResponseResult attachDataByOrderId(String orderId);
+
+    ResponseResult updateOrderStatusById(String orderId, OrderStatus orderStatus);
+
+    ResponseResult removeOrderStatusAttachs(HashMap<String, Object> map);
 }

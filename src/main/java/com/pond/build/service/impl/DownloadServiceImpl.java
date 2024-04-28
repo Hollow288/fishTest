@@ -61,5 +61,35 @@ public class DownloadServiceImpl implements DownloadService {
         }
     }
 
+    @Override
+    public ResponseEntity<byte[]> downloadOrderStatus(String attachId) {
+        try {
+            LambdaQueryWrapper<AttachmentInformation> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(AttachmentInformation::getAttachId,attachId);
+            AttachmentInformation attachmentInformation = attachmentInformationMapper.selectOne(queryWrapper);
+            String attachUrl = attachmentInformation.getAttachUrl();
+            String[] split = attachUrl.split("/");
+            String fileURL = "/"+split[split.length-2]+"/"+split[split.length-1];
+            String fileName = split[split.length-1];
+            InputStream is = minioUtil.getObject("fishtest-cabinet-order-status", fileURL);
+
+            // 读取输入流的内容到字节数组中
+            byte[] data = IOUtils.toByteArray(is);
+            is.close();
+            // 设置响应头，指定文件名和文件类型
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            headers.setContentDispositionFormData("attachment", URLEncoder.encode(fileName, "UTF-8"));
+
+            // 返回 ResponseEntity 对象，设置状态码为 200 OK
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .body(data);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
 
 }

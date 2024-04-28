@@ -16,4 +16,6 @@ public interface UploadService {
     ResponseResult uploadPortFolioPanoramaFile(MultipartFile[] files, String folioId);
 
     ResponseResult uploadNewsInformationFile(MultipartFile[] files, String newsId);
+
+    ResponseResult uploadOrderStatusFile(MultipartFile[] files, String orderId);
 }
