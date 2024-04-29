@@ -943,5 +943,37 @@ class TestApplicationTests {
 
     }
 
+    private StringBuffer splitLongString(String dictionaryName, String longString){
+        StringBuffer resultString = new StringBuffer();
+        String[] stringList = longString.split("\n");
+        resultString.append(dictionaryName + "字典项：");
+        for (int i = 0; i <stringList.length; i++) {
+            resultString.append( i+1 + "." +  stringList[i] + " ");
+        }
+        return resultString;
+    }
 
+    @Test
+    public void test6(){
+        System.out.println(this.splitLongString("发票类型","增值税专用发票\n" +
+                "货物运输业增值税专用发票\n" +
+                "机动车销售统一发票\n" +
+                "增值税普通发票\n" +
+                "增值税电子普通发票\n" +
+                "增值税普通发票（卷票）\n" +
+                "增值税电子专用发票\n" +
+                "增值税电子普通发票（通行费）\n" +
+                "二手车销售统一发票\n" +
+                "客票\n" +
+                "火车票\n" +
+                "机票\n" +
+                "定额发票\n" +
+                "海关进口增值税专用缴款书\n" +
+                "代扣代缴抵扣清单\n" +
+                "海关进口消费税专用缴款书\n" +
+                "海关进口关税专用缴款书\n" +
+                "财政电子发票\n" +
+                "普通发票\n" +
+                "其他发票"));
+    }
 }

@@ -100,5 +100,13 @@
         </foreach>
     </update>
 
+    <update id="deleteOrderStatusById">
+        update order_status set update_by = #{userId}, update_time = #{date},del_flag = '1'
+        where order_id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
 </mapper>
 

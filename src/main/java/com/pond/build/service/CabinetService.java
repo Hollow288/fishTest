@@ -63,4 +63,8 @@ public interface CabinetService {
     ResponseResult updateOrderStatusById(String orderId, OrderStatus orderStatus);
 
     ResponseResult removeOrderStatusAttachs(HashMap<String, Object> map);
+
+    ResponseResult deleteOrderStatusByIds(HashMap<String, Object> orderIds);
+
+    ResponseResult addArrivedPrice(HashMap<String, Object> map, String orderId);
 }

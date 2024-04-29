@@ -587,4 +587,35 @@ public class CabinetServiceImpl implements CabinetService {
         }
         return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
     }
+
+    @Override
+    public ResponseResult deleteOrderStatusByIds(HashMap<String, Object> orderIds) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        User userInfo = loginUser.getUser();
+
+        List<String> ids = (List<String>)orderIds.get("ids");
+        if(!CollectionUtils.isEmpty(ids)){
+            cabinetMapper.deleteOrderStatusById(ids,userInfo.getUserId().toString(),new Date());
+        }
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
+    }
+
+    @Override
+    public ResponseResult addArrivedPrice(HashMap<String, Object> map, String orderId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        User userInfo = loginUser.getUser();
+        QueryWrapper<OrderStatus> orderStatusQueryWrapper = new QueryWrapper<>();
+        orderStatusQueryWrapper.eq("order_id",orderId);
+        OrderStatus orderStatus = orderStatusMapper.selectOne(orderStatusQueryWrapper);
+        BigDecimal thisPaidPrice = new BigDecimal(String.valueOf(map.get("thisPaidPrice")));
+        orderStatus.setPaidPrice(orderStatus.getPaidPrice().add(thisPaidPrice));
+        orderStatus.setUnPaidPrice(orderStatus.getAllTotalPrice().subtract(orderStatus.getPaidPrice()));
+        orderStatus.setUpdateBy(userInfo.getUserId().toString());
+        orderStatus.setUpdateTime(new Date());
+        orderStatusMapper.updateById(orderStatus);
+
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"操作成功");
+    }
 }

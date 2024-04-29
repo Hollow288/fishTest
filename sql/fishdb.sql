@@ -11,7 +11,7 @@
  Target Server Version : 80035
  File Encoding         : 65001
 
- Date: 26/04/2024 17:36:10
+ Date: 29/04/2024 17:48:53
 */
 
 SET NAMES utf8mb4;
@@ -32,7 +32,7 @@ CREATE TABLE `attachment_information`  (
                                            `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '是否删除（0未删除 1已删除）',
                                            `attach_url` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '附件路径',
                                            PRIMARY KEY (`attach_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 23 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of attachment_information
@@ -59,6 +59,10 @@ INSERT INTO `attachment_information` VALUES (19, 'cabinet_quotation', '49', 1, '
 INSERT INTO `attachment_information` VALUES (20, 'cabinet_quotation', '49', 1, '2024-03-29 17:36:54', 1, '2024-03-29 17:44:09', '1', 'http://127.0.0.1:9000/fishtest-cabinet-quotation/2024-03-29/asec3_1711705014278.sql');
 INSERT INTO `attachment_information` VALUES (21, 'cabinet_quotation', '49', 1, '2024-03-29 17:44:39', NULL, NULL, '0', 'http://127.0.0.1:9000/fishtest-cabinet-quotation/2024-03-29/temp_1711705478837.sql');
 INSERT INTO `attachment_information` VALUES (22, 'cabinet_quotation', '2', 1, '2024-04-01 10:16:16', NULL, NULL, '0', 'http://127.0.0.1:9000/fishtest-cabinet-quotation/2024-04-01/2bb7db4d-ae4e-4687-abab-2d84f0cd9c6e1_1711937775876.gif');
+INSERT INTO `attachment_information` VALUES (23, 'order_status', '7', 1, '2024-04-28 16:51:56', 1, '2024-04-29 09:18:22', '1', 'http://127.0.0.1:9000/fishtest-cabinet-order-status/2024-04-28/DEMO_1714294316337.docx');
+INSERT INTO `attachment_information` VALUES (24, 'order_status', 'null', 1, '2024-04-29 09:18:26', NULL, NULL, '0', 'http://127.0.0.1:9000/fishtest-cabinet-order-status/2024-04-29/新建 Microsoft Word 文档_1714353504888.docx');
+INSERT INTO `attachment_information` VALUES (25, 'order_status', '7', 1, '2024-04-29 09:20:44', NULL, NULL, '0', 'http://127.0.0.1:9000/fishtest-cabinet-order-status/2024-04-29/新建 Microsoft Word 文档_1714353644448.docx');
+INSERT INTO `attachment_information` VALUES (26, 'order_status', '7', 1, '2024-04-29 09:20:44', 1, '2024-04-29 09:20:50', '1', 'http://127.0.0.1:9000/fishtest-cabinet-order-status/2024-04-29/学习笔记_1714353644457.md');
 
 -- ----------------------------
 -- Table structure for cabinet_quotation
@@ -89,7 +93,7 @@ CREATE TABLE `cabinet_quotation`  (
 -- Records of cabinet_quotation
 -- ----------------------------
 INSERT INTO `cabinet_quotation` VALUES (1, '小明', '地址', '123', NULL, NULL, NULL, '2024-03-03 00:00:00', 22.2100, 122.1000, NULL, 144.3100, 1, NULL, NULL, NULL, '0');
-INSERT INTO `cabinet_quotation` VALUES (2, '测试', '测试地址', '123456789', '测试产品', '测试颜色', '测试柜体', '2024-03-10 08:00:00', 2822.1100, 40605.0000, NULL, 43427.1100, 1, '2024-03-28 08:00:00', 1, '2024-04-01 10:16:13', '0');
+INSERT INTO `cabinet_quotation` VALUES (2, '测试', '测试地址', '13588888888', '测试产品', '测试颜色', '测试柜体', '2024-03-10 08:00:00', 2822.1100, 40605.0000, NULL, 43427.1100, 1, '2024-03-28 08:00:00', 1, '2024-04-28 11:15:17', '0');
 INSERT INTO `cabinet_quotation` VALUES (3, '测试', '测试地址', '123456789', '测试产品', '测试颜色', '测试柜体', '2024-03-10 00:00:00', 2822.1100, 40605.0000, NULL, 43427.1100, 1, '2024-03-28 11:05:44', NULL, NULL, '0');
 INSERT INTO `cabinet_quotation` VALUES (4, '9', NULL, '9', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 11:10:26', 1, '2024-04-01 10:14:37', '1');
 INSERT INTO `cabinet_quotation` VALUES (5, '99', NULL, '99', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 11:13:08', 1, '2024-04-01 10:14:37', '1');
@@ -159,7 +163,7 @@ CREATE TABLE `cabinet_quotation_detail`  (
                                              `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '是否删除（0未删除 1已删除）',
                                              `detail_type` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '子表种类（0橱柜类 1厨具五金类）',
                                              PRIMARY KEY (`detail_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 79 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 83 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cabinet_quotation_detail
@@ -238,10 +242,14 @@ INSERT INTO `cabinet_quotation_detail` VALUES (71, 49, '2', '2', 2.0000, 2.0000,
 INSERT INTO `cabinet_quotation_detail` VALUES (72, 49, '1', '1', 1.0000, 1.0000, 1.0000, 1.0000, '1', 1, '2024-03-29 17:44:43', NULL, NULL, '0', '0');
 INSERT INTO `cabinet_quotation_detail` VALUES (73, 49, '1', '1', 1.0000, 1.0000, 1.0000, 1.0000, '1', 1, '2024-03-29 17:44:43', NULL, NULL, '0', '1');
 INSERT INTO `cabinet_quotation_detail` VALUES (74, 49, '2', '2', 2.0000, 2.0000, 2.0000, 8.0000, '....', 1, '2024-03-29 17:44:43', NULL, NULL, '0', '1');
-INSERT INTO `cabinet_quotation_detail` VALUES (75, 2, '测试1', '测试11', 1.1000, 100.1000, 1.0000, 110.1100, '测试备注1', 1, '2024-04-01 10:16:13', NULL, NULL, '0', '0');
-INSERT INTO `cabinet_quotation_detail` VALUES (76, 2, '测试2', '测试22', 2.0000, 1356.0000, 1.0000, 2712.0000, '测试备注2', 1, '2024-04-01 10:16:13', NULL, NULL, '0', '0');
-INSERT INTO `cabinet_quotation_detail` VALUES (77, 2, '测试3', '测试33', 3.0000, 203.0000, 1.0000, 609.0000, '测试备注3', 1, '2024-04-01 10:16:13', NULL, NULL, '0', '1');
-INSERT INTO `cabinet_quotation_detail` VALUES (78, 2, '测试4', '测试44', 4.0000, 9999.0000, 1.0000, 39996.0000, '测试备注4', 1, '2024-04-01 10:16:13', NULL, NULL, '0', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (75, 2, '测试1', '测试11', 1.1000, 100.1000, 1.0000, 110.1100, '测试备注1', 1, '2024-04-01 10:16:13', NULL, NULL, '1', '0');
+INSERT INTO `cabinet_quotation_detail` VALUES (76, 2, '测试2', '测试22', 2.0000, 1356.0000, 1.0000, 2712.0000, '测试备注2', 1, '2024-04-01 10:16:13', NULL, NULL, '1', '0');
+INSERT INTO `cabinet_quotation_detail` VALUES (77, 2, '测试3', '测试33', 3.0000, 203.0000, 1.0000, 609.0000, '测试备注3', 1, '2024-04-01 10:16:13', NULL, NULL, '1', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (78, 2, '测试4', '测试44', 4.0000, 9999.0000, 1.0000, 39996.0000, '测试备注4', 1, '2024-04-01 10:16:13', NULL, NULL, '1', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (79, 2, '测试1', '测试11', 1.1000, 100.1000, 1.0000, 110.1100, '测试备注1', 1, '2024-04-28 11:15:17', NULL, NULL, '0', '0');
+INSERT INTO `cabinet_quotation_detail` VALUES (80, 2, '测试2', '测试22', 2.0000, 1356.0000, 1.0000, 2712.0000, '测试备注2', 1, '2024-04-28 11:15:17', NULL, NULL, '0', '0');
+INSERT INTO `cabinet_quotation_detail` VALUES (81, 2, '测试3', '测试33', 3.0000, 203.0000, 1.0000, 609.0000, '测试备注3', 1, '2024-04-28 11:15:17', NULL, NULL, '0', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (82, 2, '测试4', '测试44', 4.0000, 9999.0000, 1.0000, 39996.0000, '测试备注4', 1, '2024-04-28 11:15:17', NULL, NULL, '0', '1');
 
 -- ----------------------------
 -- Table structure for message_board
@@ -310,7 +318,7 @@ CREATE TABLE `notice_management`  (
                                       `release_date` datetime NULL DEFAULT NULL COMMENT '发布日期',
                                       `release_by` bigint NULL DEFAULT NULL COMMENT '发布人id',
                                       PRIMARY KEY (`notice_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of notice_management
@@ -321,6 +329,45 @@ INSERT INTO `notice_management` VALUES (3, '单独发给管理员的骚扰通知
 INSERT INTO `notice_management` VALUES (4, 'TEST1', 1, '2024-03-25 14:44:17', NULL, NULL, '0', NULL, NULL, NULL, NULL);
 INSERT INTO `notice_management` VALUES (6, '待办通知：444', NULL, NULL, NULL, NULL, '0', NULL, NULL, '2024-04-26 17:20:10', NULL);
 INSERT INTO `notice_management` VALUES (7, '待办通知：55555', NULL, NULL, NULL, NULL, '0', NULL, NULL, '2024-04-26 17:20:10', NULL);
+
+-- ----------------------------
+-- Table structure for order_status
+-- ----------------------------
+DROP TABLE IF EXISTS `order_status`;
+CREATE TABLE `order_status`  (
+                                 `order_id` int NOT NULL AUTO_INCREMENT COMMENT '订单ID',
+                                 `quotation_id` int NULL DEFAULT NULL COMMENT '报价单ID',
+                                 `Customer_Name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '客户姓名',
+                                 `address` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '地址',
+                                 `telephone` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '电话',
+                                 `Product_Name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '产品名称',
+                                 `all_Total_price` decimal(18, 4) NULL DEFAULT NULL COMMENT '总价',
+                                 `paid_price` decimal(18, 4) NULL DEFAULT NULL COMMENT '已付款金额',
+                                 `un_paid_price` decimal(18, 4) NULL DEFAULT NULL COMMENT '未付款金额',
+                                 `remark` varchar(3000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
+                                 `paid_remark` varchar(3000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '付款备注',
+                                 `create_by` bigint NULL DEFAULT NULL COMMENT '创建人',
+                                 `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+                                 `update_by` bigint NULL DEFAULT NULL COMMENT '更新人',
+                                 `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                                 `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '是否删除（0未删除 1已删除）',
+                                 PRIMARY KEY (`order_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of order_status
+-- ----------------------------
+INSERT INTO `order_status` VALUES (1, 2, '测试', '测试地址', '123456789', '测试产品', 43427.1100, 0.0000, 43427.1100, NULL, NULL, 1, '2024-04-28 10:44:50', NULL, NULL, '0');
+INSERT INTO `order_status` VALUES (2, 1, '小明', '地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址', '123', NULL, 144.3100, 144.3100, 0.0000, NULL, NULL, 1, '2024-04-28 14:24:35', 1, '2024-04-29 17:46:29', '0');
+INSERT INTO `order_status` VALUES (3, 3, '测试', '测试地址', '123456789', '测试产品', 43427.1100, 6000.0000, 37427.1100, NULL, NULL, 1, '2024-04-28 14:24:44', 1, '2024-04-29 10:59:42', '0');
+INSERT INTO `order_status` VALUES (4, NULL, 'testName', 'testAdd', '13566666666', 'testPro', 20.0000, 1.0000, 19.0000, 'remark', NULL, 1, '2024-04-28 16:48:21', 1, '2024-04-29 09:38:47', '1');
+INSERT INTO `order_status` VALUES (5, NULL, 'testName', 'testAdd', '13566666666', 'testPro', 20.0000, 1.0000, 19.0000, 'remark', NULL, 1, '2024-04-28 16:49:39', 1, '2024-04-29 09:38:47', '1');
+INSERT INTO `order_status` VALUES (6, NULL, 'testName', 'testAdd', '13566666666', 'testPro', 20.0000, 1.0000, 19.0000, 'remark', NULL, 1, '2024-04-28 16:51:01', 1, '2024-04-29 09:38:47', '1');
+INSERT INTO `order_status` VALUES (7, NULL, '199a', '299', '39', '499', 59.0000, 69.0000, 79.0000, '49', NULL, 1, '2024-04-28 16:51:56', 1, '2024-04-29 09:20:50', '0');
+INSERT INTO `order_status` VALUES (8, NULL, '1', NULL, '1', NULL, 1.0000, 1.0000, 0.0000, NULL, NULL, 1, '2024-04-29 10:28:41', NULL, NULL, '0');
+INSERT INTO `order_status` VALUES (9, NULL, '1', NULL, '1', NULL, 100.0000, 30.0000, 70.0000, NULL, NULL, 1, '2024-04-29 10:49:58', NULL, NULL, '0');
+INSERT INTO `order_status` VALUES (10, NULL, '55', '6', '5', '4', 100.0000, 1.0000, 99.0000, NULL, NULL, 1, '2024-04-29 14:13:24', 1, '2024-04-29 17:47:00', '0');
+INSERT INTO `order_status` VALUES (11, NULL, '1', NULL, '1', NULL, 5000.0000, 5000.0000, 0.0000, '1', NULL, 1, '2024-04-29 14:16:25', NULL, NULL, '0');
 
 -- ----------------------------
 -- Table structure for pending_notification
@@ -589,7 +636,7 @@ CREATE TABLE `sys_menu`  (
                              `menu_parent_id` bigint NULL DEFAULT 0 COMMENT '菜单父id',
                              `is_Leaf` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
                              PRIMARY KEY (`menu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 39 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 40 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_menu
@@ -632,6 +679,7 @@ INSERT INTO `sys_menu` VALUES (35, 'portfolio-web', 'MENU.PortfolioWeb', 'MENU.P
 INSERT INTO `sys_menu` VALUES (36, 'news-information', 'MENU.NewsInformation', 'MENU.NewsInformation', 10, '/cabinet-related/news-information', '/src/views/CabinetRelated/NewsInformation', '0', '0', NULL, 'NewspaperOutline', 1, '2024-04-15 09:51:30', 1, '2024-04-15 09:51:39', '0', '（菜单）新闻资讯', '0', '0', 1, 33, '0');
 INSERT INTO `sys_menu` VALUES (37, 'message-board', 'MENU.MessageBoard', 'MENU.MessageBoard', 15, '/cabinet-related/message-board', '/src/views/CabinetRelated/MessageBoard', '0', '0', NULL, 'AtOutline', 1, '2024-04-17 09:17:12', 1, '2024-04-17 09:17:38', '0', '（菜单）留言板', '0', '0', 1, 33, '0');
 INSERT INTO `sys_menu` VALUES (38, 'work-arrangement', 'MENU.WorkArrangement', 'MENU.WorkArrangement', 20, '/cabinet-related/work-arrangement', '/src/views/CabinetRelated/WorkArrangement', '0', '0', NULL, 'CalendarNumberOutline', 1, '2024-04-18 15:49:27', 1, '2024-04-19 09:17:56', '0', '（菜单）工作安排', '0', '0', 1, 33, '0');
+INSERT INTO `sys_menu` VALUES (39, 'order-status', 'MENU.OrderStatus', 'MENU.OrderStatus', 25, '/cabinet-related/order-status', '/src/views/CabinetRelated/OrderStatus', '0', '0', NULL, 'CartOutline', 1, '2024-04-28 10:49:53', 1, '2024-04-28 10:50:21', '0', '（菜单）订单状态', '0', '0', 1, 33, '0');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -700,6 +748,7 @@ INSERT INTO `sys_role_menu` VALUES (1, 35);
 INSERT INTO `sys_role_menu` VALUES (1, 36);
 INSERT INTO `sys_role_menu` VALUES (1, 37);
 INSERT INTO `sys_role_menu` VALUES (1, 38);
+INSERT INTO `sys_role_menu` VALUES (1, 39);
 INSERT INTO `sys_role_menu` VALUES (2, 2);
 
 -- ----------------------------

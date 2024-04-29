@@ -20,4 +20,6 @@ public interface CabinetMapper extends BaseMapper<CabinetQuotation> {
     void deletePortfolioWebById(@Param("ids")List<String> ids,@Param("userId") String string,@Param("date") Date date);
 
     void deleteNewsInformationById(@Param("ids")List<String> ids,@Param("userId") String string,@Param("date") Date date);
+
+    void deleteOrderStatusById(@Param("ids") List<String> ids, @Param("userId")String string, @Param("date") Date date);
 }

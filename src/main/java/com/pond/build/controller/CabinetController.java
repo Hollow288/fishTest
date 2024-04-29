@@ -214,4 +214,18 @@ public class CabinetController {
         return cabinetService.removeOrderStatusAttachs(map);
     }
 
+
+    @PatchMapping("/cabinet/delete-order-status")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult deleteOrderStatusByIds(@RequestBody HashMap<String,Object> orderIds){
+        return cabinetService.deleteOrderStatusByIds(orderIds);
+    }
+
+
+    @PutMapping("/cabinet/{orderId}/add-arrived-price")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseResult addArrivedPrice(@RequestBody HashMap<String,Object> map,@PathVariable("orderId") String orderId){
+        return cabinetService.addArrivedPrice(map,orderId);
+    }
+
 }
