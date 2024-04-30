@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 public class LoginController {
 
@@ -69,6 +71,12 @@ public class LoginController {
     @GetMapping("/onlineNum")
     public ResponseResult getOnlineNum(){
         return loginService.getOnlineNum();
+    }
+
+
+    @PostMapping("/user/{userId}/has-role-interface")
+    public ResponseResult hasRoleToInterface(@PathVariable("userId") String userId, @RequestBody Map<String,Object> map){
+        return loginService.hasRoleToInterface(userId, map);
     }
 
 }

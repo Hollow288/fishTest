@@ -188,6 +188,17 @@ public class LoginServiceImpl implements LoginService {
         return new ResponseResult<>(HttpStatusCode.OK.getCode(),HttpStatusCode.OK.getCnMessage(),resultMap);
     }
 
+    @Override
+    public ResponseResult hasRoleToInterface(String userId, Map<String,Object> map) {
+        String toPath = map.get("toPath").toString();
+        List<String> pathList = userMapper.hasRoleToInterface(userId);
+        if(pathList.contains(toPath)){
+            return new ResponseResult<>(HttpStatusCode.OK.getCode(),"认证成功");
+        }else{
+            return new ResponseResult<>(HttpStatusCode.OK.getCode(),"认证失败");
+        }
+    }
+
 
     //返回给前端的用户信息
     public Map<String,Object> putUserInfoToMap(String userId, String userName, String name, Date birthDate, String biography, String nickName, String email, String avatarUrl, String phoneNumber, String gender, String status, String address, List<String> roles){
