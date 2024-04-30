@@ -11,7 +11,7 @@
  Target Server Version : 80035
  File Encoding         : 65001
 
- Date: 29/04/2024 17:48:53
+ Date: 30/04/2024 18:06:37
 */
 
 SET NAMES utf8mb4;
@@ -750,6 +750,11 @@ INSERT INTO `sys_role_menu` VALUES (1, 37);
 INSERT INTO `sys_role_menu` VALUES (1, 38);
 INSERT INTO `sys_role_menu` VALUES (1, 39);
 INSERT INTO `sys_role_menu` VALUES (2, 2);
+INSERT INTO `sys_role_menu` VALUES (2, 21);
+INSERT INTO `sys_role_menu` VALUES (2, 22);
+INSERT INTO `sys_role_menu` VALUES (2, 23);
+INSERT INTO `sys_role_menu` VALUES (2, 24);
+INSERT INTO `sys_role_menu` VALUES (2, 25);
 
 -- ----------------------------
 -- Table structure for sys_user
