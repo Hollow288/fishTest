@@ -48,7 +48,12 @@ minio:
 logging:
   config: classpath:Log4j2-spring.xml
 
-
 pond:
   name: fish
   prefix: Bearer
+
+oauth2:
+  github:
+    clientId: Ov23liH3XBOXMIlwmKtr
+    clientSecret: 0c4cd5f7b568340bbe6d9c3d59f6f664d0530c6f
+    redirectUri: http://localhost:5173/auth-redirect?type=github
