@@ -15,4 +15,8 @@ public interface LoginService {
     ResponseResult getOnlineNum();
 
     ResponseResult hasRoleToInterface(String userId, Map<String,Object> map);
+
+    ResponseResult loginByGithub(Map<String,String> code);
+
+    ResponseResult bindByGithub(Map<String, String> code);
 }

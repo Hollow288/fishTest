@@ -79,4 +79,16 @@ public class LoginController {
         return loginService.hasRoleToInterface(userId, map);
     }
 
+
+    @PostMapping("/user/login/github")
+    public ResponseResult loginByGithub(@RequestBody Map<String,String> code){
+        return loginService.loginByGithub(code);
+    }
+
+
+
+    @PostMapping("/user/bind/github")
+    public ResponseResult bindByGithub(@RequestBody Map<String,String> code){
+        return loginService.bindByGithub(code);
+    }
 }

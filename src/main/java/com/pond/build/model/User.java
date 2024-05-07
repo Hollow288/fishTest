@@ -112,5 +112,13 @@ public class User implements Serializable {
      * 简介
      */
     private String biography;
+    /**
+     *
+     */
+    private String githubId;
+    /**
+     *
+     */
+    private String githubUrl;
 
 }

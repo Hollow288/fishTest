@@ -99,6 +99,15 @@ public class UserResponse {
      */
     private String biography;
     /**
+     *
+     */
+    private String githubId;
+    /**
+     *
+     */
+    private String githubUrl;
+
+    /**
      * 角色
      */
     private List<String> roles;

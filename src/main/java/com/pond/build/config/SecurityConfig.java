@@ -105,6 +105,7 @@ public class SecurityConfig{
 //                .and()
 //                .authorizeRequests()
                 .authorizeHttpRequests(conf-> conf.requestMatchers("/user/login").permitAll()
+                        .requestMatchers("/user/login/github").permitAll()
                         .requestMatchers("/user/refresh").permitAll()
                         .requestMatchers("/allItems").permitAll()
                         .requestMatchers("/hello").permitAll()

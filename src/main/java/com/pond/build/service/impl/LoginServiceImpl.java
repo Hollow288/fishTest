@@ -1,7 +1,11 @@
 package com.pond.build.service.impl;
 
+import cn.hutool.http.HttpRequest;
+import cn.hutool.http.HttpUtil;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.pond.build.enums.HttpStatusCode;
 import com.pond.build.mapper.MenuMapper;
 import com.pond.build.mapper.UserMapper;
@@ -15,7 +19,9 @@ import com.pond.build.utils.CommonUtil;
 import com.pond.build.utils.JwtUtil;
 import com.pond.build.utils.RedisUtil;
 import io.jsonwebtoken.Claims;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,6 +30,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 
@@ -42,6 +49,12 @@ public class LoginServiceImpl implements LoginService {
 
     @Autowired
     private MenuMapper menuMapper;
+
+    @Value("${oauth2.github.clientId}")
+    private String clientId;
+    @Value("${oauth2.github.clientSecret}")
+    private String clientSecret;
+
 
 
     @Override
@@ -197,6 +210,111 @@ public class LoginServiceImpl implements LoginService {
         }else{
             return new ResponseResult<>(HttpStatusCode.OK.getCode(),"认证失败");
         }
+    }
+
+    @Override
+    public ResponseResult loginByGithub(Map<String,String> code) {
+        Map<String, Object > paramMap = new HashMap<>();
+        paramMap.put("client_id",clientId);
+        paramMap.put("client_secret",clientSecret);
+        paramMap.put("code",code.get("code"));
+        paramMap.put("accept","json");
+        String result = HttpUtil.post("https://github.com/login/oauth/access_token",paramMap);
+        String token = result.split("&")[0].split("=")[1];
+        // 获取用户信息
+        String finalResult = HttpRequest.get("https://api.github.com/user")
+                .header("Authorization","token "+token)
+                .header("X-GitHub-Api-Version", "2022-11-28")
+                .execute().body();
+        System.out.println(finalResult);
+        //userName
+        JSONObject githubUserInfo = JSON.parseObject(finalResult);
+        String id = String.valueOf(githubUserInfo.get("id")) ;
+
+        QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
+        userQueryWrapper.eq("github_id",id);
+        List<User> users = userMapper.selectList(userQueryWrapper);
+        if(CollectionUtils.isEmpty(users)){
+            return new ResponseResult<>(HttpStatusCode.REQUEST_SERVER_ERROR.getCode(),"未找到该GitHub下绑定的账号!");
+        }
+
+        String userId = users.get(0).getUserId().toString();
+
+        String accessToken = JwtUtil.createJWT(userId, JwtUtil.JWT_ACCESS_TTL);
+        String refreshToken = JwtUtil.createJWT(userId, JwtUtil.JWT_REFRESH_TTL);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("access_token",accessToken);
+        map.put("refresh_token",refreshToken);
+
+        //前端需要的用户个人信息
+        User userInfo = users.get(0);
+
+        LoginUser loginUser = new LoginUser();
+        loginUser.setUser(userInfo);
+
+        List<String> permissions = menuMapper.selectRolesByUserId(users.get(0).getUserId());
+        loginUser.setPermissions(permissions);
+
+        Map<String, Object> userInfoMap = this.putUserInfoToMap(userInfo.getUserId().toString(), userInfo.getUserName(), userInfo.getName(), userInfo.getBirthDate(),  userInfo.getBiography(),
+                userInfo.getNickName(), userInfo.getEmail(), userInfo.getAvatarUrl(), userInfo.getPhoneNumber(), userInfo.getGender(), userInfo.getStatus(), userInfo.getAddress(), permissions);
+
+        map.put("user",JSONObject.toJSONString(userInfoMap));
+
+        redisUtil.set("access_token:"+ userId,JSONObject.toJSONString(loginUser),JwtUtil.JWT_ACCESS_TTL/1000);
+        redisUtil.set("refresh_token:"+ userId,JSONObject.toJSONString(loginUser),JwtUtil.JWT_REFRESH_TTL/1000);
+
+        return new ResponseResult(HttpStatusCode.OK.getCode(),"登录成功",map);
+    }
+
+    @Override
+    public ResponseResult bindByGithub(Map<String, String> code) {
+        Map<String, Object > paramMap = new HashMap<>();
+        paramMap.put("client_id",clientId);
+        paramMap.put("client_secret",clientSecret);
+        paramMap.put("code",code.get("code"));
+        paramMap.put("accept","json");
+        String result = HttpUtil.post("https://github.com/login/oauth/access_token",paramMap);
+        String token = result.split("&")[0].split("=")[1];
+        // 获取用户信息
+        String finalResult = HttpRequest.get("https://api.github.com/user")
+                .header("Authorization","token "+token)
+                .header("X-GitHub-Api-Version", "2022-11-28")
+                .execute().body();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        User userInfo = loginUser.getUser();
+
+        JSONObject userGithubInfo = JSON.parseObject(finalResult);
+        String id = String.valueOf(userGithubInfo.get("id"));
+        String url = String.valueOf(userGithubInfo.get("html_url"));
+
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("github_id",id);
+        List<User> users = userMapper.selectList(queryWrapper);
+        if(!CollectionUtils.isEmpty(users)){
+            return new ResponseResult<>(HttpStatusCode.REQUEST_SERVER_ERROR.getCode(),"该GitHub账号已经被绑定过!");
+        }
+        QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
+        userQueryWrapper.eq("user_id",userInfo.getUserId().toString());
+        User user = userMapper.selectOne(userQueryWrapper);
+        user.setGithubId(id);
+        user.setGithubUrl(url);
+        userMapper.updateById(user);
+
+        user.setPassWord("");
+        UserResponse userResponse = new UserResponse();
+        BeanUtils.copyProperties(user,userResponse);
+
+        List<String> rolesList = menuMapper.selectRolesByUserId(user.getUserId());
+        List<String> resultList = new ArrayList<>();
+        resultList.addAll(rolesList);
+        userResponse.setRoles(resultList);
+        userResponse.setUserId(user.getUserId().toString());
+
+
+        return new ResponseResult<>(HttpStatusCode.OK.getCode(),"操作成功",userResponse);
     }
 
 
