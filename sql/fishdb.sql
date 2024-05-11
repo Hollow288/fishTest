@@ -11,7 +11,7 @@
  Target Server Version : 80035
  File Encoding         : 65001
 
- Date: 08/05/2024 17:33:01
+ Date: 11/05/2024 17:08:09
 */
 
 SET NAMES utf8mb4;
@@ -94,7 +94,7 @@ CREATE TABLE `cabinet_quotation`  (
 -- Records of cabinet_quotation
 -- ----------------------------
 INSERT INTO `cabinet_quotation` VALUES (1, '小明', '地址', '123', NULL, NULL, NULL, '2024-03-03 00:00:00', 22.2100, 122.1000, NULL, 144.3100, 1, NULL, NULL, NULL, '0');
-INSERT INTO `cabinet_quotation` VALUES (2, '测试', '测试地址', '13588888888', '测试产品', '测试颜色', '测试柜体', '2024-03-10 08:00:00', 2822.1100, 40605.0000, NULL, 43427.1100, 1, '2024-03-28 08:00:00', 1, '2024-04-28 11:15:17', '0');
+INSERT INTO `cabinet_quotation` VALUES (2, '测试', '测试地址', '13588888888', '测试产品', '测试颜色1', '测试柜体', '2024-03-10 08:00:00', 2822.1100, 40605.0000, NULL, 43427.1100, 1, '2024-03-28 08:00:00', 1, '2024-05-10 10:45:53', '0');
 INSERT INTO `cabinet_quotation` VALUES (3, '测试', '测试地址', '123456789', '测试产品', '测试颜色', '测试柜体', '2024-03-10 00:00:00', 2822.1100, 40605.0000, NULL, 43427.1100, 1, '2024-03-28 11:05:44', NULL, NULL, '0');
 INSERT INTO `cabinet_quotation` VALUES (4, '9', NULL, '9', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 11:10:26', 1, '2024-04-01 10:14:37', '1');
 INSERT INTO `cabinet_quotation` VALUES (5, '99', NULL, '99', NULL, NULL, NULL, NULL, 0.0000, 0.0000, NULL, 0.0000, 1, '2024-03-28 11:13:08', 1, '2024-04-01 10:14:37', '1');
@@ -164,7 +164,7 @@ CREATE TABLE `cabinet_quotation_detail`  (
                                              `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '是否删除（0未删除 1已删除）',
                                              `detail_type` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '子表种类（0橱柜类 1厨具五金类）',
                                              PRIMARY KEY (`detail_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 83 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 87 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cabinet_quotation_detail
@@ -247,10 +247,14 @@ INSERT INTO `cabinet_quotation_detail` VALUES (75, 2, '测试1', '测试11', 1.1
 INSERT INTO `cabinet_quotation_detail` VALUES (76, 2, '测试2', '测试22', 2.0000, 1356.0000, 1.0000, 2712.0000, '测试备注2', 1, '2024-04-01 10:16:13', NULL, NULL, '1', '0');
 INSERT INTO `cabinet_quotation_detail` VALUES (77, 2, '测试3', '测试33', 3.0000, 203.0000, 1.0000, 609.0000, '测试备注3', 1, '2024-04-01 10:16:13', NULL, NULL, '1', '1');
 INSERT INTO `cabinet_quotation_detail` VALUES (78, 2, '测试4', '测试44', 4.0000, 9999.0000, 1.0000, 39996.0000, '测试备注4', 1, '2024-04-01 10:16:13', NULL, NULL, '1', '1');
-INSERT INTO `cabinet_quotation_detail` VALUES (79, 2, '测试1', '测试11', 1.1000, 100.1000, 1.0000, 110.1100, '测试备注1', 1, '2024-04-28 11:15:17', NULL, NULL, '0', '0');
-INSERT INTO `cabinet_quotation_detail` VALUES (80, 2, '测试2', '测试22', 2.0000, 1356.0000, 1.0000, 2712.0000, '测试备注2', 1, '2024-04-28 11:15:17', NULL, NULL, '0', '0');
-INSERT INTO `cabinet_quotation_detail` VALUES (81, 2, '测试3', '测试33', 3.0000, 203.0000, 1.0000, 609.0000, '测试备注3', 1, '2024-04-28 11:15:17', NULL, NULL, '0', '1');
-INSERT INTO `cabinet_quotation_detail` VALUES (82, 2, '测试4', '测试44', 4.0000, 9999.0000, 1.0000, 39996.0000, '测试备注4', 1, '2024-04-28 11:15:17', NULL, NULL, '0', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (79, 2, '测试1', '测试11', 1.1000, 100.1000, 1.0000, 110.1100, '测试备注1', 1, '2024-04-28 11:15:17', NULL, NULL, '1', '0');
+INSERT INTO `cabinet_quotation_detail` VALUES (80, 2, '测试2', '测试22', 2.0000, 1356.0000, 1.0000, 2712.0000, '测试备注2', 1, '2024-04-28 11:15:17', NULL, NULL, '1', '0');
+INSERT INTO `cabinet_quotation_detail` VALUES (81, 2, '测试3', '测试33', 3.0000, 203.0000, 1.0000, 609.0000, '测试备注3', 1, '2024-04-28 11:15:17', NULL, NULL, '1', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (82, 2, '测试4', '测试44', 4.0000, 9999.0000, 1.0000, 39996.0000, '测试备注4', 1, '2024-04-28 11:15:17', NULL, NULL, '1', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (83, 2, '测试1', '测试11', 1.1000, 100.1000, 1.0000, 110.1100, '测试备注1', 1, '2024-05-10 10:45:53', NULL, NULL, '0', '0');
+INSERT INTO `cabinet_quotation_detail` VALUES (84, 2, '测试2', '测试22', 2.0000, 1356.0000, 1.0000, 2712.0000, '测试备注2', 1, '2024-05-10 10:45:53', NULL, NULL, '0', '0');
+INSERT INTO `cabinet_quotation_detail` VALUES (85, 2, '测试3', '测试33', 3.0000, 203.0000, 1.0000, 609.0000, '测试备注3', 1, '2024-05-10 10:45:53', NULL, NULL, '0', '1');
+INSERT INTO `cabinet_quotation_detail` VALUES (86, 2, '测试4', '测试44', 4.0000, 9999.0000, 1.0000, 39996.0000, '测试备注4', 1, '2024-05-10 10:45:53', NULL, NULL, '0', '1');
 
 -- ----------------------------
 -- Table structure for message_board
@@ -264,13 +268,14 @@ CREATE TABLE `message_board`  (
                                   `message` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '留言',
                                   `message_date` datetime NULL DEFAULT NULL COMMENT '留言日期',
                                   PRIMARY KEY (`Message_ID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of message_board
 -- ----------------------------
 INSERT INTO `message_board` VALUES (1, '张三', '571339274@qq.com', '13588888888', '这是一条测试留言，我希望你能成功', NULL);
 INSERT INTO `message_board` VALUES (14, '姓名', '111@qq.com', '13577777777', '这是留言这是留言这是留言这是留言这是留言这是留言这是留言这是留言这是留言这是留言这是留言', '2024-04-17 09:59:56');
+INSERT INTO `message_board` VALUES (15, '999', '', '1354444', 'pppp', '2024-05-10 18:05:59');
 
 -- ----------------------------
 -- Table structure for news_information
