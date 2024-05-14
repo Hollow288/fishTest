@@ -955,13 +955,138 @@ class TestApplicationTests {
 
     @Test
     public void test6(){
-        System.out.println(this.splitLongString("租赁类型字典","正常客户\n" +
-                "个人房东\n" +
-                "企业房东\n" +
-                "中介公司\n" +
-                "招标代理费\n" +
-                "其它往来单位\n" +
-                "标书费\n" +
-                "投标保证金"));
+        System.out.println(this.splitLongString("租赁类型字典","其他\n" +
+                "光大银行\n" +
+                "交通银行\n" +
+                "中国建设银行\n" +
+                "中国银行"));
+    }
+
+
+
+    public List<String> findNotInList(String orgString, String needFindString){
+        List<String> orgList = Arrays.asList(orgString.split("\n"));
+        List<String> needFindList = Arrays.asList(needFindString.split("\n"));
+
+        List<String> notInOrgList = needFindList.stream()
+                .filter(element -> !orgList.contains(element))
+                .toList();
+        return notInOrgList;
+    }
+
+
+    @Test
+    public void test7(){
+        List<String> notInList = this.findNotInList("常志军\n" +
+                "刘峰\n" +
+                "伏首圣\n" +
+                "程德林\n" +
+                "曲春升\n" +
+                "门永斌\n" +
+                "陈占力\n" +
+                "张伟\n" +
+                "李国文\n" +
+                "王新磊\n" +
+                "廉福绵\n" +
+                "张恺\n" +
+                "任海涛\n" +
+                "刘刚\n" +
+                "白浩\n" +
+                "徐学明\n" +
+                "林巍\n" +
+                "阙云龙\n" +
+                "胡亮\n" +
+                "朱晓艳\n" +
+                "赵海涛\n" +
+                "陈军锋\n" +
+                "钟文香\n" +
+                "齐宏学\n" +
+                "王振海\n" +
+                "冯卓德\n" +
+                "丛强滋\n" +
+                "王晓东\n" +
+                "罗超\n" +
+                "陈玉彬\n" +
+                "候阳\n" +
+                "栗晗\n" +
+                "刘清\n" +
+                "朱元勋", "郑春\n" +
+                "王维昭\n" +
+                "柯玮\n" +
+                "刘清\n" +
+                "李会驰\n" +
+                "常志军\n" +
+                "林巍\n" +
+                "王炜\n" +
+                "苏江瑜\n" +
+                "罗超\n" +
+                "程德林\n" +
+                "魏乐永\n" +
+                "王志诚\n" +
+                "陈虎成\n" +
+                "陈占力\n" +
+                "张伟\n" +
+                "张文峰\n" +
+                "文锋\n" +
+                "赵磊\n" +
+                "齐宏学\n" +
+                "丛强滋\n" +
+                "赵国虎\n" +
+                "杨学良\n" +
+                "苏波\n" +
+                "任海涛\n" +
+                "钟文香\n" +
+                "童海涛\n" +
+                "公维强\n" +
+                "冯建明\n" +
+                "白浩\n" +
+                "刘刚\n" +
+                "黄建\n" +
+                "李宝坤\n" +
+                "王晓冬\n" +
+                "秦建军\n" +
+                "彭程\n" +
+                "曲春升\n" +
+                "王新磊\n" +
+                "门永斌\n" +
+                "裴铭海\n" +
+                "王艳萍\n" +
+                "王真\n" +
+                "王振海\n" +
+                "陶诗君\n" +
+                "周岑\n" +
+                "张志刚\n" +
+                "王勇\n" +
+                "季大雪\n" +
+                "黄清飞\n" +
+                "陈历新\n" +
+                "陈军锋\n" +
+                "张秋信\n" +
+                "胡亮\n" +
+                "朱晓艳\n" +
+                "曹佳\n" +
+                "栗晗\n" +
+                "张月瑶\n" +
+                "郑小军\n" +
+                "邵楠\n" +
+                "阙云龙\n" +
+                "王君\n" +
+                "赵颖\n" +
+                "赵海涛\n" +
+                "崔瑾\n" +
+                "刘国强\n" +
+                "施同平\n" +
+                "晋存田\n" +
+                "马健\n" +
+                "张帆\n" +
+                "杨柳");
+        System.out.println(notInList);
     }
 }
+
+
+
+
+
+
+
