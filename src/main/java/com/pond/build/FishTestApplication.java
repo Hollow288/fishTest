@@ -40,10 +40,10 @@ public class FishTestApplication extends SpringBootServletInitializer {
      * 从Jdk9开始，JavaEE从Jdk中分离，jdk就移除掉了javax.annotation.jar包的默认集成，
      * 从而导致版本不兼容。所以一旦spring项目从JDK8升到高版本，都会出现javax.annotation.Resource无法引用报红。
      */
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-        // 注意这里要指向原先用main方法执行的Application启动类
-        return builder.sources(FishTestApplication.class);
-    }
+//    @Override
+//    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+//        // 注意这里要指向原先用main方法执行的Application启动类
+//        return builder.sources(FishTestApplication.class);
+//    }
 
 }

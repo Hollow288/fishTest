@@ -1,13 +1,15 @@
 spring:
   datasource:
-    username: root
-    password: root
-#    password: 71789
-#    allowMultiQueries=true  支持批处理
-    url: jdbc:mysql://localhost:3306/fishdb?allowMultiQueries=true
+    username: ${MYSQL_USERNAME:}
+    password: ${MYSQL_PASSWORD:}
+    url: ${MYSQL_URL:}
     driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maxLifetime: 600000  # 约 10 分钟
+      idleTimeout: 600000  # 10 分钟
+      ConnectionTestQuery: SELECT 1  # 用于验证连接有效性
 server:
-  port: 8999
+  port: 18800
   servlet:
     context-path: /fish-api
   tomcat:
@@ -16,9 +18,9 @@ server:
 redis:
   #数据库索引
   database: 0
-  host: 127.0.0.1
-  port: 6379
-  password:
+  host: ${REDIS_HOST:}
+  port: ${REDIS_PORT:}
+  password: ${REDIS_PASSWORD:}
   #连接超时时间（ms）
   timeout: 5000
   # 自定义redis默认过期时间（单位：时）
@@ -40,9 +42,9 @@ mybatis-plus:
 
 # https://blog.csdn.net/HLXTU/article/details/130770881
 minio:
-  endpoint: http://127.0.0.1:9000
-  accessKey: myname
-  secretKey: mypassword
+  endpoint: ${MINIO_ENDPOINT:}
+  accessKey: ${MINIO_ACCESSKEY:}
+  secretKey: ${MINIO_SECRETKEY:}
 #  bucketName: fishtest
 
 logging:
@@ -54,6 +56,6 @@ pond:
 
 oauth2:
   github:
-    clientId: Ov23liH3XBOXMIlwmKtr
-    clientSecret: 0c4cd5f7b568340bbe6d9c3d59f6f664d0530c6f
-    redirectUri: http://localhost:5173/auth-redirect?type=github
+    clientId:
+    clientSecret:
+    redirectUri:
