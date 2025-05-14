@@ -135,7 +135,16 @@ public class ExportServiceImpl implements ExportService {
                     .bind("cabinetsExcelList", policy).bind("kitchenAppliancesExcelList", policy).build();
 
             // 渲染模板并将结果写入 ByteArrayOutputStream
-            XWPFTemplate.compile("src/main/resources/WordExcelTemplate/报价单模板.docx",config).render(innerMap).write(byteArrayOutputStream);
+            InputStream templateStream = this.getClass()
+                    .getClassLoader()
+                    .getResourceAsStream("WordExcelTemplate/报价单模板.docx");
+
+            XWPFTemplate.compile(templateStream, config)
+                    .render(innerMap)
+                    .write(byteArrayOutputStream);
+
+
+            templateStream.close();
             // 将 ByteArrayOutputStream 中的数据转换为 byte[]
             byte[] data = byteArrayOutputStream.toByteArray();
 
